@@ -59,7 +59,7 @@ def main():
 
     odmd = pd.read_csv(RAW_DIR / "odmd" / "odmd_2018_bugun_aylik.csv")
 
-    otv = pd.read_csv(RAW_DIR / "otv" / "otv_olaylari_2024_bugun_aylik.csv")
+    otv = pd.read_csv(RAW_DIR / "otv" / "otv_olaylari_2018_bugun_aylik.csv")
 
     osd = pd.read_csv(RAW_DIR / "osd" / "osd_2024_bugun_aylik.csv")
 
