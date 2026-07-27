@@ -5,8 +5,11 @@ Bu klasör, araç piyasası fiyat yönü tahmini projesinin kamuya açık kaynak
 
 - **MVP (2025, 12 ay)** — ilk prototip, yalnızca 2025 (bkz.
   `prompts/veri/01_mvp_cekirdek_veri_prompt.md`).
-- **Genişletme (2024-01 → içinde bulunulan ay)** — daha uzun, dışsal faktörleri
-  de içeren seri (bkz. `prompts/veri/03_genis_veri_cekme_prompt.md`).
+- **Genişletme (2018-01 → içinde bulunulan ay)** — daha uzun, dışsal faktörleri
+  de içeren seri (bkz. `prompts/veri/03_genis_veri_cekme_prompt.md` ve
+  `prompts/veri/06_genisletme_2018_korelasyon_prompt.md`). Proxy fiyat (BETAM)
+  yalnızca 2024-01'den itibaren dolu — 2018-2023 için bilinen bir kısıt
+  (bkz. `pm_rapor_genisletme2018_korelasyon.md`).
 
 **UYARI:** Bu klasöre şirket içi, lisanslı veya özel veri **konulmaz** (karar
 K5 — `docs/00_karar_kaydi.md`). Yalnızca kamuya açık kaynaklardan (TCMB EVDS,
@@ -38,7 +41,8 @@ data/
 │   └── alim_gucu/            brüt ücret-maaş endeksi, alım gücü proxy'si (TÜİK veri portalı, çeyreklik)
 └── processed/               # birleştirilmiş / etiketlenmiş / belgelenmiş çıktılar
     ├── mvp/                  MVP (2025) birleşik + etiketli tablo
-    ├── genisletme/            genişletme (2024-bugün) birleşik + etiketli tablo
+    ├── genisletme/            genişletme (2018-bugün) birleşik + etiketli tablo
+    ├── analiz/                korelasyon matrisi, hedef-aday karşılaştırması, zaman serileri (keşifsel)
     └── raporlar/              veri sözlüğü, temizleme raporu, PM raporları (.md — Git'e girer)
 ```
 
