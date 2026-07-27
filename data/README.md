@@ -10,6 +10,10 @@ Bu klasör, araç piyasası fiyat yönü tahmini projesinin kamuya açık kaynak
   `prompts/veri/06_genisletme_2018_korelasyon_prompt.md`). Proxy fiyat (BETAM)
   yalnızca 2024-01'den itibaren dolu — 2018-2023 için bilinen bir kısıt
   (bkz. `pm_rapor_genisletme2018_korelasyon.md`).
+- **Hedef keşfi — noter devir × DOM** — kompozit "piyasa aktivite endeksi"
+  denemesi, hedef seçimi (K1) için karar değil kanıt üretir (bkz.
+  `prompts/veri/08_hedef_kesif_noter_dom_prompt.md` ve
+  `pm_rapor_hedef_kesif.md`).
 
 **UYARI:** Bu klasöre şirket içi, lisanslı veya özel veri **konulmaz** (karar
 K5 — `docs/00_karar_kaydi.md`). Yalnızca kamuya açık kaynaklardan (TCMB EVDS,
@@ -42,7 +46,8 @@ data/
 └── processed/               # birleştirilmiş / etiketlenmiş / belgelenmiş çıktılar
     ├── mvp/                  MVP (2025) birleşik + etiketli tablo
     ├── genisletme/            genişletme (2018-bugün) birleşik + etiketli tablo
-    ├── analiz/                korelasyon matrisi, hedef-aday karşılaştırması, zaman serileri (keşifsel)
+    ├── analiz/                korelasyon matrisi, hedef-aday karşılaştırması, zaman serileri,
+    │                          piyasa aktivite endeksi (noter×DOM keşfi) (keşifsel)
     └── raporlar/              veri sözlüğü, temizleme raporu, PM raporları (.md — Git'e girer)
 ```
 
