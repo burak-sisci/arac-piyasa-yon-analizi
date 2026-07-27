@@ -2,15 +2,25 @@
 
 ## Proje Kimliği
 
-**Proje:** Araç Piyasası Fiyat Yönü Tahmini — Literatür Tarama ve Bilgi Tabanı
+**Proje:** Araç Piyasası Fiyat Yönü Tahmini
 **Sahip:** Arabam.com Data Science Intern (proje yürütücüsü)
 **Nihai amaç:** Geliştirici ekibin, araç piyasasında fiyat yönünü (up / down / stable)
-tahmin eden bir ML sistemine "gelmiş geçmiş en iyi baseline" ile başlamasını sağlayacak,
-literatüre dayalı bir bilgi tabanı üretmek.
+tahmin eden bir ML sistemine "gelmiş geçmiş en iyi baseline" ile başlamasını sağlamak.
 
-Bu repo bir yazılım projesi DEĞİLDİR. Çıktılar: Markdown dökümanları, sentez raporu
-ve karar-odaklı sunum. Kod yalnızca döküman dönüşümü (pandoc, python-docx, python-pptx)
-gibi yardımcı işler için yazılır.
+Proje İKİ AŞAMALIDIR:
+
+- **Aşama A — Literatür Tarama ve Bilgi Tabanı (TAMAMLANDI, referans olarak
+  kalıcı):** Çıktılar Markdown dökümanları, sentez raporu ve karar-odaklı
+  sunum. Kod yalnızca döküman dönüşümü (pandoc, python-docx, python-pptx)
+  gibi yardımcı işler için yazıldı. Bkz. `docs/`.
+- **Aşama B — Veri Mühendisliği ve Keşif (AKTİF):** Aşama A'nın bulgularını
+  gerçek Türkiye araç piyasası verisiyle test eden, **bu artık bir yazılım
+  projesidir** (Python: veri çekme, temizleme, istatistiksel analiz,
+  görselleştirme). Bkz. `data/`, `scripts/veri/`, `prompts/veri/`.
+
+Bu iki aşamanın ortak noktası: nihai hedef aynı (fiyat yönü tahmini için
+literatüre VE veriye dayalı bir baseline). README.md'deki "Aşama A / Aşama B"
+bölümleri güncel durumu tutar; buradaki ayrım kalıcıdır, değişmez.
 
 ## Hedef Kitle: Geliştirici Ekip Profili
 
@@ -35,21 +45,28 @@ gibi yardımcı işler için yazılır.
 - Ağır literatür taramaları claude.ai Deep Research'te yapılır; çıktılar bu repoya
   taşınır. Claude Code'un görevi: organizasyon, tutarlılık kontrolü, sentez,
   format dönüşümleri ve sunum üretimi.
-- Master plan: `docs/00_master_plan.md` (Faz 0 çıktısı geldiğinde buraya konur).
+- Master plan: `docs/00_master_plan_literatur_taramasi.md` (Faz 0 çıktısı).
   Her oturumda önce master planı ve ilgili önceki faz dosyalarını OKU, sonra çalış.
+- Aşama B (veri mühendisliği) için karşılığı: proje sahibinden gelen prompt →
+  öz-arşivleme (`prompts/veri/`) → çalışma → PM raporu (`data/processed/raporlar/`).
+  Ayrıntı: README.md → "Nasıl çalışır (veri mühendisliği döngüsü)".
 
 ## Depo Yapısı
 
 ```
 .
 ├── CLAUDE.md                  # bu dosya — her oturumda bağlam
-├── README.md                  # repo tanıtımı
+├── README.md                  # repo tanıtımı (Aşama A + Aşama B durumu)
 ├── docs/
 │   ├── standards.md           # döküman ve kalite standartları
-│   ├── 00_master_plan.md      # Faz 0 çıktısı (master plan)
-│   ├── 01_*.md ... NN_*.md    # faz çıktıları (numaralı)
-│   └── sentez/                # sentez raporu ve sunum kaynak dosyaları
-├── prompts/                   # her faz için kullanılan promptların arşivi
+│   ├── 00_master_plan_literatur_taramasi.md   # Faz 0 çıktısı (master plan)
+│   ├── 00_karar_kaydi.md      # K/N kapsam kararları (bağlayıcı)
+│   ├── 01_*.md ... 09_*.md    # faz çıktıları + sentez (numaralı)
+│   └── sentez/                # (şu an boş — sentez dökümanı docs/09'da duruyor)
+├── prompts/                   # Aşama A: faz promptlarının arşivi
+│   └── veri/                  # Aşama B: veri mühendisliği promptlarının arşivi
+├── scripts/veri/               # Aşama B: veri çekme/temizleme/analiz kodu
+├── data/                       # Aşama B: raw/processed veri (bkz. data/README.md, K5)
 └── exports/                   # docx/pptx/pdf dönüşüm çıktıları (git'e girmez)
 ```
 
