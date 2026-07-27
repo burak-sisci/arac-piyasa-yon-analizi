@@ -1,8 +1,13 @@
 """
-GENIŞLETME AŞAMA 5 — Tüm genişletilmiş serilerin birleştirilmesi, 2024-01 -> 2026-06.
+GENIŞLETME AŞAMA 5 — Tüm genişletilmiş serilerin birleştirilmesi, 2018-01 -> 2026-06.
 
 Kapsam üst sınırı 2026-06'dır (proxy fiyat ve ODMD'nin kendi yapısal yayım
-gecikmesi nedeniyle - bkz. ilgili script'lerin docstring'leri).
+gecikmesi nedeniyle - bkz. ilgili script'lerin docstring'leri). Alt sınır
+2018-01'e cekildi (proje sahibinin talebiyle, prompts/veri/06_genisletme_2018_korelasyon_prompt.md).
+proxy fiyat (BETAM) 2024-01'den once veri VERMEZ (bilinen kisit, GOREV 2'de
+arabam.com alternatifi arandi ama 2018-2023 icin bulunamadi) - bu yuzden
+proxy_fiyat_cari_tl ve ona bagli hedef etiket sutunlari 2018-01..2023-12
+araliginda NaN kalacak; diger TUM feature'lar bu aralikta doludur.
 
 DAHIL EDILEN: USD/TRY (A), TÜFE (A - 2026-01 baz degisikligi zincirleme
 yontemiyle cozuldu, bkz. genisletme_1b_tufe.py), proxy fiyat/BETAM (C+D),
@@ -32,14 +37,14 @@ REPO_KOKU = Path(__file__).resolve().parents[2]
 RAW_DIR = REPO_KOKU / "data" / "raw"
 PROCESSED_DIR = REPO_KOKU / "data" / "processed" / "genisletme"
 
-HEDEF_BASLANGIC = "2024-01"
+HEDEF_BASLANGIC = "2018-01"
 HEDEF_BITIS = "2026-06"
 
 
 def main():
     PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
 
-    usdtry = pd.read_csv(RAW_DIR / "usdtry" / "usdtry_2024_bugun_aylik.csv")[
+    usdtry = pd.read_csv(RAW_DIR / "usdtry" / "usdtry_2018_bugun_aylik.csv")[
         ["referans_ayi", "usdtry_aysonu", "usdtry_ortalama"]
     ]
 
@@ -69,7 +74,7 @@ def main():
         ["referans_ayi", "noter_devir_toplam_adet", "noter_devir_otomobil_adet"]
     ]
 
-    alim_gucu = pd.read_csv(RAW_DIR / "alim_gucu" / "alim_gucu_2024_bugun_aylik.csv")[
+    alim_gucu = pd.read_csv(RAW_DIR / "alim_gucu" / "alim_gucu_2018_bugun_aylik.csv")[
         ["referans_ayi", "brut_ucret_maas_endeksi_2021_100", "alim_gucu_ceyrek"]
     ]
 
@@ -94,10 +99,10 @@ def main():
         birlesik["noter_devir_toplam_adet"] / birlesik["brut_ucret_maas_endeksi_2021_100"]
     )
 
-    csv_yolu = PROCESSED_DIR / "veri_2024_bugun_birlesik.csv"
-    xlsx_yolu = PROCESSED_DIR / "veri_2024_bugun_birlesik.xlsx"
+    csv_yolu = PROCESSED_DIR / "veri_2018_bugun_birlesik.csv"
+    xlsx_yolu = PROCESSED_DIR / "veri_2018_bugun_birlesik.xlsx"
     birlesik.to_csv(csv_yolu, index=False, encoding="utf-8-sig")
-    birlesik.to_excel(xlsx_yolu, index=False, sheet_name="veri_2024_bugun")
+    birlesik.to_excel(xlsx_yolu, index=False, sheet_name="veri_2018_bugun")
 
     print("=== GENISLETME 5 - BIRLESTIRME OZETI ===")
     print(f"Kapsam: {HEDEF_BASLANGIC} .. {HEDEF_BITIS} ({len(birlesik)} satir)")

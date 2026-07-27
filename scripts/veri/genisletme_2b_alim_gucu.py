@@ -1,17 +1,30 @@
 """
 GENIŞLETME AŞAMA 2b — Alım gücü proxy'si (brüt ücret-maaş endeksi),
-2024-01 -> 2026-06 (kaynak seviyesi B — resmi TÜİK indirilebilir tablosu).
+2018-01 -> 2026-06 (kaynak seviyesi B — resmi TÜİK indirilebilir tablosu).
 
 ONCEKI DENEME (pm_rapor_genisletme_asama2_5.md, Bolum 3.1): TÜİK veri portali
 WebFetch ile okunamiyordu - HATA LISTESINE birakilmisti.
 
-COZUM (bu turda): TÜİK veri portali JS render eden tarayici araciyla
+COZUM (ilk tur): TÜİK veri portali JS render eden tarayici araciyla
 gezilerek "İstihdam, İşsizlik ve Ücret > İşgücü Girdi Endeksleri" bulteninde
 (en guncel: "I. Çeyrek: Ocak-Mart 2026", Sayı 57966) "Dinamik Tablolar"
 bolumunden indirilen "İşgücü Girdi Endeksleri (2021=100).xls" tablosu
 bulundu. BU TEK TABLO 2009-2026 arasi TAM CEYREKLIK TARIHCEYI icerir (ODMD
 tarzi cok-yillik tablo - tek belge yeterli oldu, noter devir'deki gibi 2.
-bir belgeye gerek kalmadi).
+bir belgeye gerek kalmadi). Ilk turda yalnizca 2024-Q1..2026-Q1 cikarilmisti.
+
+GENISLETME (2. tur, 2018-2023 ekleme): AYNI URL / AYNI .xls tablosu tekrar
+indirildi (JS render eden tarayici uzerinden bulten sayfasi acildi, "Dinamik
+Tablolar" bolumundeki "İşgücü Girdi Endeksleri (2021=100)" linki --
+/api/tr/data/downloads?... -- dogrudan herkese acik, oturum/cerez gerektirmeyen
+bir uc nokta oldugu curl ile dogrulandi; indirilen .xls, pandas.read_excel ile
+"t1" sayfasindan okunup B-N (Sanayi+insaat+ticaret-hizmet toplami) blogundaki
+19. sutun ("Brüt ücret-maaş endeksi, Arındırılmamış") cekildi). 2024-Q1..
+2026-Q1 icin cikan degerler, ilk turda elle girilmis olan degerlerle BIREBIR
+AYNI cikti (ornegin 2024-Q1 = 693.111053) - bu, sutun/blok secimini ve
+tablonun ayni kaynak/surum oldugunu dogrular. Boylece 2018-Q1..2023-Q4
+(24 ceyrek) icin GERCEK degerler (uydurma/interpolasyon degil) ayni tablodan
+eklendi.
 
 DEGISKEN SECIMI: "Brüt ücret-maaş endeksi" (Arındırılmamış, B-N toplam
 sektor: sanayi+insaat+ticaret-hizmet), NOMINAL bir ucret endeksidir
@@ -46,6 +59,30 @@ RAW_DIR = REPO_KOKU / "data" / "raw" / "alim_gucu"
 # sutunundan birebir okunmustur.
 KAYNAK_URL = "https://veriportali.tuik.gov.tr/tr/press/57966"  # İşgücü Girdi Endeksleri, I. Çeyrek 2026
 CEYREK_DEGERLERI = {
+    "2018-Q1": 55.077816,
+    "2018-Q2": 56.141908,
+    "2018-Q3": 57.799243,
+    "2018-Q4": 57.641475,
+    "2019-Q1": 63.311002,
+    "2019-Q2": 66.580759,
+    "2019-Q3": 68.769237,
+    "2019-Q4": 69.595474,
+    "2020-Q1": 74.415656,
+    "2020-Q2": 61.235986,
+    "2020-Q3": 73.433920,
+    "2020-Q4": 77.724019,
+    "2021-Q1": 87.049290,
+    "2021-Q2": 93.567483,
+    "2021-Q3": 105.637307,
+    "2021-Q4": 113.745919,
+    "2022-Q1": 146.177172,
+    "2022-Q2": 162.872867,
+    "2022-Q3": 212.872438,
+    "2022-Q4": 230.426190,
+    "2023-Q1": 320.122159,
+    "2023-Q2": 344.355578,
+    "2023-Q3": 455.890230,
+    "2023-Q4": 486.201924,
     "2024-Q1": 693.111053,
     "2024-Q2": 741.916146,
     "2024-Q3": 796.607993,
@@ -80,21 +117,32 @@ def main():
             ))
 
     df = pd.DataFrame(satirlar).sort_values("referans_ayi").reset_index(drop=True)
-    df = df[(df["referans_ayi"] >= "2024-01") & (df["referans_ayi"] <= "2026-06")]
+    df = df[(df["referans_ayi"] >= "2018-01") & (df["referans_ayi"] <= "2026-06")]
     df["kaynak_url"] = KAYNAK_URL
 
-    hedef_csv = RAW_DIR / "alim_gucu_2024_bugun_aylik.csv"
-    hedef_xlsx = RAW_DIR / "alim_gucu_2024_bugun_aylik.xlsx"
+    # DOSYA ADI DEGISTI (2024_bugun -> 2018_bugun): kapsam 2018-01'e genisletildi,
+    # bu odmd/usdtry serilerindeki "_2018_bugun_" adlandirma kalibiyla tutarlidir.
+    # Eski "alim_gucu_2024_bugun_aylik.*" dosyalari artik gecersiz/eksik kapsamli
+    # oldugundan silinir (GÖREV 3 - genisletme_5_birlestir.py - bu yeni dosya adini
+    # kullanacak sekilde ayrica guncellenmelidir).
+    eski_csv = RAW_DIR / "alim_gucu_2024_bugun_aylik.csv"
+    eski_xlsx = RAW_DIR / "alim_gucu_2024_bugun_aylik.xlsx"
+    for eski in (eski_csv, eski_xlsx):
+        if eski.exists():
+            eski.unlink()
+
+    hedef_csv = RAW_DIR / "alim_gucu_2018_bugun_aylik.csv"
+    hedef_xlsx = RAW_DIR / "alim_gucu_2018_bugun_aylik.xlsx"
     df.to_csv(hedef_csv, index=False, encoding="utf-8-sig")
     df.to_excel(hedef_xlsx, index=False, sheet_name="alim_gucu_aylik")
 
-    beklenen_aylar = pd.period_range("2024-01", "2026-06", freq="M").astype(str).tolist()
+    beklenen_aylar = pd.period_range("2018-01", "2026-06", freq="M").astype(str).tolist()
     gelen_aylar = df["referans_ayi"].tolist()
     eksik_aylar = [ay for ay in beklenen_aylar if ay not in gelen_aylar]
 
     print("=== GENISLETME 2b - ALIM GUCU PROXY'Sİ (BRUT UCRET-MAAS ENDEKSI) OZETI ===")
     print("Kaynak seviyesi: B (resmi TÜİK indirilebilir .xls tablosu, ceyreklik -> aylik genisletildi)")
-    print(f"Kapsam: 2024-01 .. 2026-06 ({len(df)} satir)")
+    print(f"Kapsam: 2018-01 .. 2026-06 ({len(df)} satir)")
     print(f"Eksik ay: {eksik_aylar if eksik_aylar else 'yok'} (2026-Q2 henuz yayimlanmadi)")
     print()
     print(df.to_string(index=False))

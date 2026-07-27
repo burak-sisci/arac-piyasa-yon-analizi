@@ -1,6 +1,12 @@
 """
-GENIŞLETME AŞAMA 3d (ikinci yarisi) — Tuketici guven endeksi, 2024-01 -> bugun
+GENIŞLETME AŞAMA 3d (ikinci yarisi) — Tuketici guven endeksi, 2018-01 -> bugun
 (kaynak seviyesi A, TCMB EVDS3).
+
+GUNCELLEME (2018-01'e genisletme): Her iki seri de (TP.TG2.Y01 ve TP.TG2.Y17)
+API'den ayri ayri sorgulanarak 2018-01'e - hatta 2012-01'e kadar - null
+olmayan deger dondurdugu dogrulandi. Yani TP.TG2.Y17'nin ankete sonradan
+eklenmis olabilecegi ihtimali bu veri kapsaminda DOGRULANMADI: iki seri de
+ayni derinlikte mevcut.
 
 ONCEKI DENEME (pm_rapor_genisletme_asama2_5.md, Bolum 3.2): 7 farkli tahmin
 edilen seri kodu (TP.TUKGUVEN, TP.TGE01, TP.TUKETICIGUVEN, TP.GUVENTUK,
@@ -25,7 +31,7 @@ from pathlib import Path
 import requests
 import pandas as pd
 
-BASLANGIC_AY = "2024-01"
+BASLANGIC_AY = "2018-01"
 BITIS_AY = date.today().strftime("%Y-%m")
 
 EVDS_BASE_URL = "https://evds3.tcmb.gov.tr/igmevdsms-dis/"

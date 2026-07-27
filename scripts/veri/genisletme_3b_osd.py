@@ -27,7 +27,7 @@ from pathlib import Path
 import requests
 import pandas as pd
 
-BASLANGIC_AY = "2024-01"
+BASLANGIC_AY = "2018-01"
 BITIS_AY = date.today().strftime("%Y-%m")
 
 EVDS_BASE_URL = "https://evds3.tcmb.gov.tr/igmevdsms-dis/"

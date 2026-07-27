@@ -67,7 +67,7 @@ def _tercile_etiket(log_degisim: pd.Series, n: int) -> pd.Series:
 def main():
     PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
 
-    girdi_csv = PROCESSED_DIR / "veri_2024_bugun_birlesik.csv"
+    girdi_csv = PROCESSED_DIR / "veri_2018_bugun_birlesik.csv"
     birlesik = pd.read_csv(girdi_csv).sort_values("referans_ayi").reset_index(drop=True)
 
     # --- aylik nominal/reel % degisim - yerelde, ayni yontemle hesaplanir ---
@@ -94,15 +94,16 @@ def main():
 
     birlesik = birlesik.drop(columns=["proxy_reel_gosterge"])
 
-    csv_yolu = PROCESSED_DIR / "veri_2024_bugun_etiketli.csv"
-    xlsx_yolu = PROCESSED_DIR / "veri_2024_bugun_etiketli.xlsx"
+    csv_yolu = PROCESSED_DIR / "veri_2018_bugun_etiketli.csv"
+    xlsx_yolu = PROCESSED_DIR / "veri_2018_bugun_etiketli.xlsx"
     birlesik.to_csv(csv_yolu, index=False, encoding="utf-8-sig")
-    birlesik.to_excel(xlsx_yolu, index=False, sheet_name="veri_2024_bugun_etiketli")
+    birlesik.to_excel(xlsx_yolu, index=False, sheet_name="veri_2018_bugun_etiketli")
 
     gecerli_gecis = birlesik["proxy_aylik_log_degisim"].notna().sum()
+    olasi_gecis = len(birlesik) - 1
     print("=== GENISLETME 6 - HEDEF ETIKET OZETI ===")
     print(f"Satir sayisi: {len(birlesik)}")
-    print(f"Gecerli (NaN olmayan) aylik log-degisim gecisi sayisi: {gecerli_gecis} / 29 olasi gecis")
+    print(f"Gecerli (NaN olmayan) aylik log-degisim gecisi sayisi: {gecerli_gecis} / {olasi_gecis} olasi gecis")
     print(f"Kullanilan esik: k={ESIK_K}")
     print(f"sigma (nominal log-degisim, gecerli gozlemler uzerinden): {sigma_nominal:.5f}")
     print(f"sigma (reel log-degisim, gecerli gozlemler uzerinden): {sigma_reel:.5f}")
