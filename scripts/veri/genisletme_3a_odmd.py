@@ -1,30 +1,44 @@
 """
 GENIŞLETME AŞAMA 3a — ODMD sıfır araç (otomobil + hafif ticari) satış adetleri,
-2024-01 -> 2026-06 (kaynak seviyesi C — resmi dernek basın bülteni PDF'i).
+2018-01 -> 2026-06 (kaynak seviyesi C — resmi dernek basın bülteni PDF'i).
 
-YÖNTEM NOTU: ODMD basın bülteni PDF'leri normal metin-tabanlı web araçlarıyla
-(WebFetch) OKUNAMADI (ham PDF stream döndü); Claude'un kendi PDF-sayfa-goruntu
-okuyucusuyla (Read araci, PDF sayfalarini goruntu olarak isler) BASARIYLA
-okundu. Her bulten, ekinde ("Ek 1/2/3") 2010'dan itibaren TÜM aylarin
-TAMAMLANMIŞ yillik satirlarini iceren bir tablo yayimliyor - bu sayede 30 ay
-icin 30 ayri bulten degil, yalnizca 2 GUNCEL bulten (2024 sonunu iceren "3
-Aralik 2024" + 2025/2026 baslangicini iceren "2 Haziran 2026") YETERLI oldu.
+YÖNTEM NOTU: ODMD basın bülteni PDF'leri Claude'un PDF-sayfa-goruntu
+okuyucusuyla (Read araci, PDF sayfalarini goruntu olarak isler) okundu; ayrica
+yerel pypdf metin çıkarımıyla da doğrulandı (WebFetch aracı bu PDF'leri ham
+stream olarak döndürüyor, o yüzden kullanılmadı). Her bulten, ekinde
+("Ek 1/2/3") **2010'dan itibaren TÜM yillarin TAMAMLANMIŞ aylik satirlarini**
+iceren bir "10 Yıllık Ortalama" tablosu yayimliyor — bu, ilk yazımda
+varsayılandan da geniş: 2018-2023 arası TAMAMEN bu ayni 2 bültenin ayni Ek 1/
+Ek 2 tablolarında hazır bulundu, ayrıca 3'üncü bir PDF aramaya GEREK KALMADI.
+Iki bültenin 2010-2023 satırları birebir aynı (çapraz-doğrulama: iki farklı
+tarihte yayımlanmış PDF, aynı 14 yıllık tarihçeyi tekrarlıyor) ve satır
+toplamları (Ocak..Aralık) yayımlanan "Toplam" sütunuyla manuel olarak
+tutuyor (bkz. asağıdaki dogrulama).
 
-Kaynaklar:
-- ODMD Basın Bülteni 3 Aralık 2024 (Ek 1: Otomobil+HTA, Ek 2: yalnız Otomobil)
+Kaynaklar (Ek 1: Otomobil+HTA toplamı, Ek 2: yalnız Otomobil):
+- ODMD Basın Bülteni 3 Aralık 2024, sayfa 7 (Ek 1) ve sayfa 8 (Ek 2)
   https://www.odmd.org.tr/folders/2837/categorial1docs/4791/ODMD%20Bas%C4%B1n%20Bulteni%203%20Aral%C4%B1k%202024.pdf
-  -> 2024'ün TAMAMLANMIŞ satırı (Ocak-Aralık, çünkü bu bülten sonraki yılda
-     yayımlanan bir bültenden değil, doğrudan bu PDF'in kendi "10 yıllık
-     tarihçe" ekinden okunmuştur — bkz. asağıdaki KAYNAK notu).
-- ODMD Basın Bülteni 2 Haziran 2026 (Ek 1, Ek 2)
+  -> tarihçe tablosu 2010-2024 (2024 satırı bu bültende henüz Ocak-Kasım,
+     çünkü bülten 3 Aralık 2024'te yayımlanmış — Aralık verisi eksik).
+- ODMD Basın Bülteni 2 Haziran 2026, sayfa 8 (Ek 1) ve sayfa 9 (Ek 2)
   https://www.odmd.org.tr/folders/2837/categorial1docs/6111/ODMD%20Bas%C4%B1n%20Bulteni%202%20Haziran%202026.docx.pdf
-  -> 2024 (tamamlanmış, çapraz-doğrulama), 2025 (tamamlanmış), 2026 Ocak-Mayıs.
+  -> tarihçe tablosu 2010-2026 (2024 TAMAMLANMIŞ — çapraz-doğrulama için
+     kullanıldı —, 2025 TAMAMLANMIŞ, 2026 Ocak-Mayıs).
 - Haziran 2026 TOPLAM rakamı ayrı bir kaynaktan (haber, web araması):
   alomaliye.com, "Otomotiv Pazarı İlk Yarıda Yüzde 8,19 Daraldı" (2 Temmuz 2026)
   -> yalnızca TOPLAM (Otomobil+HTA) verilmiş, otomobil-yalnız kırılımı YOK.
 
+2018-2023 DOĞRULAMA: Her iki bültendeki Ek 1/Ek 2 tablolarının 2018-2023
+satırları (aylık + "Toplam" sütunu) birebir aynı ve aylık değerlerin toplamı
+yayımlanan yıllık "Toplam" değerine eşit (örn. Ek 1 2018: 35.076+47.009+
+76.345+71.126+72.755+51.037+52.734+34.346+23.028+21.571+58.204+77.706 =
+620.937 = yayımlanan Toplam). PDF sayfaları ayrıca Read araciyla (goruntu
+modu) tekrar açılıp gözle teyit edildi.
+
 BİLİNEN SINIR: Haziran 2026 için yalnızca toplam (105.041 adet) var,
 otomobil-yalnız kırılımı bu turda bulunamadı (haber metninde yok) - NaN.
+KAPSAM: Bu iki PDF'in tarihçe eki 2010'a kadar gidiyor; talep edilen 2018-01
+başlangıcı bu iki kaynaktan tamamen (ek PDF aramadan) karşılandı.
 """
 from pathlib import Path
 
@@ -35,7 +49,28 @@ RAW_DIR = REPO_KOKU / "data" / "raw" / "odmd"
 
 # Ek 1 (Otomobil + Hafif Ticari Araç toplamı) — "3 Aralık 2024" ve
 # "2 Haziran 2026" bültenlerinin Ek-1 tablolarından birebir okunmuştur.
+# 2018-2023: ayni Ek-1 "10 yillik tarihce" tablosunun tamamlanmis yillik
+# satirlari (iki bultende birebir ayni, aylik toplamlar Toplam sutunuyla
+# tutuyor).
 ODMD_TOPLAM = {
+    "2018-01": 35076, "2018-02": 47009, "2018-03": 76345, "2018-04": 71126,
+    "2018-05": 72755, "2018-06": 51037, "2018-07": 52734, "2018-08": 34346,
+    "2018-09": 23028, "2018-10": 21571, "2018-11": 58204, "2018-12": 77706,
+    "2019-01": 14373, "2019-02": 24875, "2019-03": 49221, "2019-04": 30971,
+    "2019-05": 33016, "2019-06": 42688, "2019-07": 17927, "2019-08": 26246,
+    "2019-09": 41992, "2019-10": 49075, "2019-11": 58176, "2019-12": 90500,
+    "2020-01": 27273, "2020-02": 47122, "2020-03": 50008, "2020-04": 26457,
+    "2020-05": 32235, "2020-06": 70973, "2020-07": 87401, "2020-08": 61533,
+    "2020-09": 90619, "2020-10": 94733, "2020-11": 80141, "2020-12": 104293,
+    "2021-01": 43728, "2021-02": 58504, "2021-03": 96428, "2021-04": 61488,
+    "2021-05": 54734, "2021-06": 79819, "2021-07": 47849, "2021-08": 58454,
+    "2021-09": 57141, "2021-10": 56746, "2021-11": 60216, "2021-12": 62243,
+    "2022-01": 38131, "2022-02": 49652, "2022-03": 64267, "2022-04": 60035,
+    "2022-05": 65167, "2022-06": 80652, "2022-07": 52206, "2022-08": 48336,
+    "2022-09": 62084, "2022-10": 65222, "2022-11": 82311, "2022-12": 115220,
+    "2023-01": 50894, "2023-02": 81148, "2023-03": 103929, "2023-04": 97679,
+    "2023-05": 111556, "2023-06": 112163, "2023-07": 113959, "2023-08": 89454,
+    "2023-09": 96793, "2023-10": 101367, "2023-11": 115040, "2023-12": 158653,
     "2024-01": 79701, "2024-02": 105990, "2024-03": 109828, "2024-04": 75919,
     "2024-05": 100305, "2024-06": 106238, "2024-07": 94037, "2024-08": 90134,
     "2024-09": 87740, "2024-10": 97274, "2024-11": 121094, "2024-12": 170249,
@@ -48,7 +83,27 @@ ODMD_TOPLAM = {
 }
 
 # Ek 2 (yalnız Otomobil) — ayni iki bultenin Ek-2 tablosundan.
+# 2018-2023: ayni Ek-2 "10 yillik tarihce" tablosunun tamamlanmis yillik
+# satirlari (iki bultende birebir ayni).
 ODMD_OTOMOBIL = {
+    "2018-01": 26611, "2018-02": 35901, "2018-03": 59798, "2018-04": 55108,
+    "2018-05": 57227, "2018-06": 41225, "2018-07": 42024, "2018-08": 26976,
+    "2018-09": 17595, "2018-10": 16809, "2018-11": 46204, "2018-12": 60843,
+    "2019-01": 10979, "2019-02": 19205, "2019-03": 38628, "2019-04": 24416,
+    "2019-05": 27126, "2019-06": 36024, "2019-07": 15398, "2019-08": 21544,
+    "2019-09": 35308, "2019-10": 39996, "2019-11": 47803, "2019-12": 70829,
+    "2020-01": 22016, "2020-02": 37727, "2020-03": 39887, "2020-04": 21825,
+    "2020-05": 25073, "2020-06": 57067, "2020-07": 69427, "2020-08": 44372,
+    "2020-09": 71296, "2020-10": 76341, "2020-11": 64357, "2020-12": 80721,
+    "2021-01": 35358, "2021-02": 44749, "2021-03": 76357, "2021-04": 48375,
+    "2021-05": 43138, "2021-06": 62348, "2021-07": 36311, "2021-08": 44756,
+    "2021-09": 43408, "2021-10": 40512, "2021-11": 42982, "2021-12": 43559,
+    "2022-01": 29020, "2022-02": 37641, "2022-03": 50173, "2022-04": 45564,
+    "2022-05": 51750, "2022-06": 64134, "2022-07": 41031, "2022-08": 35230,
+    "2022-09": 44681, "2022-10": 47440, "2022-11": 59222, "2022-12": 86774,
+    "2023-01": 37288, "2023-02": 58907, "2023-03": 79226, "2023-04": 77398,
+    "2023-05": 87418, "2023-06": 91135, "2023-07": 87416, "2023-08": 69131,
+    "2023-09": 78971, "2023-10": 82611, "2023-11": 91424, "2023-12": 126416,
     "2024-01": 64041, "2024-02": 82277, "2024-03": 87071, "2024-04": 61448,
     "2024-05": 80260, "2024-06": 87858, "2024-07": 73396, "2024-08": 69288,
     "2024-09": 69634, "2024-10": 75662, "2024-11": 94595, "2024-12": 134811,
@@ -72,8 +127,8 @@ def main():
     })
     df["odmd_hta_adet"] = df["odmd_toplam_adet"] - df["odmd_otomobil_adet"]
 
-    csv_yolu = RAW_DIR / "odmd_2024_bugun_aylik.csv"
-    xlsx_yolu = RAW_DIR / "odmd_2024_bugun_aylik.xlsx"
+    csv_yolu = RAW_DIR / "odmd_2018_bugun_aylik.csv"
+    xlsx_yolu = RAW_DIR / "odmd_2018_bugun_aylik.xlsx"
     df.to_csv(csv_yolu, index=False, encoding="utf-8-sig")
     df.to_excel(xlsx_yolu, index=False, sheet_name="odmd_aylik")
 
