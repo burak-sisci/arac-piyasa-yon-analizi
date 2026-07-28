@@ -14,6 +14,11 @@ Bu klasör, araç piyasası fiyat yönü tahmini projesinin kamuya açık kaynak
   denemesi, hedef seçimi (K1) için karar değil kanıt üretir (bkz.
   `prompts/veri/08_hedef_kesif_noter_dom_prompt.md` ve
   `pm_rapor_hedef_kesif.md`).
+- **ENAG E-TÜFE kontrol serisi (2024-01 → 2026-06)** — TÜİK TÜFE'ye paralel,
+  ana deflatörü DEĞİŞTİRMEYEN kontrol serisi (bkz.
+  `prompts/veri/12_enag_veri_cekme_prompt.md` ve `pm_rapor_enag_cekme.md`).
+  enagrup.org resmi sitesi şu an erişilemez durumda — B/C seviyesi kaynak
+  kullanıldı, ayrıntı raporda.
 
 **UYARI:** Bu klasöre şirket içi, lisanslı veya özel veri **konulmaz** (karar
 K5 — `docs/00_karar_kaydi.md`). Yalnızca kamuya açık kaynaklardan (TCMB EVDS,
@@ -42,12 +47,14 @@ data/
 │   ├── osd/                  OSD yerli üretim, binek+kamyonet (TCMB EVDS3)
 │   ├── tuketici_guveni/      tüketici güven endeksi + otomobil satın alma ihtimali (TCMB EVDS3)
 │   ├── noter_devir/          noter devir adedi, toplam+otomobil (TÜİK veri portalı)
-│   └── alim_gucu/            brüt ücret-maaş endeksi, alım gücü proxy'si (TÜİK veri portalı, çeyreklik)
+│   ├── alim_gucu/            brüt ücret-maaş endeksi, alım gücü proxy'si (TÜİK veri portalı, çeyreklik)
+│   └── enag/                 ENAG E-TÜFE kontrol serisi (ENAG resmi X hesabı + haber ajansları, 2024-01→bugün)
 └── processed/               # birleştirilmiş / etiketlenmiş / belgelenmiş çıktılar
     ├── mvp/                  MVP (2025) birleşik + etiketli tablo
     ├── genisletme/            genişletme (2018-bugün) birleşik + etiketli tablo
     ├── analiz/                korelasyon matrisi, hedef-aday karşılaştırması, zaman serileri,
-    │                          piyasa aktivite endeksi (noter×DOM keşfi) (keşifsel)
+    │                          piyasa aktivite endeksi (noter×DOM keşfi), TÜİK-ENAG karşılaştırması (keşifsel)
+    │   └── gorseller/          keşifsel karşılaştırma grafikleri (ör. tufe_vs_enag.png)
     └── raporlar/              veri sözlüğü, temizleme raporu, PM raporları (.md — Git'e girer)
 ```
 
