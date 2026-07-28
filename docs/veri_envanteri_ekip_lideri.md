@@ -17,7 +17,10 @@ OSD, tüketici güveni, noter devir gibi ana ekonomik göstergeler **%100
 dolu**, ama ilan-fiyatı kaynaklı (proxy fiyat, DOM, satış oranı) ve ondan
 türeyen tüm hedef sütunlar yalnızca **2024-01'den itibaren** dolu (%24-28
 doluluk) — bu, tek bir kaynağın (BETAM) geç başlamasından kaynaklanan
-**yapısal** bir sınırdır, veri kaybı değildir.
+**yapısal** bir sınırdır, veri kaybı değildir. (Bu %24-28 rakamı ham BETAM
+sütunlarının kendi doluluğudur; Bölüm 3'teki tablo grubu-geneli bir ortalama
+verdiği için farklı bir sayı — %52,6 — gösterir; ayrım için Bölüm 3 sonundaki
+nota bakınız.)
 
 ---
 
