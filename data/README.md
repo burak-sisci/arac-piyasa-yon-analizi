@@ -19,6 +19,12 @@ Bu klasör, araç piyasası fiyat yönü tahmini projesinin kamuya açık kaynak
   `prompts/veri/12_enag_veri_cekme_prompt.md` ve `pm_rapor_enag_cekme.md`).
   enagrup.org resmi sitesi şu an erişilemez durumda — B/C seviyesi kaynak
   kullanıldı, ayrıntı raporda.
+- **ODMD/OYDER/Indicata "İkinci El Online Sektör Raporu" kapsam taraması**
+  — 2021-2023 için aylık mı yıllık mı yayımlandığı netleştirilmeye
+  çalışıldı; kısmi/temsili bir örneklem (36 aydan 10'u) elde edildi, tam
+  seri ÇIKARILAMADI ve BETAM'ın 2021-2023 açığını kapatmaya yetmiyor (bkz.
+  `prompts/veri/15_odmd_oyder_aylik_bulten_prompt.md` ve
+  `pm_rapor_odmd_oyder.md`).
 
 **UYARI:** Bu klasöre şirket içi, lisanslı veya özel veri **konulmaz** (karar
 K5 — `docs/00_karar_kaydi.md`). Yalnızca kamuya açık kaynaklardan (TCMB EVDS,
@@ -48,12 +54,14 @@ data/
 │   ├── tuketici_guveni/      tüketici güven endeksi + otomobil satın alma ihtimali (TCMB EVDS3)
 │   ├── noter_devir/          noter devir adedi, toplam+otomobil (TÜİK veri portalı)
 │   ├── alim_gucu/            brüt ücret-maaş endeksi, alım gücü proxy'si (TÜİK veri portalı, çeyreklik)
-│   └── enag/                 ENAG E-TÜFE kontrol serisi (ENAG resmi X hesabı + haber ajansları, 2024-01→bugün)
+│   ├── enag/                 ENAG E-TÜFE kontrol serisi (ENAG resmi X hesabı + haber ajansları, 2024-01→bugün)
+│   └── odmd_oyder/            İkinci El Online Sektör Raporu (Indicata) — kısmi/temsili örneklem, 2021-2023
 └── processed/               # birleştirilmiş / etiketlenmiş / belgelenmiş çıktılar
     ├── mvp/                  MVP (2025) birleşik + etiketli tablo
     ├── genisletme/            genişletme (2018-bugün) birleşik + etiketli tablo
     ├── analiz/                korelasyon matrisi, hedef-aday karşılaştırması, zaman serileri,
-    │                          piyasa aktivite endeksi (noter×DOM keşfi), TÜİK-ENAG karşılaştırması (keşifsel)
+    │                          piyasa aktivite endeksi (noter×DOM keşfi), TÜİK-ENAG karşılaştırması,
+    │                          ODMD/OYDER kapsam özeti (keşifsel)
     │   └── gorseller/          keşifsel karşılaştırma grafikleri (ör. tufe_vs_enag.png)
     └── raporlar/              veri sözlüğü, temizleme raporu, PM raporları (.md — Git'e girer)
 ```
