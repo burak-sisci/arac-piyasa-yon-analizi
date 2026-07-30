@@ -1,33 +1,52 @@
 """
-GENIŞLETME AŞAMA 5 — Tüm genişletilmiş serilerin birleştirilmesi, 2018-01 -> 2026-06.
+GENIŞLETME AŞAMA 5 — Tüm genişletilmiş serilerin birleştirilmesi, 2015-01 -> 2026-06.
 
 Kapsam üst sınırı 2026-06'dır (proxy fiyat ve ODMD'nin kendi yapısal yayım
 gecikmesi nedeniyle - bkz. ilgili script'lerin docstring'leri). Alt sınır
-2018-01'e cekildi (proje sahibinin talebiyle, prompts/veri/06_genisletme_2018_korelasyon_prompt.md).
-proxy fiyat (BETAM) 2024-01'den once veri VERMEZ (bilinen kisit, GOREV 2'de
-arabam.com alternatifi arandi ama 2018-2023 icin bulunamadi) - bu yuzden
-proxy_fiyat_cari_tl ve ona bagli hedef etiket sutunlari 2018-01..2023-12
-araliginda NaN kalacak; diger TUM feature'lar bu aralikta doludur.
+ÖNCE 2018-01'e cekilmisti (proje sahibinin talebiyle,
+prompts/veri/06_genisletme_2018_korelasyon_prompt.md), SONRA 2015-01'e
+genisletildi (prompts/veri/18_genisletme_2015_prompt.md, "NET KAPSAM KARARI"
+- proxy fiyat/BETAM ve ENAG haric TUM diger feature'lar 2015'e cekildi).
+proxy fiyat (BETAM) 2024-01'den once veri VERMEZ (bilinen kisit, bu genisletme
+turunun kapsami DISINDA tutuldu - bkz. YAPMA maddeleri) - bu yuzden
+proxy_fiyat_cari_tl ve ona bagli hedef etiket sutunlari 2015-01..2023-12
+araliginda NaN kalacak.
+
+BRUT UCRET-MAAS ENDEKSI / ERISIM ENDEKSI 2015'E CEKILEMEDI (ONEMLI, ayrica
+asagida da not edilecek): TÜİK veri portalindaki indirme linki bu turda SPA
+route'una donusmustu, 2015-2017 ceyreklerine erisilemedi (bkz.
+genisletme_2b_alim_gucu.py docstring). Bu yuzden brut_ucret_maas_endeksi_2021_100
+VE ondan turetilen erisim_endeksi 2015-01..2017-12 icin NaN kalacak, 2018-01'de
+baslamaya devam ediyor - bu veri kaybi degil, ERISIM ENGELIDIR.
+
+NOTER DEVIR ADEDI 2015-2017 ICIN metodoloji farkli (bkz. genisletme_2a_noter_devir.py):
+36 ay icin TOPLAM devir TAM/guvenilir (bulten metninden), ama
+noter_devir_otomobil_adet bilincli olarak NaN (yalnizca yuvarlanmis yuzde
+mevcuttu, uydurulmadi).
 
 DAHIL EDILEN: USD/TRY (A), TÜFE (A - 2026-01 baz degisikligi zincirleme
 yontemiyle cozuldu, bkz. genisletme_1b_tufe.py), proxy fiyat/BETAM (C+D),
 taşıt kredisi faizi + politika faizi (A), ODMD sıfır araç satışı (C),
-ÖTV event-dummy, OSD yerli uretim (A), tuketici guven endeksi + otomobil
-satinalma ihtimali (A), noter devir adedi (B - TÜİK resmi tablo, bkz.
-genisletme_2a_noter_devir.py), alim gucu proxy'si / brut ucret-maas endeksi
-(B - TÜİK resmi tablo, ceyreklik->aylik genisletildi, bkz.
-genisletme_2b_alim_gucu.py).
+ÖTV event-dummy (2015-2017 icin 1 yeni olay eklendi, bkz.
+genisletme_4_otv_olaylari.py), OSD yerli uretim (A), tuketici guven endeksi +
+otomobil satinalma ihtimali (A), noter devir adedi (B - TÜİK resmi tablo +
+2015-2017 icin bulten metni, bkz. genisletme_2a_noter_devir.py), alim gucu
+proxy'si / brut ucret-maas endeksi (B - TÜİK resmi tablo, ceyreklik->aylik
+genisletildi, yalnizca 2018-01'den itibaren, bkz. genisletme_2b_alim_gucu.py).
 
 ERISILEBILIRLIK ENDEKSI (2c) COZULDU: orijinal gorev promptu
 (prompts/veri/03_genis_veri_cekme_prompt.md, Asama 2c) formulu zaten
 tanimliyordu - "erisim_endeksi = noter_devir_adedi / alim_gucu_proxy".
 Bu bir FEATURE'dir (K8: hedef degil, talep/likidite sinyali), yeni veri
 cekmeye gerek yok - 2a+2b zaten birlesik tabloda oldugu icin burada
-dogrudan turetiliyor.
+dogrudan turetiliyor (ancak alim_gucu 2018-01'den once NaN oldugundan,
+erisim_endeksi de 2015-01..2017-12 icin NaN cikacaktir).
 
 HEDEF ETIKET: Bu script SADECE BIRLESTIRIR; etiket uretimi (Asama 5'in
 "HEDEF ETIKET" alt-basligi, k*sigma bandi vb.) ayrı bir onay/adimdir ve
-burada YAPILMADI.
+burada YAPILMADI. Proxy fiyat donemi degismedigi icin hedef zinciri
+(genisletme_6_hedef_etiket.py) mantigina DOKUNULMADI - yalnizca girdi dosya
+adi (veri_2015_bugun_birlesik.csv) guncellenmesi gerekecek.
 """
 from pathlib import Path
 
@@ -37,7 +56,7 @@ REPO_KOKU = Path(__file__).resolve().parents[2]
 RAW_DIR = REPO_KOKU / "data" / "raw"
 PROCESSED_DIR = REPO_KOKU / "data" / "processed" / "genisletme"
 
-HEDEF_BASLANGIC = "2018-01"
+HEDEF_BASLANGIC = "2015-01"
 HEDEF_BITIS = "2026-06"
 
 
@@ -62,15 +81,15 @@ def main():
 
     faizler = pd.read_csv(RAW_DIR / "faiz" / "faizler_2024_bugun_aylik.csv")
 
-    odmd = pd.read_csv(RAW_DIR / "odmd" / "odmd_2018_bugun_aylik.csv")
+    odmd = pd.read_csv(RAW_DIR / "odmd" / "odmd_2015_bugun_aylik.csv")
 
-    otv = pd.read_csv(RAW_DIR / "otv" / "otv_olaylari_2018_bugun_aylik.csv")
+    otv = pd.read_csv(RAW_DIR / "otv" / "otv_olaylari_2015_bugun_aylik.csv")
 
     osd = pd.read_csv(RAW_DIR / "osd" / "osd_2024_bugun_aylik.csv")
 
     tuketici_guveni = pd.read_csv(RAW_DIR / "tuketici_guveni" / "tuketici_guveni_2024_bugun_aylik.csv")
 
-    noter_devir = pd.read_csv(RAW_DIR / "noter_devir" / "noter_devir_2024_bugun_aylik.csv")[
+    noter_devir = pd.read_csv(RAW_DIR / "noter_devir" / "noter_devir_2015_bugun_aylik.csv")[
         ["referans_ayi", "noter_devir_toplam_adet", "noter_devir_otomobil_adet"]
     ]
 
@@ -99,10 +118,17 @@ def main():
         birlesik["noter_devir_toplam_adet"] / birlesik["brut_ucret_maas_endeksi_2021_100"]
     )
 
-    csv_yolu = PROCESSED_DIR / "veri_2018_bugun_birlesik.csv"
-    xlsx_yolu = PROCESSED_DIR / "veri_2018_bugun_birlesik.xlsx"
+    # ESKI DOSYALAR (kapsam artik 2015-01'den basladigi icin gecersiz) silinir.
+    eski_csv = PROCESSED_DIR / "veri_2018_bugun_birlesik.csv"
+    eski_xlsx = PROCESSED_DIR / "veri_2018_bugun_birlesik.xlsx"
+    for eski in (eski_csv, eski_xlsx):
+        if eski.exists():
+            eski.unlink()
+
+    csv_yolu = PROCESSED_DIR / "veri_2015_bugun_birlesik.csv"
+    xlsx_yolu = PROCESSED_DIR / "veri_2015_bugun_birlesik.xlsx"
     birlesik.to_csv(csv_yolu, index=False, encoding="utf-8-sig")
-    birlesik.to_excel(xlsx_yolu, index=False, sheet_name="veri_2018_bugun")
+    birlesik.to_excel(xlsx_yolu, index=False, sheet_name="veri_2015_bugun")
 
     print("=== GENISLETME 5 - BIRLESTIRME OZETI ===")
     print(f"Kapsam: {HEDEF_BASLANGIC} .. {HEDEF_BITIS} ({len(birlesik)} satir)")

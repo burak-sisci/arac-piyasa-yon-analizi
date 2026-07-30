@@ -17,9 +17,18 @@ arındırılınca piyasa aslında geriliyor). Bu, N1/K8'de zaten işaretlenen
 "ilan fiyatı ham göstergedir" sınırının somut bir tezahürüdür; iki etiket
 farklı sorulara cevap verir (TL bazlı yön vs. reel piyasa yönü).
 
-Girdi: data/processed/genisletme/veri_2024_bugun_birlesik.csv (Aşama 5
+Girdi: data/processed/genisletme/veri_2015_bugun_birlesik.csv (Aşama 5
 çıktısı, zaten tüm kaynakları birleştirmiş).
-Çıktı: data/processed/genisletme/veri_2024_bugun_etiketli.csv/.xlsx
+Çıktı: data/processed/genisletme/veri_2015_bugun_etiketli.csv/.xlsx
+
+2026-07-30 GÜNCELLEMESİ ("genişletme 2015" görevi): Girdi/çıktı dosya adları
+2018_bugun -> 2015_bugun olarak güncellendi (Aşama 5'in kapsamı 2015-01'e
+çekildiği için). HEDEF ZİNCİRİ MANTIĞINA (k*sigma bandı, tercile, sigma
+hesaplama) DOKUNULMADI - proxy fiyat (BETAM) dönemi değişmediğinden (hâlâ
+2024-01'den önce veri yok) sigma/eşik değerleri de değişmeyecektir; yalnızca
+tablo artık 2015-01'den başlayan (önceki dönemler proxy_fiyat_cari_tl NaN
+olduğu için proxy_yon_* sütunları da "eksik" etiketiyle) daha uzun bir
+satır aralığı taşıyacaktır.
 """
 from pathlib import Path
 
@@ -67,7 +76,7 @@ def _tercile_etiket(log_degisim: pd.Series, n: int) -> pd.Series:
 def main():
     PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
 
-    girdi_csv = PROCESSED_DIR / "veri_2018_bugun_birlesik.csv"
+    girdi_csv = PROCESSED_DIR / "veri_2015_bugun_birlesik.csv"
     birlesik = pd.read_csv(girdi_csv).sort_values("referans_ayi").reset_index(drop=True)
 
     # --- aylik nominal/reel % degisim - yerelde, ayni yontemle hesaplanir ---
@@ -94,10 +103,16 @@ def main():
 
     birlesik = birlesik.drop(columns=["proxy_reel_gosterge"])
 
-    csv_yolu = PROCESSED_DIR / "veri_2018_bugun_etiketli.csv"
-    xlsx_yolu = PROCESSED_DIR / "veri_2018_bugun_etiketli.xlsx"
+    eski_csv = PROCESSED_DIR / "veri_2018_bugun_etiketli.csv"
+    eski_xlsx = PROCESSED_DIR / "veri_2018_bugun_etiketli.xlsx"
+    for eski in (eski_csv, eski_xlsx):
+        if eski.exists():
+            eski.unlink()
+
+    csv_yolu = PROCESSED_DIR / "veri_2015_bugun_etiketli.csv"
+    xlsx_yolu = PROCESSED_DIR / "veri_2015_bugun_etiketli.xlsx"
     birlesik.to_csv(csv_yolu, index=False, encoding="utf-8-sig")
-    birlesik.to_excel(xlsx_yolu, index=False, sheet_name="veri_2018_bugun_etiketli")
+    birlesik.to_excel(xlsx_yolu, index=False, sheet_name="veri_2015_bugun_etiketli")
 
     gecerli_gecis = birlesik["proxy_aylik_log_degisim"].notna().sum()
     olasi_gecis = len(birlesik) - 1

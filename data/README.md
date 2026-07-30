@@ -5,11 +5,16 @@ Bu klasör, araç piyasası fiyat yönü tahmini projesinin kamuya açık kaynak
 
 - **MVP (2025, 12 ay)** — ilk prototip, yalnızca 2025 (bkz.
   `prompts/veri/01_mvp_cekirdek_veri_prompt.md`).
-- **Genişletme (2018-01 → içinde bulunulan ay)** — daha uzun, dışsal faktörleri
-  de içeren seri (bkz. `prompts/veri/03_genis_veri_cekme_prompt.md` ve
-  `prompts/veri/06_genisletme_2018_korelasyon_prompt.md`). Proxy fiyat (BETAM)
-  yalnızca 2024-01'den itibaren dolu — 2018-2023 için bilinen bir kısıt
-  (bkz. `pm_rapor_genisletme2018_korelasyon.md`).
+- **Genişletme (2015-01 → içinde bulunulan ay)** — daha uzun, dışsal faktörleri
+  de içeren seri (bkz. `prompts/veri/03_genis_veri_cekme_prompt.md`,
+  `prompts/veri/06_genisletme_2018_korelasyon_prompt.md` ve
+  `prompts/veri/18_genisletme_2015_prompt.md`). Proxy fiyat (BETAM) yalnızca
+  2024-01'den itibaren dolu — 2018-2023 için bilinen bir kısıt (bkz.
+  `pm_rapor_genisletme2018_korelasyon.md`). Alım gücü proxy'si (brüt
+  ücret-maaş endeksi) ve ondan türeyen erişim endeksi yalnızca 2018-01'den
+  itibaren dolu — 2015-2017 için TÜİK erişim engeli (bkz.
+  `pm_rapor_genisletme_2015.md`). Noter devir otomobil kırılımı da
+  2015-2017 için bilinçli NaN (yalnızca toplam adet mevcut, aynı raporda).
 - **Hedef keşfi — noter devir × DOM** — kompozit "piyasa aktivite endeksi"
   denemesi, hedef seçimi (K1) için karar değil kanıt üretir (bkz.
   `prompts/veri/08_hedef_kesif_noter_dom_prompt.md` ve
@@ -58,7 +63,7 @@ data/
 │   └── odmd_oyder/            İkinci El Online Sektör Raporu (Indicata) — kısmi/temsili örneklem, 2021-2023
 └── processed/               # birleştirilmiş / etiketlenmiş / belgelenmiş çıktılar
     ├── mvp/                  MVP (2025) birleşik + etiketli tablo
-    ├── genisletme/            genişletme (2018-bugün) birleşik + etiketli tablo
+    ├── genisletme/            genişletme (2015/2018-bugün) birleşik + etiketli tablo
     ├── analiz/                korelasyon matrisi, hedef-aday karşılaştırması, zaman serileri,
     │                          piyasa aktivite endeksi (noter×DOM keşfi), TÜİK-ENAG karşılaştırması,
     │                          ODMD/OYDER kapsam özeti (keşifsel)
