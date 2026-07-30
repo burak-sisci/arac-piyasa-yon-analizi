@@ -34,9 +34,9 @@ from pathlib import Path
 import requests
 import pandas as pd
 
-BASLANGIC_AY = "2018-01"  # genisletme hedefi: 2018-01'e kadar geriye git (taban ay, ilk ayin aylik degisimi icin gerekliyse ayrica -1 ay istenir)
+BASLANGIC_AY = "2015-01"  # genisletme hedefi: 2015-01'e kadar geriye git (taban ay, ilk ayin aylik degisimi icin gerekliyse ayrica -1 ay istenir)
 BITIS_AY = date.today().strftime("%Y-%m")
-HEDEF_BASLANGIC_AY = "2018-01"
+HEDEF_BASLANGIC_AY = "2015-01"
 HEDEF_BITIS_AY = BITIS_AY
 
 EVDS_BASE_URL = "https://evds3.tcmb.gov.tr/igmevdsms-dis/"

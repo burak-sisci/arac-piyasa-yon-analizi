@@ -1,6 +1,14 @@
 """
 GENIŞLETME AŞAMA 3a — ODMD sıfır araç (otomobil + hafif ticari) satış adetleri,
-2018-01 -> 2026-06 (kaynak seviyesi C — resmi dernek basın bülteni PDF'i).
+2015-01 -> bugün (kaynak seviyesi C — resmi dernek basın bülteni PDF'i).
+
+2015-01'E GENİŞLETME (2018 sonrası): AYNI 3 Aralık 2024 bülteni (aşağıda
+zaten bilinen kaynak) 500 DPI'da yeniden açılıp Ek 1/Ek 2 tablolarının
+2015-2017 satırları okundu — YENİ bir PDF aramaya gerek kalmadı, tablo
+zaten 2010'a kadar gidiyordu. Üç yılın (2015, 2016, 2017) hem Ek 1 hem Ek 2
+aylık toplamları yayımlanan yıllık "Toplam" sütunuyla tek tek toplanıp
+BİREBİR eşleştiği doğrulandı (2015: 968.017/725.596, 2016: 983.720/756.938,
+2017: 956.194/722.759 — hepsi tutuyor).
 
 YÖNTEM NOTU: ODMD basın bülteni PDF'leri Claude'un PDF-sayfa-goruntu
 okuyucusuyla (Read araci, PDF sayfalarini goruntu olarak isler) okundu; ayrica
@@ -53,6 +61,19 @@ RAW_DIR = REPO_KOKU / "data" / "raw" / "odmd"
 # satirlari (iki bultende birebir ayni, aylik toplamlar Toplam sutunuyla
 # tutuyor).
 ODMD_TOPLAM = {
+    # 2015-2017: AYNI iki bultenin (3 Aralik 2024) Ek-1 "10 yillik tarihce"
+    # tablosunun tamamlanmis satirlari (500 DPI'da tekrar okunmus, yayimlanan
+    # yillik Toplam sutunuyla capraz dogrulandi - 2015: 968.017, 2016: 983.720,
+    # 2017: 956.194, ucu de birebir tutuyor).
+    "2015-01": 34615, "2015-02": 55331, "2015-03": 83302, "2015-04": 91602,
+    "2015-05": 81542, "2015-06": 86158, "2015-07": 83836, "2015-08": 82577,
+    "2015-09": 64025, "2015-10": 64255, "2015-11": 84601, "2015-12": 156173,
+    "2016-01": 32713, "2016-02": 52825, "2016-03": 82948, "2016-04": 84887,
+    "2016-05": 93904, "2016-06": 91540, "2016-07": 58533, "2016-08": 71556,
+    "2016-09": 67593, "2016-10": 83000, "2016-11": 122309, "2016-12": 141912,
+    "2017-01": 35323, "2017-02": 46965, "2017-03": 73802, "2017-04": 75988,
+    "2017-05": 85422, "2017-06": 83658, "2017-07": 82297, "2017-08": 72536,
+    "2017-09": 71352, "2017-10": 91752, "2017-11": 100859, "2017-12": 136240,
     "2018-01": 35076, "2018-02": 47009, "2018-03": 76345, "2018-04": 71126,
     "2018-05": 72755, "2018-06": 51037, "2018-07": 52734, "2018-08": 34346,
     "2018-09": 23028, "2018-10": 21571, "2018-11": 58204, "2018-12": 77706,
@@ -86,6 +107,17 @@ ODMD_TOPLAM = {
 # 2018-2023: ayni Ek-2 "10 yillik tarihce" tablosunun tamamlanmis yillik
 # satirlari (iki bultende birebir ayni).
 ODMD_OTOMOBIL = {
+    # 2015-2017: ayni bultenin Ek-2 tablosu, ayni yontemle capraz dogrulandi
+    # (yillik Toplam: 2015: 725.596, 2016: 756.938, 2017: 722.759, ucu de tutuyor).
+    "2015-01": 24498, "2015-02": 40817, "2015-03": 61676, "2015-04": 70211,
+    "2015-05": 62878, "2015-06": 67766, "2015-07": 64218, "2015-08": 61753,
+    "2015-09": 47088, "2015-10": 47954, "2015-11": 62397, "2015-12": 114340,
+    "2016-01": 23358, "2016-02": 40588, "2016-03": 63975, "2016-04": 65618,
+    "2016-05": 73832, "2016-06": 71111, "2016-07": 45566, "2016-08": 53977,
+    "2016-09": 51340, "2016-10": 63746, "2016-11": 95783, "2016-12": 108044,
+    "2017-01": 25689, "2017-02": 34658, "2017-03": 55616, "2017-04": 57998,
+    "2017-05": 65799, "2017-06": 66164, "2017-07": 62384, "2017-08": 54890,
+    "2017-09": 53423, "2017-10": 70488, "2017-11": 75956, "2017-12": 99694,
     "2018-01": 26611, "2018-02": 35901, "2018-03": 59798, "2018-04": 55108,
     "2018-05": 57227, "2018-06": 41225, "2018-07": 42024, "2018-08": 26976,
     "2018-09": 17595, "2018-10": 16809, "2018-11": 46204, "2018-12": 60843,
@@ -127,8 +159,8 @@ def main():
     })
     df["odmd_hta_adet"] = df["odmd_toplam_adet"] - df["odmd_otomobil_adet"]
 
-    csv_yolu = RAW_DIR / "odmd_2018_bugun_aylik.csv"
-    xlsx_yolu = RAW_DIR / "odmd_2018_bugun_aylik.xlsx"
+    csv_yolu = RAW_DIR / "odmd_2015_bugun_aylik.csv"
+    xlsx_yolu = RAW_DIR / "odmd_2015_bugun_aylik.xlsx"
     df.to_csv(csv_yolu, index=False, encoding="utf-8-sig")
     df.to_excel(xlsx_yolu, index=False, sheet_name="odmd_aylik")
 

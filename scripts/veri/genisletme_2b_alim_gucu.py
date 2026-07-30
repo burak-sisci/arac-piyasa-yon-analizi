@@ -33,6 +33,22 @@ sektor: sanayi+insaat+ticaret-hizmet), NOMINAL bir ucret endeksidir
 tarzi etiketleme/turetme adiminin isi), burada yalnizca HAM nominal endeks
 CEKILIR.
 
+2015-01'E GENISLETME DENEMESI (2026-07-30, BASARISIZ - ACIK BLOKAJ):
+Ayni tablonun (2009-2026 tarihce) 2015-Q1..2017-Q4 satirlarini cekmek icin
+TÜİK veri portali tekrar denendi, AMA bu turda "İşgücü Girdi Endeksleri
+(2021=100)" indirme linki artik bir SPA (React) client-side route olarak
+davraniyor - ne dogrudan curl/WebFetch (SPA kabugu HTML'i donuyor, gercek
+.xls degil) ne de tarayici araciyla tiklama (network loglarinda YENI bir
+istek tetiklenmiyor, site muhtemelen farkli bir indirme mekanizmasi -
+blob/JS-taraf olusturma - kullaniyor) calisti. Onceki basarili turda
+belgelenen "/api/tr/data/downloads?..." dogrudan uc noktasi bu oturumda
+bulunamadi (site guncellenmis olabilir). WebSearch ile ikincil kaynak
+aramasi da 2015-2017 icin bu spesifik ceyreklik rakamlari getirmedi.
+SONUC: brut_ucret_maas_endeksi_2021_100 ve ondan tureyen erisim_endeksi
+2015-2017 icin GENISLETILEMEDI, 2018-01'de baslamaya devam ediyor - bu bir
+veri kaybi/hata degil, bu oturumdaki bir ERISIM ENGELIDIR (bkz.
+pm_rapor_genisletme_2015.md, acik sorular).
+
 FREKANS UYARISI (onemli, ay bazinda okurken dikkat): Bu veri ÇEYREKLIKTIR
 (TÜİK bu anketi aylik degil, ceyreklik yayimlar). Aylik veri setine
 eklenebilmesi icin HER CEYREGIN degeri, o ceyregin 3 ayina da AYNEN
