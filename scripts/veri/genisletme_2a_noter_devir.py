@@ -61,6 +61,42 @@ WebSearch'ten toplanan bazi degerler bu resmi tabloyla KARSILASTIRILDI:
 Bu, projenin genel bir uyarisi olarak not edilmeli: WebSearch'ten toplanan
 TÜİK istatistikleri (ozellikle yil bilgisi iceren) DOGRULANMADAN
 kullanilmamalidir.
+
+GENISLETME (2015-01 -> 2017-12 turu, 2026-07-30): Kullanicinin "genisletme
+2015" gorevi uzerine, ayni "Motorlu Kara Taşıtları" bulten dizisi 2015-01'e
+kadar geriye genisletildi. YONTEM FARKI (2018+ donemindeki Excel-tablo
+yontemine gore): 2015-2017 icin HER AY'IN KENDI TEKIL bulteni (36 farkli
+Sayı/press ID - tek bir "cari yil + onceki yil" ozet tablosu degil, cunku
+o donemde arananlar dogrudan aylik bultenin METIN govdesinden okundu, xls
+tablosu INDIRILMEDI) TÜİK veri portalinde "Önceki Bültenler" zincirinden
+("Daha Fazla" ile genisletilerek) tek tek bulunup navigasyonla gezildi.
+Her bultenin govde metninde ayni kalip cumle var: "{Ay} ayında {X} adet
+taşıtın devri yapıldı" - bu TAM (yuvarlanmamis) bir tam sayidir, xls
+tablosundaki TOPLAM sutunuyla ayni kesinliktedir, bu yuzden
+noter_devir_toplam_adet bu 36 ay icin de GUVENILIR/TAM kabul edildi.
+
+ONEMLI KISIT - OTOMOBIL KIRILIMI BILINCLI OLARAK NaN BIRAKILDI: Bu donemin
+bultenlerinde otomobilin devir icindeki payi YALNIZCA YUVARLANMIS YUZDE
+olarak verilir (ör. "otomobil %69,4 ile ilk sırada yer aldı" - Mayıs 2017),
+2018+ donemindeki xls tablosunun aksine TAM SAYI olarak verilmez. Yuzdeden
+geriye dogru carparak (0,694 x 662.959 gibi) bir "yaklasik otomobil adedi"
+UYDURMAK, CLAUDE.md Kural 3'e ("kaynaksiz iddia yazilmaz... tahmin
+yurutulmez") aykiridir - bu yuzden 2015-01 -> 2017-12 arasinda
+noter_devir_otomobil_adet BILINCLI OLARAK NaN birakilmistir (bu bir
+veri kaybi degil, hassasiyet/kaynak sinirlamasidir - bkz.
+docs/eksik_sutun_nedenleri.md kategorisi "a: kaynak boşluğu" ile
+tutarlidir).
+
+KAYNAK IZLENEBILIRLIGI: 2018+'in aksine (5 ortak KAYNAK_URL sabiti), bu 36
+ayin HER BIRI FARKLI bir bultenden (farkli Sayı/press ID) geldigi icin
+kaynak_url her KAYITLAR satirinin kendi icinde ayri ayri tutulur (ENAG
+script'indeki kalipla tutarli), _kaynak_url() fonksiyonu yalnizca eksik
+(2018+ donemi) satirlar icin devreye girer.
+
+DOSYA ADI DEGISTI (2024_bugun -> 2015_bugun): kapsam artik 2015-01'den
+basladigindan, odmd/usdtry serilerindeki gibi kapsamla tutarli adlandirmaya
+gecildi; eski "noter_devir_2024_bugun_aylik.*" dosyalari artik gecersiz
+kapsamli oldugundan silinir.
 """
 from pathlib import Path
 
@@ -72,7 +108,50 @@ RAW_DIR = REPO_KOKU / "data" / "raw" / "noter_devir"
 # Her deger, ilgili TÜİK bülteninin "Aylara göre devri yapılan motorlu kara
 # taşıtları sayısı" adlı resmi .xls tablosundan (Toplam, Otomobil sütunları)
 # birebir okunmuştur.
+_TUIK_PRESS = "https://veriportali.tuik.gov.tr/tr/press/{}"
+
 KAYITLAR = [
+    # --- 2015 (kaynak: her ay kendi tekil bülteni, bülten metninden "X adet
+    # taşıtın devri yapıldı" cümlesi; otomobil kırılımı yalnızca yüzde olarak
+    # verildiği için bilinçli olarak NaN bırakıldı, bkz. docstring) ---
+    dict(referans_ayi="2015-01", noter_devir_toplam_adet=462576, kaynak_url=_TUIK_PRESS.format(18763)),
+    dict(referans_ayi="2015-02", noter_devir_toplam_adet=486715, kaynak_url=_TUIK_PRESS.format(18764)),
+    dict(referans_ayi="2015-03", noter_devir_toplam_adet=576623, kaynak_url=_TUIK_PRESS.format(18765)),
+    dict(referans_ayi="2015-04", noter_devir_toplam_adet=578714, kaynak_url=_TUIK_PRESS.format(18766)),
+    dict(referans_ayi="2015-05", noter_devir_toplam_adet=512759, kaynak_url=_TUIK_PRESS.format(18767)),
+    dict(referans_ayi="2015-06", noter_devir_toplam_adet=533624, kaynak_url=_TUIK_PRESS.format(18768)),
+    dict(referans_ayi="2015-07", noter_devir_toplam_adet=490764, kaynak_url=_TUIK_PRESS.format(18769)),
+    dict(referans_ayi="2015-08", noter_devir_toplam_adet=517806, kaynak_url=_TUIK_PRESS.format(18770)),
+    dict(referans_ayi="2015-09", noter_devir_toplam_adet=474069, kaynak_url=_TUIK_PRESS.format(18771)),
+    dict(referans_ayi="2015-10", noter_devir_toplam_adet=543560, kaynak_url=_TUIK_PRESS.format(18772)),
+    dict(referans_ayi="2015-11", noter_devir_toplam_adet=571180, kaynak_url=_TUIK_PRESS.format(21599)),
+    dict(referans_ayi="2015-12", noter_devir_toplam_adet=611765, kaynak_url=_TUIK_PRESS.format(21600)),
+    # --- 2016 (kaynak: her ay kendi tekil bülteni) ---
+    dict(referans_ayi="2016-01", noter_devir_toplam_adet=449696, kaynak_url=_TUIK_PRESS.format(21601)),
+    dict(referans_ayi="2016-02", noter_devir_toplam_adet=519089, kaynak_url=_TUIK_PRESS.format(21602)),
+    dict(referans_ayi="2016-03", noter_devir_toplam_adet=659681, kaynak_url=_TUIK_PRESS.format(21603)),
+    dict(referans_ayi="2016-04", noter_devir_toplam_adet=575466, kaynak_url=_TUIK_PRESS.format(21604)),
+    dict(referans_ayi="2016-05", noter_devir_toplam_adet=593781, kaynak_url=_TUIK_PRESS.format(21605)),
+    dict(referans_ayi="2016-06", noter_devir_toplam_adet=578750, kaynak_url=_TUIK_PRESS.format(21606)),
+    dict(referans_ayi="2016-07", noter_devir_toplam_adet=414774, kaynak_url=_TUIK_PRESS.format(21607)),
+    dict(referans_ayi="2016-08", noter_devir_toplam_adet=589587, kaynak_url=_TUIK_PRESS.format(21608)),
+    dict(referans_ayi="2016-09", noter_devir_toplam_adet=502381, kaynak_url=_TUIK_PRESS.format(21609)),
+    dict(referans_ayi="2016-10", noter_devir_toplam_adet=600853, kaynak_url=_TUIK_PRESS.format(21610)),
+    dict(referans_ayi="2016-11", noter_devir_toplam_adet=627425, kaynak_url=_TUIK_PRESS.format(24594)),
+    dict(referans_ayi="2016-12", noter_devir_toplam_adet=617411, kaynak_url=_TUIK_PRESS.format(24595)),
+    # --- 2017 (kaynak: her ay kendi tekil bülteni) ---
+    dict(referans_ayi="2017-01", noter_devir_toplam_adet=509165, kaynak_url=_TUIK_PRESS.format(24596)),
+    dict(referans_ayi="2017-02", noter_devir_toplam_adet=537239, kaynak_url=_TUIK_PRESS.format(24597)),
+    dict(referans_ayi="2017-03", noter_devir_toplam_adet=675972, kaynak_url=_TUIK_PRESS.format(24598)),
+    dict(referans_ayi="2017-04", noter_devir_toplam_adet=618501, kaynak_url=_TUIK_PRESS.format(24599)),
+    dict(referans_ayi="2017-05", noter_devir_toplam_adet=662959, kaynak_url=_TUIK_PRESS.format(24600)),
+    dict(referans_ayi="2017-06", noter_devir_toplam_adet=577975, kaynak_url=_TUIK_PRESS.format(24601)),
+    dict(referans_ayi="2017-07", noter_devir_toplam_adet=615390, kaynak_url=_TUIK_PRESS.format(24602)),
+    dict(referans_ayi="2017-08", noter_devir_toplam_adet=637002, kaynak_url=_TUIK_PRESS.format(24603)),
+    dict(referans_ayi="2017-09", noter_devir_toplam_adet=580566, kaynak_url=_TUIK_PRESS.format(24604)),
+    dict(referans_ayi="2017-10", noter_devir_toplam_adet=701968, kaynak_url=_TUIK_PRESS.format(24940)),
+    dict(referans_ayi="2017-11", noter_devir_toplam_adet=668040, kaynak_url=_TUIK_PRESS.format(27639)),
+    dict(referans_ayi="2017-12", noter_devir_toplam_adet=673141, kaynak_url=_TUIK_PRESS.format(27640)),
     # --- 2018 (kaynak: "Aralık 2019" bülteni, Sayı 33648) ---
     dict(referans_ayi="2018-01", noter_devir_toplam_adet=631823, noter_devir_otomobil_adet=445255),
     dict(referans_ayi="2018-02", noter_devir_toplam_adet=597953, noter_devir_otomobil_adet=419533),
@@ -209,27 +288,38 @@ def main():
     RAW_DIR.mkdir(parents=True, exist_ok=True)
 
     df = pd.DataFrame(KAYITLAR).sort_values("referans_ayi").reset_index(drop=True)
-    df["kaynak_url"] = df["referans_ayi"].apply(_kaynak_url)
+    if "kaynak_url" not in df.columns:
+        df["kaynak_url"] = pd.NA
+    eksik_kaynak = df["kaynak_url"].isna()
+    df.loc[eksik_kaynak, "kaynak_url"] = df.loc[eksik_kaynak, "referans_ayi"].apply(_kaynak_url)
 
-    hedef_csv = RAW_DIR / "noter_devir_2024_bugun_aylik.csv"
-    hedef_xlsx = RAW_DIR / "noter_devir_2024_bugun_aylik.xlsx"
+    # ESKI DOSYALAR (kapsam artik 2015-01'den basladigi icin gecersiz) silinir.
+    eski_csv = RAW_DIR / "noter_devir_2024_bugun_aylik.csv"
+    eski_xlsx = RAW_DIR / "noter_devir_2024_bugun_aylik.xlsx"
+    for eski in (eski_csv, eski_xlsx):
+        if eski.exists():
+            eski.unlink()
+
+    hedef_csv = RAW_DIR / "noter_devir_2015_bugun_aylik.csv"
+    hedef_xlsx = RAW_DIR / "noter_devir_2015_bugun_aylik.xlsx"
     df.to_csv(hedef_csv, index=False, encoding="utf-8-sig")
     df.to_excel(hedef_xlsx, index=False, sheet_name="noter_devir_aylik")
 
-    beklenen_aylar = pd.period_range("2018-01", "2026-06", freq="M").astype(str).tolist()
+    beklenen_aylar = pd.period_range("2015-01", "2026-06", freq="M").astype(str).tolist()
     gelen_aylar = df["referans_ayi"].tolist()
     eksik_aylar = [ay for ay in beklenen_aylar if ay not in gelen_aylar]
 
     print("=== GENISLETME 2a - NOTER DEVIR ADEDI OZETI ===")
-    print("Kaynak seviyesi: B (resmi TÜİK indirilebilir .xls tablosu, 5 bülten)")
-    print(f"Kapsam: 2018-01 .. 2026-06 ({len(df)} satir)")
+    print("Kaynak seviyesi: B (2018+: resmi TÜİK indirilebilir .xls tablosu, 5 bülten)")
+    print("                 (2015-2017: 36 ayrı aylık bülten, metin govdesinden okundu)")
+    print(f"Kapsam: 2015-01 .. 2026-06 ({len(df)} satir)")
     print(f"Eksik ay: {eksik_aylar if eksik_aylar else 'yok'}")
+    eksik_otomobil = df[df["noter_devir_otomobil_adet"].isna()]["referans_ayi"].tolist()
+    print(f"noter_devir_otomobil_adet NaN olan aylar ({len(eksik_otomobil)} ay, bilincli - "
+          f"bkz. docstring): {eksik_otomobil[0]}..{eksik_otomobil[-1]}" if eksik_otomobil else "")
     print()
     print(df[["referans_ayi", "noter_devir_toplam_adet", "noter_devir_otomobil_adet"]].to_string(index=False))
     print(f"\nCikti: {hedef_csv} , {hedef_xlsx}")
-    print(f"\nNot: cikti dosya adi tarihsel nedenlerle '_2024_bugun_' iceriyor ancak")
-    print(f"artik 2018-01'den itibaren tam tarihceyi kapsiyor (genisletme_5_birlestir.py")
-    print(f"bu dosyayi ayni adla okuyor, dosya adi degistirilmedi).")
 
 
 if __name__ == "__main__":
