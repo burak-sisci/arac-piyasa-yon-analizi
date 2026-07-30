@@ -122,6 +122,37 @@ KAPSAMDAKİ 10 OLAY (kronolojik):
     satış fiyatı bazlı hale getirildi. Elektrikli otomobillerde en düşük ÖTV
     oranı %10'dan %25'e çıktı, matrah eşiği 1.650.000 TL'ye güncellendi.
     (Önceki turdan - bkz. verginet.net Vergi Sirküleri 2025-74; watmobilite.com.)
+
+2026-07-30 GÜNCELLEMESİ (2015-01 geriye genişletme turu - "genişletme 2015"
+görevi): 2015-01 -> 2017-12 arası kamuya açık kaynaklardan (WebSearch,
+en az 2 bağımsız kaynakla çapraz doğrulamalı) TARANDI. Bu pencerede binek
+otomobil ÖTV'sini etkileyen TEK olay bulundu (aşağıya 11. olay olarak
+eklendi, kronolojik sırada 2018-09'dan ÖNCE gelir). Aranıp bulunamayan/
+doğrulanamayan alt-dönemler (uydurulmadı, "olaysız" bırakıldı):
+- 2015-01 .. 2016-10 arası: Bu pencerede binek otomobile özgü somut bir
+  oran/matrah değişikliği kararı BULUNAMADI (aranan terimler: "2015 ÖTV
+  artışı otomobil", "2015/7511 ÖTV Bakanlar Kurulu Kararı" vb.).
+- 2016-11-26 .. 2017-12 arası: 2016/9542 sayılı kararın (aşağıda) ardından
+  bu pencerede binek otomobile özgü BAŞKA bir oran/matrah değişikliği
+  BULUNAMADI.
+
+11. 2016-11-25 (yürürlük = RG yayım tarihi) — 2016/9542 sayılı Bakanlar
+    Kurulu Kararı (karar tarihi 24.11.2016), RG 29899 (25.11.2016). ÖTV
+    Kanunu'na ekli (II) sayılı listedeki binek otomobiller (GTİP 87.03) için
+    KÖKLÜ bir sistem değişikliği: o zamana kadar YALNIZCA motor silindir
+    hacmine göre belirlenen ÖTV oranı, bu kararla İLK KEZ hacim + fiyat
+    (ÖTV matrahı) bazlı kademeli bir sisteme geçirildi. Genel oran bandı da
+    yükseltildi: en düşük oran %45'ten %60'a, en yüksek oran %145'ten
+    %160'a çıktı (1600cc altı düşük matrahlı araçlarda %45 istisnası
+    korundu). Bu, 2018+ döneminde (bu script'in orijinal kapsamı) görülen
+    "matrah eşiği güncelleme" tarzı küçük ayarlamalardan FARKLI olarak,
+    o dönemin en büyük yapısal ÖTV reformudur (fiyat kriterinin sisteme
+    ilk kez girişi).
+    Kaynak: alomaliye.com "BKK 2016-9542 Bazı Mal ve Hizmetlere Uygulanan
+    KDV ile ÖTV Oranları" (kararın doğrudan metni); otopark.com "Otomobil
+    ÖTV oranları artık belli oldu!"; sekizsilindir.com "Yeni ÖTV-Eski ÖTV
+    oranları karşılaştırması" (üçü de RG 29899 / 25.11.2016 ve %45->%60,
+    %145->%160 rakamlarında birbiriyle örtüşüyor).
 """
 from pathlib import Path
 
@@ -130,10 +161,16 @@ import pandas as pd
 REPO_KOKU = Path(__file__).resolve().parents[2]
 RAW_DIR = REPO_KOKU / "data" / "raw" / "otv"
 
-BASLANGIC_AY = "2018-01"
+BASLANGIC_AY = "2015-01"
 BITIS_AY = "2026-06"
 
 OLAYLAR = [
+    dict(tarih="2016-11-25", referans_ayi="2016-11",
+         aciklama="2016/9542 sayılı Bakanlar Kurulu Kararı (RG 29899): binek "
+                   "otomobil ÖTV sistemi ilk kez hacim+fiyat (matrah) bazlı "
+                   "kademeli sisteme gecti; genel oran bandi %45-145'ten "
+                   "%60-160'a yukseltildi.",
+         kaynak_url="https://www.alomaliye.com/2016/11/25/bkk-2016-9542-bazi-mal-ve-hizmetlere-uygulanan-kdv-ile-otv-oranlari/"),
     dict(tarih="2018-09-24", referans_ayi="2018-09",
          aciklama="132 sayılı Cumhurbaşkanı Kararı (RG 30545): binek otomobil "
                    "ÖTV matrah limitleri yükseltildi (1600cc altı ust sinir "
@@ -221,12 +258,18 @@ def main():
 
     df["otv_ay_farki_en_yakin_olay"] = df["referans_ayi"].apply(en_yakin_olay_farki)
 
-    csv_yolu = RAW_DIR / "otv_olaylari_2018_bugun_aylik.csv"
-    xlsx_yolu = RAW_DIR / "otv_olaylari_2018_bugun_aylik.xlsx"
+    eski_csv = RAW_DIR / "otv_olaylari_2018_bugun_aylik.csv"
+    eski_xlsx = RAW_DIR / "otv_olaylari_2018_bugun_aylik.xlsx"
+    for eski in (eski_csv, eski_xlsx):
+        if eski.exists():
+            eski.unlink()
+
+    csv_yolu = RAW_DIR / "otv_olaylari_2015_bugun_aylik.csv"
+    xlsx_yolu = RAW_DIR / "otv_olaylari_2015_bugun_aylik.xlsx"
     df.to_csv(csv_yolu, index=False, encoding="utf-8-sig")
     df.to_excel(xlsx_yolu, index=False, sheet_name="otv_olaylari")
 
-    print("=== GENISLETME 4 - OTV OLAY-DUMMY OZET (2018-01 genisletmesi) ===")
+    print("=== GENISLETME 4 - OTV OLAY-DUMMY OZET (2015-01 genisletmesi) ===")
     print(f"Kapsam: {BASLANGIC_AY} .. {BITIS_AY} ({len(df)} ay)")
     print(f"Tespit edilen olay sayisi: {len(OLAYLAR)}")
     for o in OLAYLAR:
