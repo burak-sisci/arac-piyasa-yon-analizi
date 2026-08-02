@@ -67,6 +67,32 @@ Doluluk sütunları "dolu gözlem / toplam satır" biçimindedir.
 | `alim_gucu_ceyrek` | Hangi çeyreğin değeri | 99/138 | 25/28 | Aynı desen |
 | `erisim_endeksi` | noter_devir/alım_gücü oranı | 99/138 | 25/28 | Aynı desen (türetilmiş) |
 
+## DF-A'nın "tam kapsamlı" alt kümesi (2026-07-31 eklendi)
+
+`df_a_tam_kapsamli_2015_bugun.csv` (+ .xlsx), DF-A'dan (46 sütun) kaynağı
+GERÇEKTEN 2015'ten sonra başlayan 25 sütunun çıkarılmasıyla üretildi (bkz.
+`scripts/veri/genisletme_20_df_a_tam_kapsamli.py`). **138 satır × 21 sütun.**
+Çıkarılan gruplar: proxy fiyat/BETAM (10 sütun, ilk dolu 2024-01/02), BETAM'a
+bağımlı hedef etiket/parametre sütunları (`proxy_yon_*`, `kullanilan_esik_k`,
+`kullanilan_sigma_*` — 6 sütun), ENAG (5 sütun, ilk dolu 2024-01), 2015-2017
+erişim engeli grubu (`noter_devir_otomobil_adet`, `brut_ucret_maas_endeksi_2021_100`,
+`alim_gucu_ceyrek`, `erisim_endeksi` — 4 sütun, ilk dolu 2018-01).
+
+**Kalan 21 sütun** (referans_ayi dahil) 2015-01'den itibaren kaynağı
+kesintisiz olan sütunlardır — `tufe_aylik_degisim` (1 ay), `tufe_yillik_degisim`
+(12 ay) ve `otv_aciklama` (127 ay) dışında hepsi 138/138 tam doludur; bu üçü
+KAYNAK BOŞLUĞU değil, hesaplama gereği (ilk aylarda önceki veri yokluğu) ve
+tasarım gereği (yalnızca olay ayında dolu) boşluklardır — bilinçli olarak
+DF-A'da bırakıldı, çıkarılmadı.
+
+**Üç dosyanın özeti:**
+
+| Dosya | Satır | Sütun | BETAM/ENAG/alım gücü içerir mi |
+|---|---|---|---|
+| `df_a_genis_2015_bugun.csv` | 138 | 46 | Evet (kısmi dolu, NaN korunur) |
+| `df_a_tam_kapsamli_2015_bugun.csv` | 138 | 21 | **Hayır** — yalnızca 2015'ten beri kesintisiz seriler |
+| `df_b_dar_betam_bugun.csv` | 28 | 46 | Evet (tam dolu, BETAM'ın olduğu aylarla sınırlı) |
+
 ## Genel not
 
 DF-A'daki hiçbir sütun bu görevde doldurulmadı/enterpolasyon yapılmadı —
