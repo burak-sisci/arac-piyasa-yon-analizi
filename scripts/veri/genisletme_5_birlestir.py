@@ -63,7 +63,7 @@ HEDEF_BITIS = "2026-06"
 def main():
     PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
 
-    usdtry = pd.read_csv(RAW_DIR / "usdtry" / "usdtry_2018_bugun_aylik.csv")[
+    usdtry = pd.read_csv(RAW_DIR / "usdtry" / "usdtry_2015_bugun_aylik.csv")[
         ["referans_ayi", "usdtry_aysonu", "usdtry_ortalama"]
     ]
 

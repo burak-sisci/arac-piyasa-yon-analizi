@@ -16,6 +16,17 @@ istegiyle dogrulandi: 2018 tek yil -> totalCount=365 tam; 2018-2019 -> 730 tam;
 2018-2020 -> totalCount=1000 ve donen ilk gun 07-04-2018 idi, yani 2018-01/02/03
 sessizce dusmustu). Bu yuzden asagida genel istenen araligi <=~2 yillik
 (<=700 gunluk) parcalara bolup ayri ayri cekiyoruz ve birlestiriyoruz.
+
+DUZELTME (2026-07-31): BASLANGIC_AY daha once (2015 genisletmesi sirasinda)
+"2018-01" -> "2015-01" olarak degistirilmis ama cikti dosya adlari yanlislikla
+"_2018_bugun_" olarak kalmisti (diger script'lerde - odmd, noter_devir, otv -
+yapilan yeniden adlandirma burada atlanmisti). Bu turda duzeltildi:
+"_2018_bugun_" -> "_2015_bugun_". AYRICA kullanicinin talebiyle GUNLUK
+periyottaki tablo (usdtry_..._gunluk.csv/.xlsx) ARTIK URETILMIYOR/KAYDEDILMIYOR
+- yalnizca AYLIK tablo disariya yaziliyor (gunluk veri hala API'den cekiliyor
+ve aylik ortalamayi hesaplamak icin yerelde kullaniliyor, sadece ayri bir
+dosya olarak persist edilmiyor). Ham gunluk API yaniti (raw.json) audit/
+izlenebilirlik amaciyla korunuyor (projedeki diger script'lerle tutarli).
 """
 import os
 import sys
@@ -147,12 +158,25 @@ def main():
 
     RAW_DIR.mkdir(parents=True, exist_ok=True)
 
+    # ESKI DOSYALAR (yanlis "_2018_bugun_" adi + artik uretilmeyen gunluk
+    # tablo) varsa silinir.
+    eski_dosyalar = [
+        "usdtry_2018_bugun_aylik.csv", "usdtry_2018_bugun_aylik.xlsx",
+        "usdtry_2018_bugun_gunluk.csv", "usdtry_2018_bugun_gunluk.xlsx",
+        "usdtry_2018_bugun_raw.json",
+        "usdtry_2015_bugun_gunluk.csv", "usdtry_2015_bugun_gunluk.xlsx",
+    ]
+    for ad in eski_dosyalar:
+        eski = RAW_DIR / ad
+        if eski.exists():
+            eski.unlink()
+
     payload = evds_gunluk_seri_cek(api_key, SERIES, BASLANGIC_AY, BITIS_AY)
     if payload is None:
         print("[UYARI] Veri cekilemedi.")
         sys.exit(1)
 
-    ham_path = RAW_DIR / "usdtry_2018_bugun_raw.json"
+    ham_path = RAW_DIR / "usdtry_2015_bugun_raw.json"
     with open(ham_path, "w", encoding="utf-8") as f:
         json.dump(payload, f, ensure_ascii=False, indent=2)
 
@@ -168,10 +192,10 @@ def main():
 
     gunluk_dolu = df.dropna(subset=["usdtry_alis", "usdtry_satis"])
 
-    gunluk_csv = RAW_DIR / "usdtry_2018_bugun_gunluk.csv"
-    gunluk_xlsx = RAW_DIR / "usdtry_2018_bugun_gunluk.xlsx"
-    df.to_csv(gunluk_csv, index=False, encoding="utf-8-sig")
-    df.to_excel(gunluk_xlsx, index=False, sheet_name="usdtry_gunluk")
+    # NOT: gunluk tablo (usdtry_..._gunluk.csv/.xlsx) ARTIK AYRI DOSYA OLARAK
+    # KAYDEDILMIYOR (kullanici talebi) - gunluk veri yalnizca yereldeki aylik
+    # ortalama/aysonu hesaplamasi icin kullanilir, disariya yazilmaz. Ham
+    # gunluk API yaniti audit icin usdtry_2015_bugun_raw.json'da duruyor.
 
     aylik_ortalama = gunluk_dolu.groupby("referans_ayi")[["usdtry_alis", "usdtry_satis", "usdtry_orta"]].mean()
     aylik_ortalama = aylik_ortalama.rename(columns={
@@ -183,8 +207,8 @@ def main():
     })
     aylik_birlesik = aylik_sonu.join(aylik_ortalama, how="outer").reset_index().sort_values("referans_ayi").reset_index(drop=True)
 
-    aylik_csv = RAW_DIR / "usdtry_2018_bugun_aylik.csv"
-    aylik_xlsx = RAW_DIR / "usdtry_2018_bugun_aylik.xlsx"
+    aylik_csv = RAW_DIR / "usdtry_2015_bugun_aylik.csv"
+    aylik_xlsx = RAW_DIR / "usdtry_2015_bugun_aylik.xlsx"
     aylik_birlesik.to_csv(aylik_csv, index=False, encoding="utf-8-sig")
     aylik_birlesik.to_excel(aylik_xlsx, index=False, sheet_name="usdtry_aylik")
 
