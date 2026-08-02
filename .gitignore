@@ -15,10 +15,11 @@ data/processed/*
 # ...ama icindeki HER SEY yine varsayilan olarak gizli kalsin:
 data/raw/*/*
 data/processed/*/*
-# ...yalnizca .gitkeep'ler ve raporlar/ altindaki .md'ler istisna:
+# ...yalnizca .gitkeep'ler ve raporlar/ ile dataframes/ altindaki .md'ler istisna:
 !data/raw/*/.gitkeep
 !data/processed/*/.gitkeep
 !data/processed/raporlar/*.md
+!data/processed/dataframes/*.md
 
 # API anahtarları / gizli bilgiler — asla git'e girmez
 .env
