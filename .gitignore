@@ -35,6 +35,10 @@ __pycache__/
 .venv/
 venv/
 
+# Jupyter (notebooks/ — .ipynb dosyalarının kendisi git'e girer, ama
+# calisma zamani checkpoint klasoru gurultu, girmez)
+.ipynb_checkpoints/
+
 # OS
 .DS_Store
 Thumbs.db

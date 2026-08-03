@@ -69,6 +69,7 @@ kanıt üretiyor, karar vermiyor. `data/` klasörüne bkz.
 | `prompts/` (kök) | Tarama fazlarında kullanılan promptların arşivi + bu repo'nun navigasyon/meta promptları (ör. bu döküman) |
 | `prompts/veri/` | Veri mühendisliği promptlarının arşivi (MVP, genişletme, fizibilite, korelasyon, hedef keşfi) |
 | `scripts/veri/` | Veri çekme/temizleme/birleştirme/analiz kodu (kaynak adına göre, tekrar çalıştırılabilir) |
+| `notebooks/` | Proje sahibinin serbest/keşifsel Jupyter notebook analizleri (`scripts/veri/`'nin aksine — pipeline değil, ad-hoc) |
 | `data/raw/` | Kaynak bazlı ham veri (usdtry, tüfe, proxy_fiyat, faiz, odmd, otv, osd, tüketici_güveni, noter_devir, alım_gücü) |
 | `data/processed/mvp/` | MVP (2025) birleşik + etiketli tablo |
 | `data/processed/genisletme/` | Genişletme (2015/2018/2024-bugün) birleşik + etiketli tablo |
