@@ -8,6 +8,15 @@ kaynak_kod: scripts/veri/genisletme_12_enag_cekme.py
 durum: tamamlandı
 ---
 
+## 0) Ek Not (2026-08-03, sonradan eklendi)
+
+Bu raporda üretilen `enag_aylik_2024_2026.csv`, proje sahibinin talimatıyla
+sonraki bir görevde toplanan 2021-2023 genişletme verisiyle birleştirilerek
+tek dosya haline getirildi: `data/raw/enag/enag_aylik_2021_2026.csv`
+(bkz. `pm_rapor_enag_2018_genisletme.md` Bölüm 0). Üretim kodu:
+`scripts/veri/genisletme_20_enag_birlestirme.py`. Aşağıdaki bölümler,
+birleştirme öncesi orijinal haliyle değiştirilmeden bırakılmıştır.
+
 ## 1) Ne yapıldı
 
 ENAG (Enflasyon Araştırma Grubu) E-TÜFE serisi, 2024-01→2026-06 (30 ay) için

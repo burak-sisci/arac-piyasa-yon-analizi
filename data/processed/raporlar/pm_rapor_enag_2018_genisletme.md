@@ -10,6 +10,19 @@ prompt_arşivi: prompts/veri/20_enag_2018_genisletme_prompt.md
 durum: tamamlandı (kısmi kapsama — 2018-2020 aranmadı, bkz. Bölüm 2)
 ---
 
+## 0) Ek Not (2026-08-03, sonradan eklendi)
+
+Bu raporun 7. bölümünde ayrı dosya olarak bırakılması önerilen 2021-2023
+genişletme verisi, proje sahibinin doğrudan talimatıyla mevcut 2024-2026
+ana ENAG dosyasıyla **birleştirildi**. Tek/kapsamlı dosya:
+`data/raw/enag/enag_aylik_2021_2026.csv` (65 ay, 2021-01→2026-06;
+2021-02 ve 2018-2020 hâlâ yok — bu raporda açıklanan nedenlerle).
+Birleşik dosya, kaynak dönemini (`veri_donemi`: genisletme_2021_2023 /
+ana_2024_2026) ve doğrulama durumunu (`cift_dogrulama`) ayrı sütunlarda
+korur — kalite farkı gizlenmedi. Üretim kodu:
+`scripts/veri/genisletme_20_enag_birlestirme.py`. Aşağıdaki Bölüm 1-8,
+birleştirme öncesi orijinal haliyle değiştirilmeden bırakılmıştır.
+
 ## 1) Ne yapıldı
 
 ENAG E-TÜFE serisinin mevcut kapsamını (2024-01→2026-06) geriye doğru

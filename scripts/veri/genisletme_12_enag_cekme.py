@@ -35,6 +35,14 @@ Girdi: data/raw/tufe/tufe_2024_bugun_aylik.csv (mevcut TÜİK TÜFE serisi)
   - data/raw/enag/enag_aylik_2024_2026.csv
   - data/processed/analiz/tufe_enag_karsilastirma.csv
   - data/processed/analiz/gorseller/tufe_vs_enag.png
+
+NOT (2026-08-03): Bu script'in çıktısı, genisletme_20_enag_birlestirme.py
+tarafından 2021-2023 genişletme verisiyle birleştirilerek
+data/raw/enag/enag_aylik_2021_2026.csv'de tek dosya haline getirildi. Bu
+script tarihsel kayıt olarak durur; ENAG ham verisi için GÜNCEL kaynak
+enag_aylik_2021_2026.csv'dir (bu script'i yeniden çalıştırmak eski parçalı
+enag_aylik_2024_2026.csv dosyasını geri getirir, birleşik dosyayı SİLMEZ ama
+onu güncellemez).
 """
 from pathlib import Path
 
