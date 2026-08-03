@@ -217,16 +217,27 @@ dönüş gerekirse doğrudan kullanılabilir.)
    DF-A'da zaten yoktu. Silmeden önce DF-B'nin yedeği
    `data/processed/dataframes/yedek/df_b_zengin_2024_bugun_v2_20260803_v23_oncesi.csv`
    olarak alındı. DF-B: 35 → **33 sütun** (satır sayısı değişmedi, 30).
-2. **Tam aritmetik özdeşlik taşıyan üçlüler** (`odmd_toplam_adet` =
+2. ~~Tam aritmetik özdeşlik taşıyan üçlüler (`odmd_toplam_adet` =
    `odmd_otomobil_adet` + `odmd_hta_adet`; `osd_binek_kamyonet_toplam_adet`
    = `osd_binek_adet` + `osd_kamyonet_adet`) korelasyon analizine
-   HANGİSİYLE girsin — üçü birden mi, yoksa yalnızca toplam mı, yoksa
-   yalnızca bileşenler mi? Bu, çoklu-doğrusallık riskini doğrudan
-   etkileyen bir tasarım kararı, bu raporda yalnızca tespit edildi,
-   karar verilmedi.
-3. **`erisim_endeksi` ile onu oluşturan iki bileşen** (`noter_devir_toplam_adet`,
-   `brut_ucret_maas_endeksi_2021_100`) birlikte mi kullanılacak yoksa
-   yalnızca biri mi seçilecek?
+   HANGİSİYLE girsin?~~ **ÇÖZÜLDÜ (2026-08-03, takip görevi):** Proje
+   sahibi onayıyla K1'in kapsamıyla (yolcu otomobili piyasası) tutarlı
+   olan sütunlar (`odmd_otomobil_adet`, `osd_binek_adet`) tutuldu; diğer
+   dört sütun (`odmd_toplam_adet`, `odmd_hta_adet`,
+   `osd_binek_kamyonet_toplam_adet`, `osd_kamyonet_adet`) her iki
+   DataFrame'den de silindi. Yedekler
+   `df_a_kapsama_testli_v2_20260803_v24_oncesi.csv` ve
+   `df_b_zengin_2024_bugun_v2_20260803_v24_oncesi.csv`.
+3. ~~`erisim_endeksi` ile onu oluşturan iki bileşen birlikte mi
+   kullanılacak?~~ **ÇÖZÜLDÜ (2026-08-03, takip görevi):** Proje sahibi
+   `erisim_endeksi`'nin her iki DataFrame'den de silinmesine karar verdi
+   — `noter_devir_toplam_adet` ve `brut_ucret_maas_endeksi_2021_100` ham
+   bileşenler olarak kaldı. Yedekler
+   `df_a_kapsama_testli_v2_20260803_v25_oncesi.csv` ve
+   `df_b_zengin_2024_bugun_v2_20260803_v25_oncesi.csv`.
+
+   **Nihai boyutlar (bu üç takip görevinden sonra):** DF-A **102 satır ×
+   19 sütun**, DF-B **30 satır × 28 sütun**.
 4. **proxy_dom_gun ve proxy_satis_orani_pct'nin 2 boşluk ayı için
    enterpolasyon yapılabilir mi?** (§3.1-3.2) Fiyat sütunu (proxy_fiyat_cari_tl)
    için komşu değerler çok yakın (%0,4-1,6 fark) ve enterpolasyon makul
