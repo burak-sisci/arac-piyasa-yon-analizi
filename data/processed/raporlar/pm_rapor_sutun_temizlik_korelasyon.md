@@ -236,9 +236,18 @@ dönüş gerekirse doğrudan kullanılabilir.)
    `df_a_kapsama_testli_v2_20260803_v25_oncesi.csv` ve
    `df_b_zengin_2024_bugun_v2_20260803_v25_oncesi.csv`.
 
-   **Nihai boyutlar (bu üç takip görevinden sonra):** DF-A **102 satır ×
-   19 sütun**, DF-B **30 satır × 28 sütun**.
-4. **proxy_dom_gun ve proxy_satis_orani_pct'nin 2 boşluk ayı için
+4. **`brut_ucret_maas_endeksi_2021_100` silinsin mi?** **ÇÖZÜLDÜ
+   (2026-08-03, takip görevi):** Proje sahibi onayıyla her iki
+   DataFrame'den de silindi. Yedekler
+   `df_a_kapsama_testli_v2_20260803_v26_oncesi.csv` ve
+   `df_b_zengin_2024_bugun_v2_20260803_v26_oncesi.csv`.
+   **Proaktif not:** `alim_gucu_ceyrek` sütunu artık "yetim" kaldı (yalnızca
+   bu silinen sütunun hangi çeyreğe ait olduğunu işaretliyordu) — henüz
+   silinmedi, ayrı bir onay bekliyor.
+
+   **Nihai boyutlar (bu dört takip görevinden sonra):** DF-A **102 satır ×
+   18 sütun**, DF-B **30 satır × 27 sütun**.
+5. **proxy_dom_gun ve proxy_satis_orani_pct'nin 2 boşluk ayı için
    enterpolasyon yapılabilir mi?** (§3.1-3.2) Fiyat sütunu (proxy_fiyat_cari_tl)
    için komşu değerler çok yakın (%0,4-1,6 fark) ve enterpolasyon makul
    görünüyor; ama proxy_satis_orani_pct'nin 2024-05 boşluğunda komşu
