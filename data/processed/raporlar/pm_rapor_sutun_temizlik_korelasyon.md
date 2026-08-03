@@ -211,10 +211,12 @@ dönüş gerekirse doğrudan kullanılabilir.)
 
 ## 7. Açık Sorular / PM Onayı Gerekenler
 
-1. **`kullanilan_sigma_nominal`/`kullanilan_sigma_reel` (DF-B'de "yetim"
-   sabit sütunlar, bkz. §4a) silinsin mi?** Görev 1'in listesinde
-   yoklardı, bu turda silinmedi — ama artık bağlamlarını kaybettiler
-   (etiketledikleri `proxy_yon_*` sütunları silindi).
+1. ~~`kullanilan_sigma_nominal`/`kullanilan_sigma_reel` (DF-B'de "yetim"
+   sabit sütunlar, bkz. §4a) silinsin mi?~~ **ÇÖZÜLDÜ (2026-08-03,
+   takip görevi):** Proje sahibi onayıyla ikisi de DF-B'den silindi.
+   DF-A'da zaten yoktu. Silmeden önce DF-B'nin yedeği
+   `data/processed/dataframes/yedek/df_b_zengin_2024_bugun_v2_20260803_v23_oncesi.csv`
+   olarak alındı. DF-B: 35 → **33 sütun** (satır sayısı değişmedi, 30).
 2. **Tam aritmetik özdeşlik taşıyan üçlüler** (`odmd_toplam_adet` =
    `odmd_otomobil_adet` + `odmd_hta_adet`; `osd_binek_kamyonet_toplam_adet`
    = `osd_binek_adet` + `osd_kamyonet_adet`) korelasyon analizine
