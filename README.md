@@ -40,6 +40,10 @@ Aşama A'nın bulgularını gerçek veriyle test eden, adım adım ilerleyen akt
    dışsal özellikler 2015-01'e kadar uzatıldı (alım gücü/erişim endeksi
    erişim engeli nedeniyle yalnızca 2018-01'den itibaren dolu); sonuçlar
    `pm_rapor_genisletme_2015.md`'de.
+7. **ENAG kontrol serisi geriye genişletme (denendi)** — hedef 2018-01
+   idi; ENAG'ın 2020'de kurulmuş olması nedeniyle 2018-2019 için veri
+   yok, 2021-01→2023-12 (kısmi, kalite düşen) kapsandı, ana 2024-2026
+   dosyasıyla birleştirilmedi; sonuçlar `pm_rapor_enag_2018_genisletme.md`'de.
 
 **Açık durum:** Nihai hedef tanımı (K1 — hangi değişken, hangi ufuk, hangi
 eşik) proje sahibinin kararını bekliyor; bu ana kadarki çalışma karar için
@@ -99,5 +103,7 @@ kanıt üretiyor, karar vermiyor. `data/` klasörüne bkz.
 - [x] Hedef keşfi — noter devir × DOM, kompozit piyasa aktivite endeksi
 - [x] 2015-01'e geriye genişletme (proxy fiyat/ENAG hariç; alım gücü/erişim
       endeksi yalnızca 2018-01'den itibaren)
+- [x] ENAG kontrol serisi geriye genişletme denemesi (kısmi: 2021-01→2023-12,
+      2018-2020 elde edilemedi, ana dosyayla birleştirilmedi)
 - [ ] Nihai hedef tanımı (K1) — proje sahibi kararı bekliyor
 - [ ] Model kurma / tahmin — başlatılmadı (ayrı aşama)
