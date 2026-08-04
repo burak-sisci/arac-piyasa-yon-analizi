@@ -26,10 +26,16 @@ TÜİK TÜFE ile BİRLEŞTİRME YAPILMADI (K1 kararı: TÜFE ana deflatör, ENAG
 kontrol serisi, ayrı sütun/dosya kalır).
 
 Çıktı: data/raw/enag/enag_aylik_2021_2026.csv
-Kolonlar: referans_ayi, enag_aylik_degisim, enag_yillik_degisim, enag_endeks,
+Kolonlar: referans_ayi, enag_aylik_degisim, enag_yillik_degisim,
   kaynak_url, kaynak_seviyesi (A-D), cift_dogrulama (evet/hayır),
   veri_donemi (genisletme_2021_2023 / ana_2024_2026 — hangi görevde
   toplandığının izlenebilirliği için).
+
+NOT (2026-08-04 güncellemesi): "enag_endeks" sütunu KALDIRILDI. ENAG
+yalnızca aylık/yıllık YÜZDE DEĞİŞİM yayımlıyor, endeks SEVİYESİ hiç
+yayımlamıyor — bu sütun baştan beri tüm satırlarda None'du (bkz.
+pm_rapor_gunluk_karisik_frekans.md, Görev 25, Bölüm 6/madde 3). Proje
+sahibinin talimatıyla tamamen silindi.
 """
 from pathlib import Path
 
@@ -129,9 +135,8 @@ def main():
     ana["veri_donemi"] = "ana_2024_2026"
 
     birlesik = pd.concat([genisletme, ana], ignore_index=True).sort_values("referans_ayi")
-    birlesik["enag_endeks"] = None
     birlesik = birlesik[[
-        "referans_ayi", "enag_aylik_degisim", "enag_yillik_degisim", "enag_endeks",
+        "referans_ayi", "enag_aylik_degisim", "enag_yillik_degisim",
         "kaynak_url", "kaynak_seviyesi", "cift_dogrulama", "veri_donemi",
     ]].reset_index(drop=True)
 
