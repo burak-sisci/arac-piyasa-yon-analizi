@@ -40,9 +40,24 @@ Girdi: data/processed/dataframes/df_gunluk_karisik_frekans_2015_bugun.csv
   proxy_fiyat,alim_gucu,faiz} (aylik/ceyreklik kaynaklarin KENDI referans_
   ayi -> deger eslemesi icin)
 Cikti: data/processed/dataframes/df_gunluk_forward_fill_2015_bugun.csv
+
+EK (2026-08-04, proje sahibinin talebiyle) — PROXY_FIYAT (BETAM) GRUBU
+ZENGINLESTIRILDI: eskiden yalnizca proxy_fiyat_cari_tl/proxy_dom_gun/
+proxy_satis_orani_pct kullaniliyordu, ham dosyada BETAM'in kendi
+yayimladigi 2 sutun daha (proxy_nominal_yillik_pct, proxy_talep_aylik_pct)
+hic kullanilmiyordu - simdi dogrudan ham kaynaktan eklendi. Ayrica ESKI
+DF-A/DF-B pipeline'inda (genisletme_6_hedef_etiket.py) proxy_fiyat_cari_tl
+uzerinden turetilen 3 hesaplanan sutun (proxy_nominal_aylik_pct,
+proxy_aylik_log_degisim, proxy_reel_aylik_log_degisim) AYNI formulle
+burada da yeniden hesaplandi - eski pipeline'daki degerlerle birebir
+tutarli olsun diye. `proxy_reel_aylik_pct` icin ise BETAM'in KENDI
+yayimladigi ham deger kullanildi (eski pipeline'in yerel olarak
+yeniden hesapladigi versiyon degil) - ikisi sayisal olarak neredeyse
+ayni cikiyor (capraz kontrol edildi), ham/birincil kaynak tercih edildi.
 """
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 REPO_KOKU = Path(__file__).resolve().parents[2]
@@ -60,7 +75,13 @@ AYLIK_CEYREKLIK_KAYNAKLAR = {
     "odmd": (RAW_DIR / "odmd" / "odmd_2015_bugun_aylik.csv", ["odmd_toplam_adet", "odmd_otomobil_adet", "odmd_hta_adet"]),
     "osd": (RAW_DIR / "osd" / "osd_2024_bugun_aylik.csv", ["osd_binek_adet", "osd_kamyonet_adet", "osd_binek_kamyonet_toplam_adet"]),
     "tuketici": (RAW_DIR / "tuketici_guveni" / "tuketici_guveni_2024_bugun_aylik.csv", ["tuketici_guven_endeksi", "otomobil_satinalma_ihtimali_endeksi"]),
-    "proxy": (RAW_DIR / "proxy_fiyat" / "proxy_fiyat_2024_bugun_raw.csv", ["proxy_fiyat_cari_tl", "proxy_dom_gun", "proxy_satis_orani_pct"]),
+    "proxy": (RAW_DIR / "proxy_fiyat" / "proxy_fiyat_2024_bugun_raw.csv", [
+        "proxy_fiyat_cari_tl", "proxy_dom_gun", "proxy_satis_orani_pct",
+        "proxy_reel_aylik_pct", "proxy_nominal_yillik_pct", "proxy_talep_aylik_pct",
+        "proxy_nominal_aylik_pct", "proxy_aylik_log_degisim", "proxy_reel_aylik_log_degisim",
+        # NOT: proxy_ilan_sayisi eklenmedi - ham kaynakta tamamen bostu (0/30
+        # dolu), proje sahibinin talebiyle kaynaktan da (genisletme_1c) silindi.
+    ]),
     "alim_gucu": (RAW_DIR / "alim_gucu" / "alim_gucu_2018_bugun_aylik.csv", ["brut_ucret_maas_endeksi_2021_100"]),
     "faiz": (RAW_DIR / "faiz" / "faizler_2024_bugun_aylik.csv", ["tasit_kredisi_faiz", "politika_faizi"]),
 }
@@ -68,6 +89,30 @@ AYLIK_CEYREKLIK_KAYNAKLAR = {
 # GUNLUK/OTV/takvim disindaki 25 nolu gorev sutunlari - bunlar bu scriptte
 # YENIDEN URETILIR (ham kaynaktan), o yuzden kaynak tablodan ALINMAZLAR.
 YENIDEN_URETILEN_SUTUNLAR = {"referans_ay", "gercek_mi"}  # isim parcasi kontrolu icin
+
+
+def _log_degisim(seri: pd.Series) -> pd.Series:
+    """ln(x_t / x_{t-1}) - genisletme_6_hedef_etiket.py ile AYNI formul."""
+    return np.log(seri / seri.shift(1))
+
+
+def _proxy_zenginlestirilmis(ham_yol: Path) -> pd.DataFrame:
+    """Proxy (BETAM) ham dosyasini okur ve eski pipeline'daki (genisletme_6)
+    ile AYNI formullerle turetilmis 3 sutunu (proxy_nominal_aylik_pct,
+    proxy_aylik_log_degisim, proxy_reel_aylik_log_degisim) ekler. Diger 6
+    sutun (proxy_fiyat_cari_tl, proxy_dom_gun, proxy_satis_orani_pct,
+    proxy_reel_aylik_pct, proxy_nominal_yillik_pct, proxy_talep_aylik_pct)
+    dogrudan ham kaynaktan gelir - hicbir hesaplama yapilmaz."""
+    ham = pd.read_csv(ham_yol).sort_values("referans_ayi").reset_index(drop=True)
+    tufe = pd.read_csv(RAW_DIR / "tufe" / "tufe_2024_bugun_aylik.csv")[["referans_ayi", "tufe_endeks"]]
+    ham = ham.merge(tufe, on="referans_ayi", how="left")
+
+    proxy_reel_gosterge = ham["proxy_fiyat_cari_tl"] / ham["tufe_endeks"]
+    ham["proxy_nominal_aylik_pct"] = ham["proxy_fiyat_cari_tl"].pct_change() * 100
+    ham["proxy_aylik_log_degisim"] = _log_degisim(ham["proxy_fiyat_cari_tl"])
+    ham["proxy_reel_aylik_log_degisim"] = _log_degisim(proxy_reel_gosterge)
+
+    return ham.drop(columns=["tufe_endeks"])
 
 
 def main():
@@ -94,7 +139,7 @@ def main():
     }
 
     for grup, (ham_yol, deger_kolonlari) in AYLIK_CEYREKLIK_KAYNAKLAR.items():
-        ham = pd.read_csv(ham_yol)
+        ham = _proxy_zenginlestirilmis(ham_yol) if grup == "proxy" else pd.read_csv(ham_yol)
         referans_ay_col = f"{grup}_referans_ay"
         ham = ham.rename(columns={"referans_ayi": referans_ay_col})
         ham = ham[[referans_ay_col] + deger_kolonlari].drop_duplicates(subset=referans_ay_col)
@@ -104,8 +149,12 @@ def main():
         # ayni (referans_ayi == _ay_str oldugu icin), eslesmeyenlerde NaN - ek islem gerekmez.
 
     df = df.drop(columns=["_ay_str"])
-    # kaynak tabloyla ayni sutun sirasi (okunabilirlik/karsilastirma icin)
-    df = df[[c for c in kaynak.columns if c in df.columns]]
+    # kaynak tabloyla ayni sutun sirasi korunur (okunabilirlik/karsilastirma
+    # icin); kaynak tabloda hic olmayan YENI sutunlar (ör. proxy grubunun
+    # eklenen 6 sutunu) sona eklenir - filtrelenip DUSMEZ.
+    eski_sirali = [c for c in kaynak.columns if c in df.columns]
+    yeni_sutunlar = [c for c in df.columns if c not in eski_sirali]
+    df = df[eski_sirali + yeni_sutunlar]
 
     df.to_csv(HEDEF_CSV, index=False, encoding="utf-8-sig")
 
@@ -117,7 +166,9 @@ def main():
     for grup, (ham_yol, deger_kolonlari) in AYLIK_CEYREKLIK_KAYNAKLAR.items():
         for kolon in deger_kolonlari:
             yeni = df[kolon].notna().sum()
-            print(f"  {kolon}: {eski_doluluk[kolon]}/{len(df)} -> {yeni}/{len(df)}")
+            eski = eski_doluluk.get(kolon)
+            eski_metin = f"{eski}/{len(df)}" if eski is not None else "YOK (yeni sutun)"
+            print(f"  {kolon}: {eski_metin} -> {yeni}/{len(df)}")
     print(f"\nCikti: {HEDEF_CSV}")
 
 

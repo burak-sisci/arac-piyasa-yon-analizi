@@ -248,7 +248,9 @@ def main():
     df = pd.DataFrame(KAYITLAR)
     if "proxy_fiyat_arabamcom_referans_tl" not in df.columns:
         df["proxy_fiyat_arabamcom_referans_tl"] = None
-    df["proxy_ilan_sayisi"] = None  # Hicbir ay icin mutlak sayi yayimlanmadi.
+    # NOT (2026-08-04): "proxy_ilan_sayisi" sutunu KALDIRILDI - hicbir ay
+    # icin mutlak ilan sayisi hic yayimlanmadi, sutun bastan sona bostu
+    # (0/30 dolu). Proje sahibinin talebiyle tamamen silindi.
     df = df.sort_values("referans_ayi").reset_index(drop=True)
 
     ham_csv = RAW_DIR / "proxy_fiyat_2024_bugun_raw.csv"

@@ -211,3 +211,81 @@ için boş; bu beklenen bir durum.)
 **korelasyon analizi ÇALIŞTIRILMADI** — proje sahibinin ayrı onayıyla,
 kendi belirleyeceği yöntemle (günlük veya aya-indirgenmiş) bir sonraki
 adımda ele alınacak.
+
+---
+
+## EK — 2026-08-04: Proxy Fiyat (BETAM) Grubu Zenginleştirildi
+
+Proje sahibi, eski (v1/v2, aylık frekans) DF-A/DF-B pipeline'ında
+kullanılan bazı proxy_fiyat sütunlarının bu (v3, günlük) pipeline'da
+eksik olduğunu fark etti ve tamamlanmasını istedi.
+
+**Eklenen 6 yeni sütun** (`scripts/veri/genisletme_26_forward_fill_gunluk.py`
+güncellendi, `_proxy_zenginlestirilmis()` fonksiyonu eklendi):
+
+- `proxy_reel_aylik_pct`, `proxy_nominal_yillik_pct`, `proxy_talep_aylik_pct`
+  — ham kaynakta (`data/raw/proxy_fiyat/proxy_fiyat_2024_bugun_raw.csv`)
+  zaten mevcuttu, hiç kullanılmamıştı; doğrudan aktarıldı.
+- `proxy_nominal_aylik_pct`, `proxy_aylik_log_degisim`,
+  `proxy_reel_aylik_log_degisim` — eski pipeline'da (`genisletme_6_
+  hedef_etiket.py`) `proxy_fiyat_cari_tl` üzerinden hesaplanan sütunlardı;
+  AYNI formülle (`pct_change()`, `ln(x_t/x_t-1)`, TÜFE'ye bölünmüş "reel
+  gösterge") burada da yeniden hesaplandı. Değerler eski pipeline'ın
+  üreteceği değerlerle birebir tutarlı (2024-02 için proxy_nominal_aylik_pct
+  = -0.5418..., manuel çapraz kontrol edildi).
+
+**Proaktif not:** `proxy_reel_aylik_pct` için BETAM'ın KENDİ yayımladığı
+ham değer kullanıldı, eski pipeline'ın yerel yeniden-hesaplaması DEĞİL
+(ikisi ayrı ayrı hesaplanıp çapraz kontrol edildi — sayısal olarak
+neredeyse özdeş çıktı, ör. 2024-02: ham=-5.00 vs yerel-hesap=-4.85 —
+birincil/ham kaynak tercih edildi, daha güvenilir).
+
+**Bu sütunlar YALNIZCA DF-B'ye girdi, DF-A'ya GİREMEDİ** — hepsi BETAM
+kaynaklı olduğu için ilk dolu ayları 2024-01/2024-02, DF-A'nın kapsama
+testini (ankor: 2015-01) yapısal olarak geçemiyorlar. Bu bir hata değil,
+BETAM'ın 2024'ten önce hiç veri toplamamış olmasının doğal sonucu.
+
+**Sonuç:** `df_gunluk_forward_fill_2015_bugun.csv` 48→54 sütun,
+`df_b_v3_enag_betam_2024_bugun.csv` 45→51 sütun (DF-A 35 sütunda
+DEĞİŞMEDİ). Tüm dosyalar yeniden üretildi (script + Excel çıktıları),
+satır sayıları ve ay-içi tutarlılık yeniden doğrulandı — sorun yok.
+
+**AÇIK SORU — proje sahibinin gönderdiği eski korelasyon ekran
+görüntülerindeki OTV sütunları (`otv_event_ay_mi`,
+`otv_ay_farki_en_yakin_olay`) hakkında henüz karar verilmedi** — bu
+sütunlar Görev 29'da proje sahibinin KENDİ talimatıyla DF-A/DF-B'den
+tamamen dışlanmıştı. Ekran görüntülerinde bu sütunların bulunması, bu
+kararın gözden geçirilmek istendiği anlamına mı geliyor, yoksa ekran
+görüntüsü yalnızca proxy/ENAG sütunlarını göstermek için mi
+paylaşıldı — proje sahibine ayrıca soruldu (bkz. sohbet).
+
+---
+
+## EK 2 — 2026-08-04: Kapsam Netleştirmesi ve `proxy_ilan_sayisi` Denemesi
+
+Proje sahibi, EK 1'de eklenen 6 sütunu onayladı ve netleştirdi:
+`kaynak_url`, `kaynak_seviyesi`, `cift_dogrulama`, `veri_donemi`,
+`kaynak`, `kaynak_rapor_basligi`, `kaynak_alinti`,
+`proxy_fiyat_arabamcom_referans_tl`, `otv_referans_ay`, `otv_aciklama`,
+`otv_event_gunu_mu` KESİNLİKLE eklenmeyecek (zaten eklenmemişti).
+
+`proxy_ilan_sayisi` eklenmesi istendi — kontrol edildi, ham kaynakta
+**tamamen boş** çıktı (0/30 dolu, `enag_endeks`'teki duruma birebir
+benzer). Bu bulgu proje sahibine bildirildi, ardından **sütunün
+tamamen silinmesi** istendi: `genisletme_1c_proxy_fiyat.py`'den
+kaldırılıp ham kaynak (`data/raw/proxy_fiyat/proxy_fiyat_2024_bugun_raw.csv`)
+yeniden üretildi, `genisletme_26`'nın sütun listesine hiç eklenmedi.
+**Nihai sonuç EK 1 ile aynı: DF-B 51 sütun, DF-A 35 sütun (değişmedi).**
+
+**`noter_devir_otomobil_adet`'in DF-A'ya eklenmesi hakkındaki soruya
+yanıt:** Teknik olarak MÜMKÜN (CSV/pandas NaN bloğunu sorunsuz taşır)
+ama DF-A'nın kendi tasarım ilkesine AYKIRI. Sütun 2018-01'de başlıyor;
+DF-A'ya eklenirse 2015-01→2017-12 arası **1096 satır (%25,9) baştan
+sona NaN** kalır — bu, tam olarak 20/21 numaralı görevlerde
+"içerdiği NaN'larla dahil et" mantığından "gerçekten kapsıyor mu"
+mantığına geçilme SEBEBİYLE kaçınılmak istenen durumdur. Diğer DF-A
+sütunlarındaki boşluklar (hafta sonu/tatil gibi) dağınık ve küçük;
+bu ise pencerenin başında 3 yıl kesintisiz bir blok olurdu. **Öneri:**
+DF-A'da kalmasın — zaten DF-B'de tam karşılığı var (2024-01'den
+itibaren tam dolu). İstenirse yine de eklenebilir, ama bu DF-A'nın
+"kapsama testi geçen sütun" tanımını bilerek gevşetmek anlamına gelir.

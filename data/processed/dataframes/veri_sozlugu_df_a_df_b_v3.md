@@ -61,7 +61,9 @@ Görev 6 doğrulaması): `noter_devir_otomobil_adet`, `alim_gucu_referans_ay`,
 
 ## DF-B — ENAG + BETAM Dahil (`df_b_v3_enag_betam_2024_bugun.csv`)
 
-**947 satır × 45 sütun, 2024-01-01 → 2026-08-04 (bugün).** Kapsama testi
+**947 satır × 51 sütun (2026-08-04 güncellemesiyle 45'ten 51'e çıktı —
+proxy grubuna 6 yeni sütun eklendi, bkz. aşağıda), 2024-01-01 → 2026-08-04
+(bugün).** Kapsama testi
 UYGULANMADI — DF-A'da bulunan her şeye ek olarak ENAG ve BETAM (proxy
 fiyat) grupları da dahil, artı `noter_devir_otomobil_adet`.
 
@@ -82,7 +84,27 @@ kısa/daha güncel pencere, 2024-2026):
 | `tuketici_guven_endeksi` | 943/947 (%99,6) | 80.42, 79.34, 79.35 |
 | `tasit_kredisi_faiz` | 943/947 (%99,6) | 41.68, 40.97, 42.30 |
 
-**DF-B'ye ÖZGÜ (DF-A'da olmayan) 18 sütun:**
+**[2026-08-04 EK] Proxy fiyat (BETAM) grubu zenginleştirildi — 6 yeni
+sütun.** Eskiden yalnızca `proxy_fiyat_cari_tl`, `proxy_dom_gun`,
+`proxy_satis_orani_pct` kullanılıyordu. Proje sahibinin talebiyle,
+eski (v1/v2) DF-A/DF-B pipeline'ında (`genisletme_6_hedef_etiket.py`)
+kullanılan ek göstergeler bu tabloya da taşındı:
+
+| Sütun | Kaynak | Açıklama | Doluluk | Örnek değerler |
+|---|---|---|---|---|
+| `proxy_reel_aylik_pct` | Ham (BETAM'ın kendi yayımladığı) | BETAM'ın kendi hesapladığı, enflasyondan arındırılmış (reel) aylık fiyat değişimi (%) | 636/947 (%67,2) | -6.0, -5.0, -2.7 |
+| `proxy_nominal_yillik_pct` | Ham (BETAM'ın kendi yayımladığı) | BETAM'ın kendi hesapladığı yıllık nominal fiyat değişimi (%) | 853/947 (%90,1) | 50.9, 39.3, 31.8 |
+| `proxy_talep_aylik_pct` | Ham (BETAM'ın kendi yayımladığı) | BETAM'ın kendi hesapladığı aylık talep değişimi (%) | 853/947 (%90,1) | 5.6, 4.0, 3.9 |
+| `proxy_nominal_aylik_pct` | Hesaplanan (yerel, `proxy_fiyat_cari_tl.pct_change()*100`) | Aylık nominal fiyat değişimi (%), eski pipeline'la AYNI formül | 761/947 (%80,4) | -0.54, 0.38, 1.02 |
+| `proxy_aylik_log_degisim` | Hesaplanan (yerel, ln(x_t/x_t-1)) | Aylık log-fiyat değişimi | 761/947 (%80,4) | -0.0054, 0.0038, 0.0102 |
+| `proxy_reel_aylik_log_degisim` | Hesaplanan (yerel, TÜFE'ye bölünmüş fiyat üzerinden ln(x_t/x_t-1)) | Aylık reel log-fiyat değişimi | 761/947 (%80,4) | -0.0497, -0.0273, -0.0211 |
+
+Not: `proxy_reel_aylik_pct` için BETAM'ın KENDİ yayımladığı ham değer
+kullanıldı (eski pipeline'ın yerel olarak yeniden hesapladığı versiyon
+DEĞİL) — ikisi çapraz kontrol edildi, sayısal olarak neredeyse aynı
+çıktı, birincil/ham kaynak tercih edildi.
+
+**DF-B'ye ÖZGÜ (DF-A'da olmayan) 24 sütun (18 önceki + 6 yeni proxy):**
 
 | Sütun | Açıklama | Doluluk | Tip + örnek değerler |
 |---|---|---|---|
