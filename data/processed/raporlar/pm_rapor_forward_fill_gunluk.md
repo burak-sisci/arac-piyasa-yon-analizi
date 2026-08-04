@@ -163,18 +163,85 @@ var olma nedenidir.
 
 ## 7. Açık Sorular / PM Onayı Gerekenler
 
-1. **`..._referans_ay` yardımcı sütunlarının forward-fill edilmesi**
-   (Bölüm 1) — görev talimatında açıkça istenmemiş bir yorumlayıcı
-   ekti. Onay bekleniyor: bu tercih uygun mu, yoksa referans_ay
-   sütunları da orijinal (yalnızca as-of günü dolu) haliyle mi
-   kalmalıydı?
-2. **`_gercek_mi` bayrağının anlamı iki farklı durumu tek bir "0" değerinde
-   birleştiriyor:** (a) önceki ayın taşınan değeri VE (b) henüz hiç veri
-   gelmemiş dönem (örn. `proxy_fiyat_cari_tl` için 2024-01 öncesi tüm
-   günler). İkisini ayırt etmek gerekirse (örn. 3 durumlu bir kategori:
-   gerçek / taşınmış / hiç-veri-yok) ayrı bir görev olarak ele alınabilir.
-3. **Sonraki adım önerisi (başlatılmadı, yalnızca öneri):** bu iki
+1. **`..._referans_ay` yardımcı sütunlarının forward-fill edilmesi —
+   talimatta yoktu, benim yorumlayıcı eklemem.**
+   Görev metni yalnızca "değer sütunlarını forward-fill et, bayrak
+   ekle" diyordu; 10 grubun referans_ay sütunları (`noter_referans_ay`,
+   `tufe_referans_ay` vb.) için açık bir talimat yoktu. Ben bunları da
+   ileri doğru doldurdum, çünkü doldurulmasalar tabloda şöyle bir
+   tutarsızlık oluşuyordu: `noter_devir_toplam_adet` sütunu 2020-06-15
+   gibi bir ara günde dolu (561375.0) görünürken, `noter_referans_ay`
+   aynı satırda NaN kalıyordu — yani "bu değer hangi aya ait?" sorusunun
+   cevabı tablo içinde bulunamıyordu, kullanıcı bunu ayrıca hesaplamak
+   zorunda kalıyordu.
+   **İki seçenek ve sonuçları:**
+   - **(A) Şu anki hal — referans_ay de forward-fill edilir.** Artı:
+     tablo kendi başına okunabilir, her satırda "bu değer hangi ay
+     verisi" açık. Eksi: `referans_ay` sütunu artık "bu satırda gerçek
+     bir yayım oldu" anlamına gelmiyor — o bilgiyi taşıyan tek şey
+     `_gercek_mi` bayrağı oldu; birisi referans_ay'ı tek başına (bayrağı
+     kontrol etmeden) okursa yanlışlıkla "bu ayın verisi bugün açıklandı"
+     sanabilir.
+   - **(B) Alternatif — referans_ay orijinal haliyle (yalnızca as-of
+     gününde dolu) bırakılır.** Artı: referans_ay'ın doluluğu tek
+     başına "gerçek as-of günü" anlamına gelmeye devam eder, `_gercek_mi`
+     bayrağıyla aynı bilgiyi iki kez taşımamış olur. Eksi: ara günlerde
+     hangi ayın verisinin gösterildiğini bulmak için ayrı bir sorgu/join
+     gerekir.
+   Proje sahibinin onayı gereken nokta: (A) mı kalsın, yoksa script
+   (B)'ye göre mi güncellensin? (Değişikliği yapmak tek satırlık bir
+   düzenleme — script'in `AYLIK_CEYREKLIK_GRUPLAR` döngüsündeki
+   `df[referans_ay_col] = df[referans_ay_col].ffill()` satırı
+   kaldırılır.)
+
+2. **`_gercek_mi` bayrağı iki farklı "0" durumunu birbirinden
+   AYIRT ETMİYOR — bu, modelleme aşamasında yanıltıcı olabilir.**
+   Bayrak yalnızca 1 (gerçek as-of günü) / 0 (gerçek değil) ikili
+   değeri taşıyor, ama "0" aslında iki temelde farklı senaryoyu
+   kapsıyor:
+   - **(a) Taşınmış değer:** o ay için gerçek veri VAR ama bu spesifik
+     gün onun as-of günü değil, önceki as-of'tan taşınmış (ör. yukarıdaki
+     örnekte 2020-06-15, noter için).
+   - **(b) Hiç veri yok:** kaynağın kendisi o tarihte henüz mevcut
+     değildi, forward-fill'in dolduracağı bir "önceki değer" bile yoktu
+     (NaN kaldı). Somut büyüklük — kaynak bazında hâlâ NaN kalan satır
+     sayısı (4234 üzerinden): `proxy_fiyat_cari_tl` **3347/4234**
+     (BETAM verisi ancak 2024-03-01'den itibaren var), `enag_aylik_degisim`
+     **2223/4234** (ENAG serisi 2021-02-01'den başlıyor),
+     `noter_devir_otomobil_adet` ve `brut_ucret_maas_endeksi_2021_100`
+     her ikisi de **1127/4234** (ikisi de 2018-02-01'den başlıyor).
+   Bu iki durumu ayırmadan `_gercek_mi=0` olan satırları toplu olarak
+   "eski/güvenilmez" diye işaretlemek yanlış olur — (a) durumunda değer
+   GERÇEK ve güncel (yalnızca o gün açıklanmamış), (b) durumunda ise
+   değer YOK. Bir modelin bu ikisini karıştırması, örneğin
+   `proxy_fiyat_cari_tl` için 2015-2023 arası NaN'ları yanlışlıkla
+   "taşınmış eski değer" sanıp bir doldurma/imputation stratejisi
+   uygulamasına yol açabilir.
+   **Öneri (başlatılmadı, PM onayı gerekir):** `_gercek_mi` yerine
+   3 durumlu bir kategori sütunu (`gercek` / `tasinmis` / `veri_yok`)
+   üretmek; bu, ayrı bir görev olarak ele alınabilir, mevcut ikili
+   bayrağı BOZMADAN (geriye dönük uyumluluk için) ek bir sütun olarak
+   eklenebilir.
+
+3. **Görev 25'in BETAM (proxy_fiyat) çakışma-çözümü, forward-fill
+   tablosuna SESSİZCE miras kalıyor — bunun farkında olunmalı.**
+   Hatırlatma (bkz. `pm_rapor_gunluk_karisik_frekans.md` Bölüm 6/madde 2):
+   BETAM bazen iki referans ayını (ör. 2024-01 ve 2024-02) aynı yayım
+   ayında birlikte açıklıyor; Görev 25'te bu çakışmalarda yalnızca EN
+   GÜNCEL referans ayın değeri tutulup diğeri elendi. Bu script o
+   kararı DEĞİŞTİRMEDEN kaynak tablodan okuyor — yani örneğin 2024-01'in
+   kendi değeri (855781 TL değil, 860443 TL) bu forward-fill tablosunda
+   HİÇBİR günde görünmüyor, doğrudan 2024-02'nin değerine atlanıyor.
+   Bu, Görev 25'te onaylanan bir tasarım kararının ikinci bir tabloya
+   sessizce yayılması anlamına geliyor — yanlış değil, ama PM'in
+   bunun farkında olması ve gerekirse Görev 25'teki kararı yeniden
+   değerlendirmesi (örn. "atlanan ay da ayrı bir sütunda saklansın mı")
+   gerekebilir.
+
+4. **Sonraki adım önerisi (başlatılmadı, yalnızca öneri):** bu iki
    tablo (as-of vs forward-fill) üzerinde karşılaştırmalı korelasyon
    analizi YAPILMADI (görev talimatının YAPMA listesine uygun) —
-   istenirse hangi yaklaşımın modele daha uygun olduğunu görmek için
+   istenirse hangi yaklaşımın modele daha uygun olduğunu (forward-fill'in
+   yapay günlük varyans yaratıp yaratmadığı, as-of'un ise çok seyrek
+   veri nedeniyle korelasyon gücünü düşürüp düşürmediği) görmek için
    ayrı bir görev olarak ele alınabilir.
