@@ -44,6 +44,15 @@ noter_devir_otomobil_adet TAMAMEN farkli/daha sonra baslayan KAYNAKLARDIR
 (hesaplama gecikmesi degil, kaynagin kendisi o tarihte yoktu), coverage
 testini GERCEKTEN basaramazlar.
 
+EK (2026-08-04, proje sahibinin ACIK talebiyle) - MANUEL ISTISNA:
+`noter_devir_otomobil_adet` kapsama testini GECEMEDIGI HALDE (ilk dolu
+ayi 2018-01, ankordan 2015-01'den 3 yil geç) proje sahibinin acik
+talebiyle DF-A'ya YINE DE eklendi. Bu, kapsama testinin bir "hata"sinin
+duzeltilmesi DEGIL, bilinçli bir gevsetme - sonucu: DF-A'da bu sutun
+2015-01'den 2017-12'ye kadar (1096 satir, ~%25,9) tamamen NaN kalir.
+Bu, proje sahibine acikca bildirildi (bkz. pm_rapor_df_a_df_b_v3.md
+EK 2) ve onayla eklendi.
+
 Girdi: data/processed/dataframes/df_gunluk_forward_fill_2015_bugun.csv
   (SADECE OKUNUR, degistirilmez)
 Cikti:
@@ -62,6 +71,11 @@ DF_B_CSV = DF_DIR / "df_b_v3_enag_betam_2024_bugun.csv"
 
 # hesaplama geregi (kaynak boslugu DEGIL) daha gec baslayan, istisna uygulanan sutunlar
 HESAPLAMA_GECIKMELI_ISTISNA = {"tufe_aylik_degisim", "tufe_yillik_degisim"}
+
+# proje sahibinin ACIK talebiyle, kapsama testini GECEMEDIGI HALDE DF-A'ya
+# manuel olarak dahil edilen sutunlar (bilinen sonuc: pencere basinda buyuk
+# bir NaN blogu - bkz. yukaridaki EK notu)
+MANUEL_DAHIL_EDILEN = {"noter_devir_otomobil_adet"}
 
 YAPISAL_SUTUNLAR = ["tarih", "yil", "ay", "gun", "ceyrek", "haftanin_gunu", "yilin_gunu"]
 
@@ -99,13 +113,16 @@ def main():
     print(f"-> Ankor: {ankor_sutun} ({ankor_ay})")
     print()
 
-    gecen_sutunlar, gecemeyen_sutunlar = [], []
+    gecen_sutunlar, gecemeyen_sutunlar, manuel_eklenen = [], [], []
     for c, ay in ilk_dolu_ay.items():
         if ay is None:
             gecemeyen_sutunlar.append((c, ay))
             continue
         if ay <= ankor_ay or c in HESAPLAMA_GECIKMELI_ISTISNA:
             gecen_sutunlar.append((c, ay))
+        elif c in MANUEL_DAHIL_EDILEN:
+            gecen_sutunlar.append((c, ay))
+            manuel_eklenen.append((c, ay))
         else:
             gecemeyen_sutunlar.append((c, ay))
 
@@ -116,11 +133,18 @@ def main():
     print("=== KAPSAMA TESTI SONUCU ===")
     print(f"GECEN ({len(gecen_sutunlar)}):")
     for c, ay in sorted(gecen_sutunlar):
-        istisna_notu = " [ISTISNA: hesaplama gecikmesi]" if c in HESAPLAMA_GECIKMELI_ISTISNA else ""
-        print(f"  {c}: ilk dolu ay={ay}{istisna_notu}")
+        if c in MANUEL_DAHIL_EDILEN:
+            notu = " [MANUEL DAHIL: proje sahibi talebi, kapsama testini GECEMEDI]"
+        elif c in HESAPLAMA_GECIKMELI_ISTISNA:
+            notu = " [ISTISNA: hesaplama gecikmesi]"
+        else:
+            notu = ""
+        print(f"  {c}: ilk dolu ay={ay}{notu}")
     print(f"GECEMEYEN ({len(gecemeyen_sutunlar)}):")
     for c, ay in sorted(gecemeyen_sutunlar, key=lambda x: (x[1] or "", x[0])):
         print(f"  {c}: ilk dolu ay={ay}")
+    if manuel_eklenen:
+        print(f"\nMANUEL EKLENEN (kapsama testini GECEMEDI ama proje sahibi talebiyle eklendi): {manuel_eklenen}")
     print()
 
     # ---- GOREV 3: DF-B - 2024-01-01 -> bugun, TUM sutunlar (otv haric) ----

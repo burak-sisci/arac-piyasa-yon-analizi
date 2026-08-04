@@ -18,7 +18,9 @@ sahibi tarafından bu sürümde tamamen dışlandı.
 
 ## DF-A — Noter Devri Penceresi (`df_a_v3_noter_penceresi_2015_bugun.csv`)
 
-**4234 satır × 35 sütun, 2015-01-01 → 2026-08-04 (bugün).**
+**4234 satır × 36 sütun (2026-08-04 güncellemesiyle 35'ten 36'ya çıktı —
+`noter_devir_otomobil_adet` manuel eklendi, bkz. aşağıda), 2015-01-01 →
+2026-08-04 (bugün).**
 Ankor: `noter_devir_toplam_adet` (ilk dolu ayı 2015-01 — `noter_devir_otomobil_adet`'ten
 [2018-01] daha erken başladığı için ankor seçildi).
 
@@ -50,12 +52,24 @@ Ankor: `noter_devir_toplam_adet` (ilk dolu ayı 2015-01 — `noter_devir_otomobi
 | `faiz_referans_ay` | Faiz verisinin ait olduğu referans ay | 4230/4234 (%99,9) | metin — "2015-01", "2015-02", "2015-03" |
 | `tasit_kredisi_faiz` | Taşıt kredisi faiz oranı (aylık ortalama) | 4230/4234 (%99,9) | sayısal — 11.01, 10.80, 10.82 |
 | `politika_faizi` | TCMB politika faizi (aylık ortalama) | 4230/4234 (%99,9) | sayısal — 8.25, 7.92, 7.80 |
+| `noter_devir_otomobil_adet` **[MANUEL EKLENDİ, kapsama testini GEÇEMEDİ]** | Noter devrinin otomobil-özel kırılımı (2018-01'den itibaren tutulmaya başlanmış) | 3103/4234 (%73,3) — **2015-01→2017-12 arası (1096 satır, %25,9) tamamen NaN** | sayısal — (2018-01'den itibaren) 530744, 573508, 580492 |
+
+**[2026-08-04 EK] `noter_devir_otomobil_adet`, proje sahibinin AÇIK
+talebiyle DF-A'ya manuel eklendi** — kapsama testini geçemiyor
+(2018-01'de başlıyor, ankor 2015-01'den 3 yıl geç) ama bilinçli bir
+istisna olarak dahil edildi. Sonuç: pencerenin başında (2015-2017)
+büyük ve KESİNTİSİZ bir NaN bloğu var — diğer DF-A sütunlarındaki
+dağınık/küçük boşluklardan farklı bir doluluk deseni, korelasyon
+analizinde dikkat edilmeli.
 
 **Kapsama testini GEÇEMEYEN, DF-A'da YOK olan sütunlar** (bkz. Bölüm 3,
-Görev 6 doğrulaması): `noter_devir_otomobil_adet`, `alim_gucu_referans_ay`,
+Görev 6 doğrulaması): `alim_gucu_referans_ay`,
 `brut_ucret_maas_endeksi_2021_100`, `enag_referans_ay`,
 `enag_aylik_degisim`, `enag_yillik_degisim`, `proxy_referans_ay`,
-`proxy_fiyat_cari_tl`, `proxy_dom_gun`, `proxy_satis_orani_pct`.
+`proxy_fiyat_cari_tl`, `proxy_dom_gun`, `proxy_satis_orani_pct`,
+`proxy_reel_aylik_pct`, `proxy_nominal_yillik_pct`, `proxy_talep_aylik_pct`,
+`proxy_nominal_aylik_pct`, `proxy_aylik_log_degisim`,
+`proxy_reel_aylik_log_degisim`.
 
 ---
 
@@ -65,12 +79,13 @@ Görev 6 doğrulaması): `noter_devir_otomobil_adet`, `alim_gucu_referans_ay`,
 proxy grubuna 6 yeni sütun eklendi, bkz. aşağıda), 2024-01-01 → 2026-08-04
 (bugün).** Kapsama testi
 UYGULANMADI — DF-A'da bulunan her şeye ek olarak ENAG ve BETAM (proxy
-fiyat) grupları da dahil, artı `noter_devir_otomobil_adet`.
+fiyat) grupları da dahil.
 
-DF-A ile ORTAK olan 27 sütun (tarih, takvim sütunları, kur, altın, TÜFE,
-noter_devir_toplam_adet, ODMD, OSD, tüketici güveni, faiz) — açıklamaları
-yukarıdaki DF-A tablosuyla AYNI, yalnızca doluluk oranları farklı (daha
-kısa/daha güncel pencere, 2024-2026):
+DF-A ile ORTAK olan 28 sütun (tarih, takvim sütunları, kur, altın, TÜFE,
+noter devri — hem toplam hem [2026-08-04'ten itibaren] otomobil kırılımı,
+ODMD, OSD, tüketici güveni, faiz) — açıklamaları yukarıdaki DF-A
+tablosuyla AYNI, yalnızca doluluk oranları farklı (daha kısa/daha güncel
+pencere, 2024-2026):
 
 | Sütun | Doluluk (947 satır) | Örnek değerler |
 |---|---|---|
@@ -79,6 +94,7 @@ kısa/daha güncel pencere, 2024-2026):
 | `altin_gram_try` | 882/947 (%93,1) | 2069.67, 2085.58, 2394.82 |
 | `tufe_endeks` | 912/947 (%96,3) | 1984.02, 2073.88, 2139.47 |
 | `noter_devir_toplam_adet` | 912/947 (%96,3) | 782589, 847861, 865144 |
+| `noter_devir_otomobil_adet` | 912/947 (%96,3) | 530744, 573508, 580492 |
 | `odmd_toplam_adet` | 912/947 (%96,3) | 79701, 105990, 109828 |
 | `osd_binek_adet` | 912/947 (%96,3) | 67059, 83955, 87260 |
 | `tuketici_guven_endeksi` | 943/947 (%99,6) | 80.42, 79.34, 79.35 |
@@ -104,11 +120,9 @@ kullanıldı (eski pipeline'ın yerel olarak yeniden hesapladığı versiyon
 DEĞİL) — ikisi çapraz kontrol edildi, sayısal olarak neredeyse aynı
 çıktı, birincil/ham kaynak tercih edildi.
 
-**DF-B'ye ÖZGÜ (DF-A'da olmayan) 24 sütun (18 önceki + 6 yeni proxy):**
-
-| Sütun | Açıklama | Doluluk | Tip + örnek değerler |
-|---|---|---|---|
-| `noter_devir_otomobil_adet` | Noter devrinin otomobil-özel kırılımı (2018-01'den itibaren tutulmaya başlanmış) | 912/947 (%96,3) | sayısal — 530744, 573508, 580492 |
+**DF-B'ye ÖZGÜ (DF-A'da olmayan) 23 sütun** (`noter_devir_otomobil_adet`
+2026-08-04'ten itibaren DF-A'da da MANUEL olarak var, bkz. DF-A bölümü —
+artık ortak sütun, buradan çıkarıldı):
 | `enag_referans_ay` | ENAG verisinin ait olduğu referans ay | 912/947 (%96,3) | metin — "2024-01", "2024-02", "2024-03" |
 | `enag_aylik_degisim` | ENAG (bağımsız enflasyon araştırma grubu) aylık enflasyon ölçümü (%) | 912/947 (%96,3) | sayısal — 9.38, 4.32, 5.68 |
 | `enag_yillik_degisim` | ENAG yıllık enflasyon ölçümü (%) | 912/947 (%96,3) | sayısal — 129.11, 121.98, 124.63 |

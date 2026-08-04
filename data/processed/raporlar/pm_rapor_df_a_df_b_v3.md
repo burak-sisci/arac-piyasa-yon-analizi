@@ -289,3 +289,21 @@ bu ise pencerenin başında 3 yıl kesintisiz bir blok olurdu. **Öneri:**
 DF-A'da kalmasın — zaten DF-B'de tam karşılığı var (2024-01'den
 itibaren tam dolu). İstenirse yine de eklenebilir, ama bu DF-A'nın
 "kapsama testi geçen sütun" tanımını bilerek gevşetmek anlamına gelir.
+
+---
+
+## EK 3 — 2026-08-04: `noter_devir_otomobil_adet` DF-A'ya Manuel Eklendi
+
+Proje sahibi, EK 2'deki soruyu yanıtladı: "her iki dataya da ekle."
+`genisletme_29_df_a_df_b_v3.py`'ye `MANUEL_DAHIL_EDILEN` istisna kümesi
+eklendi — `noter_devir_otomobil_adet`, kapsama testini GEÇEMEDİĞİ HALDE
+(ilk dolu ayı 2018-01) DF-A'ya bilinçli olarak dahil edildi.
+
+**Doğrulanan sonuç:** DF-A 35→36 sütun. Sütun 2015-01-01→2017-12-31
+arası **1096 satır (%25,9) tamamen NaN** (kodla doğrulandı), 2018-01'den
+itibaren 3103/3138 dolu. DF-B zaten bu sütunu içeriyordu (Görev 29'un
+ilk halinden beri) — değişmedi (51 sütun).
+
+Bu, önceden bildirilen riskin AYNEN gerçekleştiği, beklenmedik bir yan
+etki OLMADIĞI anlamına gelir — proje sahibi riski bilerek onayladı.
+Veri sözlüğü ve tüm çıktı dosyaları (CSV + Excel) güncellendi.
