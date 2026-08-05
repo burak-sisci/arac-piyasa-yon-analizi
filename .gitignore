@@ -34,6 +34,9 @@ __pycache__/
 *.pyc
 .venv/
 venv/
+# Modelleme fazı — AutoGluon TimeSeries icin ayri Python 3.12 sanal ortami
+# (ana ortam 3.14, AutoGluon henuz desteklemiyor) - kod versiyonlanir, ortam degil.
+.venv312/
 
 # Jupyter (notebooks/ — .ipynb dosyalarının kendisi git'e girer, ama
 # calisma zamani checkpoint klasoru gurultu, girmez)
