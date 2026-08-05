@@ -51,7 +51,7 @@ COVARIATE_SUTUNLARI = [
 # noter_devir_toplam_adet BILINCLI OLARAK DISLANDI - sizinti riski (bkz. docstring)
 
 PREDICTION_LENGTH = 30  # gun (~1 ay - kaynagin gercek guncelleme sikligi)
-TIME_LIMIT_SANIYE = 600  # ilk deneme icin 10 dakika ust sinir
+TIME_LIMIT_SANIYE = 1200  # high_quality (DeepAR, Chronos2 ince-ayar) icin 20 dakika ust sinir
 
 # DUZELTME (2026-08-05): tek dogrulama penceresi (varsayilan num_val_windows=1)
 # tesadufen tam bir takvim ayina denk gelip (2026-06-01..06-30, target'in TEK
@@ -91,11 +91,13 @@ def main():
         prediction_length=PREDICTION_LENGTH,
         freq="D",
         eval_metric="MASE",
+        eval_metric_seasonal_period=30,  # 7 (haftalik) yerine 30 (aylik) - kaynagin
+        # gercek guncelleme sikligiyla ORTUSEN bir referans yontem kullanmak icin
         path=str(MODEL_DIR / "autogluon_model_01"),
     )
     predictor.fit(
         tsdf,
-        presets="medium_quality",
+        presets="high_quality",
         time_limit=TIME_LIMIT_SANIYE,
         num_val_windows=NUM_VAL_WINDOWS,
         val_step_size=VAL_STEP_SIZE,
