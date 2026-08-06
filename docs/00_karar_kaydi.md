@@ -128,6 +128,51 @@ ve `scripts/model/model_06_hacim_yon_siniflandirma.py` (AutoGluon
 `TabularPredictor(problem_type="multiclass")` ile DF-A/DF-B ayrı eğitim —
 bkz. `data/processed/raporlar/pm_rapor_hacim_yon_3sinif_baseline.md`).
 
+**K10 — Haftalık güncellenen aylık hacim yönü nowcast'i (2026-08-06,
+proje sahibi kararı; Rota uygulayıcı, Pusula karar ortağı).** K9'un hedefi
+ve üç sınıfı korunarak operasyonel tahmin sözleşmesi aşağıdaki biçimde
+profesyonelleştirildi:
+
+1. **Değişmeyen hedef ve sınıflar:** Target
+   `noter_devir_otomobil_adet`; çıktı `down/stable/up`. Etiket, cari ay M'nin
+   resmî noter otomobil devir adedinin bir önceki takvim ayı M-1'e göre yüzde
+   değişimidir. Ana stable bandı K9 ile aynı, kapalı **±%5** aralığıdır.
+2. **Tahmin ritmi ve ufuk:** Her pazartesi, yalnız önceki pazar cut-off'una
+   kadar bilinen verilerle **içinde bulunulan ayın kapanış yönü** nowcast
+   edilir. Aylık target haftalık target'mış gibi bölünmez, enterpole edilmez
+   veya haftalara paylaştırılmaz.
+3. **Bağımsız örnek birimi:** Aynı ayın 4-5 haftalık snapshot'ı tek bir aylık
+   gerçekleşmeyi paylaşır. Tümü aynı kronolojik split/fold içinde tutulur ve
+   snapshot ağırlıkları ay başına toplam 1 olacak biçimde kurulur. Etkin N,
+   snapshot sayısı değil bağımsız etiketli ay sayısıdır.
+4. **Gerçek-zaman/sızıntı kuralı:** Cari ay target değeri ve lag-1 target
+   feature değildir. Tarihsel kesin yayın tarihleri eksik olduğu sürece aylık
+   feature'lar konservatif olarak en az iki takvim ayı geciktirilir; target
+   yalnız lag2/lag3/lag12 olarak kullanılabilir. Gerçek günlük göstergeler
+   yalnız cari ay başlangıcından cut-off'a kadarki gözlemlerle özetlenir.
+5. **Nowcast türü:** Kamuya açık noter serisinde ay-içi kümülatif target
+   bulunmadığından bu çalışma **yüksek frekanslı öncü gösterge tabanlı cari-ay
+   nowcast'idir**; kısmi noter target ekstrapolasyonu değildir. Ay-içi resmî
+   target ileride bulunursa, as-of kanıtı olmadan sisteme eklenemez.
+6. **Validasyon:** Ay-gruplu kronolojik/expanding değerlendirme, fold
+   sınırlarında iki aylık embargo, birincil global/Gorodkin MCC ve macro-F1,
+   ikincil accuracy/per-class recall; majority, persistence ve mevsimsel
+   t-12 baseline'ları modelden önce sabitlenir. Test dönemi Stage 1'de
+   **kilitlenmemiştir**; etiket/yayım/tatil sözleşmesi tamamlandıktan sonra
+   ayrıca onaylanacaktır.
+7. **Takvim:** 2429 sayılı Kanun ve Diyanet yıllık listeleriyle doğrulanan tam
+   ve yarım gün resmî/dini tatiller, iş-günü eşdeğeri ve ay-içi ilerleme
+   feature'larına dahil edilir.
+8. **Veri yeterliliği:** DF-A 101 bağımsız etiketli ayla N≥50 geçidini aşar.
+   DF-B 29 bağımsız ayla N<50'dir; yalnız keşifsel tutulur ve doğrulayıcı model
+   karşılaştırmasına sokulmaz.
+
+Uygulama sözleşmesi: `scripts/model/haftalik_aylik_nowcast.py`,
+`scripts/model/turkiye_tatil_takvimi.py` ve
+`scripts/model/model_07_haftalik_nowcast_veri_hazirligi.py`. K9'un eski
+aylık-ileri sınıflandırma baseline'ı denetim izi olarak korunur; K10 onu
+sessizce yeniden yazmaz.
+
 ## B. Faz Bulgularından Doğan Bağlayıcı Notlar (N)
 
 **N1 (Faz 2) — Kompozisyon düzeltmesi modelin işidir.** Kamuya açık Türk

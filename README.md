@@ -45,12 +45,12 @@ Aşama A'nın bulgularını gerçek veriyle test eden, adım adım ilerleyen akt
    yok, 2021-01→2023-12 (kısmi, kalite düşen) kapsandı, ana 2024-2026
    dosyasıyla birleştirilmedi; sonuçlar `pm_rapor_enag_2018_genisletme.md`'de.
 
-**Durum:** Aktif Aşama B target'ı **K9 ile kararlaştırılmıştır** — günlük
-granülerlikte `noter_devir_otomobil_adet` (hacim) serisinin doğrudan
-üç-sınıflı (up/stable/down) yönü. K1'in aylık tahmin ufku, bu çalışma
-kapsamında bir varsayım olarak kullanılıyor (nihai/bağlayıcı hedef
-değişken/ufuk/eşik seçimi hâlâ proje sahibinin nihai onayına açıktır;
-K9 bu arada geçerli aktif çalışma hedefidir). `data/` klasörüne bkz.
+**Durum:** Aktif Aşama B hedefi K9/K10 ile kararlaştırılmıştır:
+`noter_devir_otomobil_adet` serisinin `up/stable/down` yönü. Her pazartesi,
+önceki pazar cut-off'una kadar bilinen verilerle içinde bulunulan ayın kapanış
+yönü nowcast edilecektir. Target aylık kalır; haftalıkmış gibi bölünmez.
+Birincil DF-A 101 bağımsız etiketli ayla veri yeterlilik geçidini aşarken,
+29 aylık DF-B yalnız keşifseldir. Ayrıntı: `docs/00_karar_kaydi.md` K10.
 
 ### Nasıl çalışır (veri mühendisliği döngüsü)
 
@@ -143,3 +143,8 @@ K9 bu arada geçerli aktif çalışma hedefidir). `data/` klasörüne bkz.
       protokolünün parçası değildir ama PM onaylı ayrı bir çalışmadır.
       `model_03`/`model_04`/`model_05` ise untracked, PM onayından geçmemiş
       denemelerdir — bu paketin dışındadır.)
+- [x] **Haftalık güncellenen aylık nowcast veri sözleşmesi (K10):** Pazartesi
+      tahmin/pazar cut-off; cari ayın M/M-1 yönü, kapalı ±%5 stable bandı;
+      ay-gruplu snapshot ve ay-eşit ağırlık; lag2 gerçek-zaman koruması;
+      resmî/dini tam-yarım gün tatil takvimi. DF-A: 101 bağımsız ay,
+      DF-B: 29 ay (yalnız keşifsel). Model eğitimi henüz başlatılmadı.
