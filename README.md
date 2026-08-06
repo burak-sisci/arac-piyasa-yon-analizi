@@ -154,3 +154,11 @@ Birincil DF-A 101 bağımsız etiketli ayla veri yeterlilik geçidini aşarken,
       Hafta 1→4 MCC eğrisi monoton değil; mevcut özelliklerle haftalık ek
       bilgi doğrulanmadı. Ayrıntı:
       `pm_rapor_nowcast_baseline_ve_dusuk_kapasite.md`.
+- [x] **Nowcast rolling-origin performans ölçümü:** Pusula yönetiminde
+      2021-03..2025-04 arasında 50 test-dışı origin, her origin'de iki ay
+      embargo ve yeniden fit; 2.000 ortak hareketli-blok bootstrap. M-2
+      persistence MCC=0,017 (%95 GA: -0,146..0,234); dört modelin MCC'si
+      -0,0306 ile -0,1193 arasında ve tüm model-persistence farkları negatif.
+      Holm, macro-F1 ve yıllık jackknife koşullarında terfi yok; haftalık ek
+      bilgi doğrulanmadı. Kilitli test açılmadı. Ayrıntı:
+      `pm_rapor_nowcast_rolling_origin.md`.
