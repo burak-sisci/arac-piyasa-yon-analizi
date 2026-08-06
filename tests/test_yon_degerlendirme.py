@@ -157,6 +157,52 @@ def test_tahmin_sinifi_ve_guven_dogru_sinifi_ve_guveni_dondurur():
     assert guven == pytest.approx(0.75)
 
 
+# --- sinif_agirliklari_hesapla: balanced (ters-frekans) sinif agirligi ------
+
+def test_sinif_agirliklari_esit_sinif_sayisinda_hepsi_bir():
+    etiketler = ["down", "stable", "up"] * 4  # her sinif esit sayida (12/3=4)
+    sonuc = yd.sinif_agirliklari_hesapla(etiketler)
+    for sinif in yd.FIXED_LABEL_ORDER:
+        assert sonuc[sinif] == pytest.approx(1.0)
+
+
+def test_sinif_agirliklari_dengesiz_agirliksiz_ters_frekansla_orantili():
+    # down: 1, stable: 2, up: 6 -> toplam 9, n_sinif=3
+    etiketler = ["down"] * 1 + ["stable"] * 2 + ["up"] * 6
+    sonuc = yd.sinif_agirliklari_hesapla(etiketler)
+    assert sonuc["down"] == pytest.approx(9 / (3 * 1))
+    assert sonuc["stable"] == pytest.approx(9 / (3 * 2))
+    assert sonuc["up"] == pytest.approx(9 / (3 * 6))
+    # az gorulen sinif (down) en yuksek agirligi alir
+    assert sonuc["down"] > sonuc["stable"] > sonuc["up"]
+
+
+def test_sinif_agirliklari_agirlikli_frekans_ay_agirligi_birimini_kullanir():
+    # ay_agirligi ile uretilmis kesirli agirliklar (pseudo-replikasyon
+    # duzeltmesiyle tutarli) - frekans SATIR sayisi degil AGIRLIK toplamidir.
+    etiketler = ["down", "down", "up"]
+    agirliklar = [0.5, 0.5, 1.0]  # down toplam agirlik=1.0, up toplam agirlik=1.0
+    sonuc = yd.sinif_agirliklari_hesapla(etiketler, agirliklar=agirliklar,
+                                          label_sirasi=["down", "up"])
+    assert sonuc["down"] == pytest.approx(sonuc["up"])
+
+
+def test_sinif_agirliklari_egitimde_hic_gorulmeyen_sinif_reddedilir():
+    etiketler = ["down", "down", "up"]
+    with pytest.raises(ValueError, match="hic gorulmedi"):
+        yd.sinif_agirliklari_hesapla(etiketler)  # "stable" hic yok
+
+
+def test_sinif_agirliklari_uzunluk_uyumsuzlugu_reddedilir():
+    with pytest.raises(ValueError, match="ayni uzunlukta"):
+        yd.sinif_agirliklari_hesapla(["down", "up"], agirliklar=[1.0])
+
+
+def test_sinif_agirliklari_bilinmeyen_etiket_reddedilir():
+    with pytest.raises(ValueError, match="Bilinmeyen"):
+        yd.sinif_agirliklari_hesapla(["down", "sideways", "up"])
+
+
 # --- degerlendir: mukemmel / hep-stable / gecersiz etiket -------------------
 
 def test_mukemmel_tahmin_tum_metrikler_maksimum():
@@ -221,3 +267,66 @@ def test_eksik_etiket_degerlendirmede_reddedilir():
     y_tahmin = ["down", "stable", "up"]
     with pytest.raises(ValueError, match="Bilinmeyen"):
         yd.degerlendir(y_gercek, y_tahmin)
+
+
+# --- sinif_agirliklari_hesapla: ek senaryolar (agirliksiz cagri) -----------
+
+def test_sinif_agirliklari_azinlik_sinif_daha_yuksek_carpan_alir():
+    # down: 1, stable: 2, up: 9 -> azinlik (down) en yuksek, cogunluk (up) en dusuk carpan
+    etiketler = ["down"] + ["stable"] * 2 + ["up"] * 9
+    agirliklar = yd.sinif_agirliklari_hesapla(etiketler)
+    assert agirliklar["down"] > agirliklar["stable"] > agirliklar["up"]
+    # frekans-agirlikli ortalama tam 1.0 kalmali (toplam agirlik carpitilmaz)
+    n = len(etiketler)
+    agirlikli_ortalama = sum(agirliklar[e] for e in etiketler) / n
+    assert agirlikli_ortalama == pytest.approx(1.0)
+
+
+def test_sinif_agirliklari_gorulmeyen_sinif_reddedilir():
+    etiketler = ["down", "down", "up"]  # 'stable' hic yok
+    with pytest.raises(ValueError, match="stable"):
+        yd.sinif_agirliklari_hesapla(etiketler)
+
+
+def test_sinif_agirliklari_bos_liste_reddedilir():
+    with pytest.raises(ValueError, match="bos"):
+        yd.sinif_agirliklari_hesapla([])
+
+
+# --- en_iyi_aday_sec: mcc -> macro_f1 -> stable recall sirali secim --------
+
+def test_en_iyi_aday_sec_mcc_farkli_ise_mcc_kazanir():
+    adaylar = {
+        "a": {"mcc_gorodkin": 0.5, "macro_f1": 0.1, "per_class": {"stable": {"recall": 0.0}}},
+        "b": {"mcc_gorodkin": 0.6, "macro_f1": 0.05, "per_class": {"stable": {"recall": 0.0}}},
+    }
+    assert yd.en_iyi_aday_sec(adaylar) == "b"
+
+
+def test_en_iyi_aday_sec_mcc_esitse_macro_f1_karar_verir():
+    adaylar = {
+        "a": {"mcc_gorodkin": 0.4, "macro_f1": 0.3, "per_class": {"stable": {"recall": 1.0}}},
+        "b": {"mcc_gorodkin": 0.4, "macro_f1": 0.5, "per_class": {"stable": {"recall": 0.0}}},
+    }
+    assert yd.en_iyi_aday_sec(adaylar) == "b"
+
+
+def test_en_iyi_aday_sec_mcc_ve_f1_esitse_stable_recall_karar_verir():
+    adaylar = {
+        "a": {"mcc_gorodkin": 0.4, "macro_f1": 0.3, "per_class": {"stable": {"recall": 0.2}}},
+        "b": {"mcc_gorodkin": 0.4, "macro_f1": 0.3, "per_class": {"stable": {"recall": 0.6}}},
+    }
+    assert yd.en_iyi_aday_sec(adaylar) == "b"
+
+
+def test_en_iyi_aday_sec_tam_esitlikte_ilk_aday_kazanir():
+    adaylar = {
+        "ilk": {"mcc_gorodkin": 0.4, "macro_f1": 0.3, "per_class": {"stable": {"recall": 0.2}}},
+        "ikinci": {"mcc_gorodkin": 0.4, "macro_f1": 0.3, "per_class": {"stable": {"recall": 0.2}}},
+    }
+    assert yd.en_iyi_aday_sec(adaylar) == "ilk"
+
+
+def test_en_iyi_aday_sec_bos_sozluk_reddedilir():
+    with pytest.raises(ValueError, match="bos"):
+        yd.en_iyi_aday_sec({})

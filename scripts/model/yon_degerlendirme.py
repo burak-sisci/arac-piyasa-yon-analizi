@@ -5,6 +5,10 @@ kullanilabilir saf fonksiyonlar: (1) sabit yuzde esikli yon etiketleme,
 support, karisiklik matrisi), (3) olasilik dogrulama/karar yardimcilari,
 (4) purge'li kronolojik split ve ay-agirligi yardimcilari.
 
+(5) egitim bolumu sinif frekansindan maliyet-duyarli "balanced" sinif
+agirligi (`sinif_agirliklari_hesapla`, N4 sirasi adim 1 - bkz.
+prompts/veri/31_*.md).
+
 Baglayici kararlar (docs/00_karar_kaydi.md, K9 — aktif Asama B karari):
 - Stable bandi SABIT yuzde esiklidir (K2'deki oynaklik-uyarlamali/sigma
   tabanli yaklasim aktif hacim gorevi icin TERK EDILMISTIR — bkz. K9). Ana
@@ -191,6 +195,56 @@ def _dogrula_etiketler(etiketler, izin_verilenler) -> None:
         )
 
 
+def sinif_agirliklari_hesapla(etiketler, agirliklar=None, label_sirasi=None) -> dict:
+    """
+    Egitim bolumunun SINIF FREKANSLARINDAN (yalniz verilen `etiketler`/
+    `agirliklar`dan - cagiran taraf yalniz TRAIN bolumunu vermelidir)
+    "balanced" (ters-frekans) sinif agirligi hesaplar:
+
+        agirlik[c] = toplam_agirlik / (sinif_sayisi * sinif_agirlik_toplami[c])
+
+    `agirliklar` verilmezse her satir esit (1.0) sayilir (frekans = ham satir
+    sayisi). `ay_agirligi` ile uretilmis agirliklar verilirse frekans o
+    birimde (ornegin bagimsiz ay sayisi) olculur - boylece pseudo-
+    replikasyondan arindirilmis bir "sinif basina bagimsiz ay sayisi" temsili
+    saglanir (bkz. modul docstring'i, ay-hizali gunluk tekrar notu).
+
+    Donus: {sinif: agirlik} sozlugu, label_sirasi'ndaki TUM siniflari icerir.
+    Bir sinif egitim bolumunde hic gorulmemisse (toplam agirligi <= 0)
+    ValueError (bolme tanimsiz - cagiran taraf boyle bir sinifi once ele
+    almalidir).
+    """
+    label_sirasi = list(label_sirasi) if label_sirasi is not None else list(FIXED_LABEL_ORDER)
+    etiketler = list(etiketler)
+    if len(etiketler) == 0:
+        raise ValueError("sinif_agirliklari_hesapla: bos etiket listesi kabul edilmez")
+    if agirliklar is not None:
+        agirliklar = list(agirliklar)
+        if len(agirliklar) != len(etiketler):
+            raise ValueError(
+                "sinif_agirliklari_hesapla: agirliklar, etiketler ile ayni uzunlukta olmali"
+            )
+    else:
+        agirliklar = [1.0] * len(etiketler)
+
+    _dogrula_etiketler(etiketler, label_sirasi)
+
+    sinif_toplami = {sinif: 0.0 for sinif in label_sirasi}
+    for etiket, agirlik in zip(etiketler, agirliklar):
+        sinif_toplami[etiket] += agirlik
+
+    sifir_sinif = [s for s, t in sinif_toplami.items() if t <= 0]
+    if sifir_sinif:
+        raise ValueError(
+            f"sinif_agirliklari_hesapla: su siniflar egitim bolumunde hic gorulmedi/agirligi "
+            f"sifir: {sifir_sinif} - bolme tanimsiz"
+        )
+
+    toplam_agirlik = sum(sinif_toplami.values())
+    n_sinif = len(label_sirasi)
+    return {sinif: toplam_agirlik / (n_sinif * sinif_toplami[sinif]) for sinif in label_sirasi}
+
+
 def degerlendir(y_gercek, y_tahmin, label_sirasi=None, agirliklar=None) -> dict:
     """
     Saf fonksiyon - egitim/model YOK, yalnizca metrik hesabi.
@@ -256,3 +310,32 @@ def degerlendir(y_gercek, y_tahmin, label_sirasi=None, agirliklar=None) -> dict:
         "n": len(y_gercek),
         "agirlikli_mi": agirliklar is not None,
     }
+
+
+def en_iyi_aday_sec(aday_metrikleri: dict) -> str:
+    """
+    Model secimi icin saf, target-bagimsiz karar fonksiyonu. Her aday icin
+    `degerlendir()` ciktisini sirasiyla (mcc_gorodkin, macro_f1, 'stable'
+    sinifi recall) uclusuyle karsilastirir ve EN IYI adayin ADINI (anahtar)
+    dondurur - test metriklerine ASLA bakmaz (cagiran taraf yalniz
+    validation metriklerini gecmelidir).
+
+    Esitlik durumunda dict'te ONCE gelen aday kazanir (deterministik,
+    kararli secim - rastgelelik yok).
+
+    aday_metrikleri: {aday_adi: degerlendir() ciktisi (en az 'stable'
+    sinifini iceren bir per_class sozlugu olmali)}. Bos dict -> ValueError.
+    """
+    if not aday_metrikleri:
+        raise ValueError("en_iyi_aday_sec: bos aday sozlugu kabul edilmez")
+    en_iyi_isim = None
+    en_iyi_anahtar = None
+    for isim, metrik in aday_metrikleri.items():
+        anahtar = (
+            metrik["mcc_gorodkin"],
+            metrik["macro_f1"],
+            metrik["per_class"]["stable"]["recall"],
+        )
+        if en_iyi_anahtar is None or anahtar > en_iyi_anahtar:
+            en_iyi_isim, en_iyi_anahtar = isim, anahtar
+    return en_iyi_isim

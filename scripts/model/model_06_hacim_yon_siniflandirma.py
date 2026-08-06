@@ -41,6 +41,19 @@ MODEL: AutoGluon TabularPredictor(problem_type="multiclass"), eval_metric
 "mcc", presets="medium_quality", time_limit<=300sn/set, TEK deneme (hata
 olursa tekrar denenmez).
 
+SINIF AGIRLIGI ITERASYONU (prompts/veri/31_*.md, N4 sirasi adim 1): baseline
+("esit_agirlik" - mevcut ay-esit ornek agirligi) yaninda IKINCI bir aday
+egitilir ("sinif_agirlikli" - ayni ay-esit agirlik, egitim bolumunun SINIF
+frekansindan hesaplanan balanced sinif agirligiyla CARPILMIS,
+yd.sinif_agirliklari_hesapla). Sinif agirligi YALNIZCA TRAIN bolumunun
+etiket frekansindan hesaplanir (val/test'e sizdirilmaz); validasyon agirligi
+her iki adayda da degismeden ay-esit kalir (adil karsilastirma). Iki aday
+arasindaki secim SIRAYLA validasyon MCC -> macro-F1 -> stable recall'a
+gore yapilir (test metrikleri secim mantigina girmez). Secilen aday icin
+test degerlendirmesi BIR KEZ uretilir; bu test bolumu onceki (baseline)
+calistirmada zaten gorulmus oldugundan sonuc DOGRULAYICI degil KESIFSEL
+olarak isaretlenir (bkz. sonuc["test_degerlendirme_notu"]).
+
 CIKTI (data/processed/model/):
   model_06_hacim_yon_{set}_sonuc.json          - ozellik katalogu, split
                                                   ozeti, egitim suresi, test
@@ -213,6 +226,20 @@ def _tam_seri_dagilim(df: pd.DataFrame) -> dict:
     }, etiket_ay_serisi, aylik_hedef
 
 
+def _sinif_agirlikli_train_verisi(train_df: pd.DataFrame, train_data: pd.DataFrame) -> tuple:
+    """Mevcut ay-esit 'agirlik' kolonunu, YALNIZCA train_df'in etiket
+    frekansindan hesaplanan balanced sinif agirligiyla carpan ikinci bir
+    train verisi kopyasi uretir. Donus: (train_data_agirlikli, sinif_agirliklari)."""
+    sinif_agirliklari = yd.sinif_agirliklari_hesapla(
+        train_df["etiket"].tolist(), agirliklar=train_df["agirlik"].tolist()
+    )
+    train_data_agirlikli = train_data.copy()
+    train_data_agirlikli["agirlik"] = (
+        train_data_agirlikli["agirlik"] * train_data_agirlikli["etiket"].map(sinif_agirliklari)
+    )
+    return train_data_agirlikli, sinif_agirliklari
+
+
 def calistir(set_adi: str, ayar: dict) -> dict:
     print(f"\n{'=' * 70}\n{set_adi}\n{'=' * 70}")
     MODEL_DIR.mkdir(parents=True, exist_ok=True)
@@ -259,44 +286,78 @@ def calistir(set_adi: str, ayar: dict) -> dict:
     train_data = train_df[feature_listesi + ["etiket", "agirlik"]].reset_index(drop=True)
     tuning_data = val_df[feature_listesi + ["etiket", "agirlik"]].reset_index(drop=True)
 
-    predictor = TabularPredictor(
-        label="etiket",
-        problem_type="multiclass",
-        eval_metric="mcc",
-        sample_weight="agirlik",
-        weight_evaluation=True,
-        path=str(MODEL_DIR / f"autogluon_model_06_{set_adi.lower().replace('-', '_')}"),
-        verbosity=2,
-    )
-    t0 = time.time()
-    predictor.fit(
-        train_data=train_data,
-        tuning_data=tuning_data,
-        time_limit=ZAMAN_SINIRI_SANIYE,
-        presets=PRESET,
-        # GECICI WORKAROUND (kok neden KANITLANMADI): kucuk/agirlikli
-        # validation orneklerinde (ozellikle DF-B, 6 bagimsiz ay) sklearn MCC
-        # hesaplamasi bazi baz modellerde NaN val_score uretebiliyor (invalid
-        # value encountered in sqrt - dejenere/sabit tahmin dagilimi olasi bir
-        # aciklama, kesin dogrulanmadi). AutoGluon boyle bir modeli
-        # kaydetmiyor ama WeightedEnsemble aux-stacking asamasi yine de ona
-        # referans vermeye calisip "Model does not exist" ile CRASH ediyor
-        # (gozlenen AutoGluon 1.5.0 davranisi - upstream kok neden
-        # incelenmedi/kanitlanmadi). NN_TORCH'u disarida birakmak sorunu
-        # yalnizca bir sonraki NaN'li modele (ornegin LightGBMLarge) tasidi,
-        # model-bazli disarida birakma calismadi. Bu yuzden WeightedEnsemble
-        # aux adimi TAMAMEN ATLANDI (fit_weighted_ensemble=False) - bu bir
-        # kok-neden duzeltmesi DEGIL, gozlenen crash'i bypass eden gecici bir
-        # workaround'dur; bagimsiz temel modeller yine egitilir/
-        # degerlendirilir, en iyi TEK model leaderboard'dan secilir. Iki veri
-        # setinde de AYNI konfigurasyon (tek deneme kuraliyla tutarli - model-
-        # bazli tekrar denemeler DEGIL, tek seferlik gecici ayar).
-        fit_weighted_ensemble=False,
-    )
-    egitim_suresi = time.time() - t0
-    print(f"Egitim suresi: {egitim_suresi:.1f}s")
+    train_data_agirlikli, sinif_agirliklari = _sinif_agirlikli_train_verisi(train_df, train_data)
+    print(f"  Train sinif agirliklari (yalniz train frekansindan, balanced): {sinif_agirliklari}")
 
-    # --- test tahmini ---
+    ADAYLAR = {
+        "esit_agirlik": train_data,          # mevcut baseline: yalniz ay-esit agirlik
+        "sinif_agirlikli": train_data_agirlikli,  # ay-esit agirlik * balanced sinif agirligi (yalniz TRAIN)
+    }
+
+    predictors = {}
+    val_metrikleri = {}
+    egitim_sureleri = {}
+    for aday_adi, aday_train_data in ADAYLAR.items():
+        print(f"  --- aday: {aday_adi} ---")
+        aday_predictor = TabularPredictor(
+            label="etiket",
+            problem_type="multiclass",
+            eval_metric="mcc",
+            sample_weight="agirlik",
+            weight_evaluation=True,
+            path=str(MODEL_DIR / f"autogluon_model_06_{set_adi.lower().replace('-', '_')}_{aday_adi}"),
+            verbosity=2,
+        )
+        t0 = time.time()
+        aday_predictor.fit(
+            train_data=aday_train_data,
+            tuning_data=tuning_data,
+            time_limit=ZAMAN_SINIRI_SANIYE,
+            presets=PRESET,
+            # GECICI WORKAROUND (kok neden KANITLANMADI): kucuk/agirlikli
+            # validation orneklerinde (ozellikle DF-B, 6 bagimsiz ay) sklearn MCC
+            # hesaplamasi bazi baz modellerde NaN val_score uretebiliyor (invalid
+            # value encountered in sqrt - dejenere/sabit tahmin dagilimi olasi bir
+            # aciklama, kesin dogrulanmadi). AutoGluon boyle bir modeli
+            # kaydetmiyor ama WeightedEnsemble aux-stacking asamasi yine de ona
+            # referans vermeye calisip "Model does not exist" ile CRASH ediyor
+            # (gozlenen AutoGluon 1.5.0 davranisi - upstream kok neden
+            # incelenmedi/kanitlanmadi). NN_TORCH'u disarida birakmak sorunu
+            # yalnizca bir sonraki NaN'li modele (ornegin LightGBMLarge) tasidi,
+            # model-bazli disarida birakma calismadi. Bu yuzden WeightedEnsemble
+            # aux adimi TAMAMEN ATLANDI (fit_weighted_ensemble=False) - bu bir
+            # kok-neden duzeltmesi DEGIL, gozlenen crash'i bypass eden gecici bir
+            # workaround'dur; bagimsiz temel modeller yine egitilir/
+            # degerlendirilir, en iyi TEK model leaderboard'dan secilir. Iki veri
+            # setinde de AYNI konfigurasyon (tek deneme kuraliyla tutarli - model-
+            # bazli tekrar denemeler DEGIL, tek seferlik gecici ayar).
+            fit_weighted_ensemble=False,
+        )
+        egitim_sureleri[aday_adi] = round(time.time() - t0, 1)
+        print(f"  [{aday_adi}] Egitim suresi: {egitim_sureleri[aday_adi]:.1f}s")
+
+        X_val = val_df[feature_listesi].reset_index(drop=True)
+        proba_val = aday_predictor.predict_proba(X_val)[yd.FIXED_LABEL_ORDER].reset_index(drop=True)
+        tahmin_val = proba_val.idxmax(axis=1).tolist()
+        # validasyon her iki adayda da AYNI ay-esit agirlikla degerlendirilir (adil karsilastirma)
+        val_metrikleri[aday_adi] = yd.degerlendir(
+            val_df["etiket"].tolist(), tahmin_val, agirliklar=val_df["agirlik"].tolist()
+        )
+        predictors[aday_adi] = aday_predictor
+
+    secilen_aday = yd.en_iyi_aday_sec(val_metrikleri)
+    aday_ozet = {
+        k: (v["mcc_gorodkin"], v["macro_f1"], v["per_class"]["stable"]["recall"])
+        for k, v in val_metrikleri.items()
+    }
+    print(f"  Validasyon karsilastirmasi (mcc, macro_f1, stable_recall): {aday_ozet}")
+    print(f"  SECILEN ADAY: {secilen_aday} (kural: once val MCC, esitlikte macro-F1, "
+          f"esitlikte stable recall, tam esitlikte ilk aday/'esit_agirlik' - yd.en_iyi_aday_sec)")
+
+    predictor = predictors[secilen_aday]
+    egitim_suresi = egitim_sureleri[secilen_aday]
+
+    # --- test tahmini (yalniz SECILEN aday icin, BIR KEZ) ---
     X_test = test_df[feature_listesi].reset_index(drop=True)
     proba = predictor.predict_proba(X_test)[yd.FIXED_LABEL_ORDER].reset_index(drop=True)
     assert np.allclose(proba.sum(axis=1).values, 1.0, atol=1e-6), "predict_proba toplami 1 degil"
@@ -379,12 +440,31 @@ def calistir(set_adi: str, ayar: dict) -> dict:
         "ozellik_katalogu": katalog,
         "feature_listesi": feature_listesi,
         "split_ozeti": split_ozet,
+        "sinif_agirligi_iterasyonu": {
+            "sinif_agirliklari_train": sinif_agirliklari,
+            "aday_karsilastirmasi_validasyon": val_metrikleri,
+            "aday_egitim_sureleri_saniye": egitim_sureleri,
+            "secilen_aday": secilen_aday,
+            "secim_kurali": (
+                "Once validasyon MCC (mcc_gorodkin), esitlikte macro-F1, esitlikte "
+                "'stable' recall - test metrikleri secim mantigina sokulmadi."
+            ),
+        },
         "egitim_suresi_saniye": round(egitim_suresi, 1),
         "test_metrikleri": {
             "gunluk_agirlikli_birincil": metrik_gunluk_agirlikli,
             "gunluk_agirliksiz_bilgilendirme": metrik_gunluk_agirliksiz,
             "ay_bazli_son_gun": metrik_ay_bazli,
         },
+        "test_degerlendirme_notu": (
+            "KESIFSEL, DOGRULAYICI DEGIL: bu test bolumu (aylari), onceki baseline-only "
+            "calistirmasinda (pm_rapor_hacim_yon_3sinif_baseline.md) zaten bir kez "
+            "gorulup raporlanmisti. Bu calistirmada aday secimi YALNIZ validasyon "
+            "metrikleriyle yapildi (test test'e hic bakilmadan secildi) - ancak test "
+            "seti artik gorevi hic gormemis bagimsiz bir holdout olmadigindan, "
+            "asagidaki test_metrikleri sonuclari performans DOGRULAMASI degil, "
+            "yalniz keşifsel bir gozlem olarak okunmalidir."
+        ),
         "baseline_metrikleri_ay_bazli": baseline_metrikleri,
         "denetmen_mevsimsel_karsilastirma": mevsimsel_uyum,
         "pseudo_replikasyon_notu": pseudo_replikasyon_notu,
@@ -419,6 +499,7 @@ def calistir(set_adi: str, ayar: dict) -> dict:
     model_egitim_son_ayi = str(split["train"][-1])
     ileri_sinyal = {
         "veri_seti": set_adi,
+        "secilen_aday": secilen_aday,
         "durum": "gerceklesme_bekleniyor",
         "kullanim_durumu": "yalniz_pipeline_demonstrasyonu",
         "not": "Bu bir TEST/PERFORMANS sonucu DEGILDIR - hedef ayin gercek degeri henuz "
