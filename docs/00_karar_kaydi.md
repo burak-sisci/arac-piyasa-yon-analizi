@@ -2,7 +2,7 @@
 dokuman_tipi: karar_kaydi
 proje: "Araç Piyasası Fiyat Yönü Tahmini — Literatür Taraması"
 tarih: 2026-07-13
-revizyon: v8 — FİNAL (N13 eklendi; tüm 8 tarama fazı tamamlandı)
+revizyon: v9 — K9 eklendi: aktif Aşama B hedefi hacim yönüne kaydırıldı (2026-08-06, Codex denetimi)
 iliskili_dokuman: 00_master_plan_literatur_taramasi.md
 durum: onaylandi
 ---
@@ -57,6 +57,76 @@ Bu bilinçli ve belgelenmiş bir tasarım tercihidir.
   açıkça raporlanır; sıfır varsayılmaz.
 - İlan verisinin yapısal sorunları (seçilim yanlılığı, ölü/tekrarlanan ilanlar,
   fiyat düşürme davranışı) Faz 4 ve Faz 8'de ele alınır.
+
+**K8 — Operasyonel ek not (2026-08-06, Codex denetimi ile onaylandı):**
+Aşama B veri mühendisliği çalışması sırasında ortaya çıkan üç operasyonel
+netleştirme, K8'in yorumlanmasına bağlayıcıdır (yeni bir kaynak iddiası
+eklemez, yalnızca mevcut K8 kararının uygulamadaki kapsamını netleştirir):
+
+1. **Rol ayrımı:** K8'in operasyonel birincil hedefi BETAM/sahibindex
+   `proxy_fiyat_cari_tl` serisinin **NOMİNAL** aylık ilan fiyatı yönüdür.
+   **Reel** yön (TÜFE deflatörlü) ikincil bir sağlamlık/duyarlılık hedefidir,
+   birincilin yerini almaz. `noter_devir_otomobil_adet` bir **hacim**
+   serisidir — yalnızca yardımcı özellik (feature) veya ayrı, kendi başına
+   keşifsel bir hacim görevi olarak ele alınır; fiyat baseline'ı olarak
+   sunulamaz.
+2. **N<50 keşifsel geçit:** `proxy_fiyat_cari_tl` serisinde şu an 28 dolu
+   fiyat ayı / ~25 geçerli (hesaplanabilir) yön etiketi bulunmaktadır. N12
+   eşiğine göre bu **N<50** demektir: bu veri hacmiyle yalnızca **keşifsel**
+   analiz yapılabilir; başarı/baseline iddiası kurulamaz ve model eğitimi
+   **başlatılamaz**. Eşik N≥50'ye ulaşana kadar geçerlidir.
+3. **Stable bandı uygulaması (K2 netleştirmesi):** Oynaklık-uyarlamalı
+   sigma/tercile eşiği **tüm seri üzerinden tek seferde** hesaplanıp sabit
+   uygulanamaz (bu, gelecek gözlemleri görmüş olmak anlamına gelir —
+   sızıntı). Her değerlendirme kesiminde eşik **yalnızca o ana kadarki
+   geçmiş/eğitim penceresinden** (genişleyen pencere, N12 as-of ilkesi) fit
+   edilir. Nominal ana senaryo **k=0.5**'tir; k=0.75 ve k=1.0 duyarlılık
+   senaryolarıdır. Tercile tabanlı bölme yalnızca ikincil bir duyarlılık
+   kontrolüdür (K2'deki yedek seçenek rolü değişmedi).
+
+K9 kapsamında `scripts/model/yon_degerlendirme.py`, hiçbir commit'e girmemiş
+ve artık kaldırılmış olan geçici bir keşifsel fiyat-denetim script'inin
+yerine, **target-bağımsız bir değerlendirme altyapısına dönüştürüldü**
+(ne fiyata ne hacme özel varsayım taşımıyor — hangi seriyi/eşiği
+kullanacağına çağıran script karar verir). K8'in NOMİNAL ilan-fiyatı yönü
+hedefi ve N<50 keşifsel geçidi bilgisi kalıcıdır (fiyat serisi hâlâ N<50
+durumundadır), ancak Aşama B'nin şu anki aktif çalışması K9'da tanımlıdır.
+
+**K9 — Aktif Aşama B kararı: hacim yönü, doğrudan üç sınıf (2026-08-06,
+Codex denetimi ile onaylandı).** K8'in ilan-fiyatı yönü hedefi N<50 keşifsel
+geçidinde takılı kaldığı için (bkz. yukarıdaki K8 operasyonel ek notu),
+Aşama B'nin şu anki aktif operasyonel çalışması **hacim** hedefine kaydırıldı:
+
+1. **Target:** `noter_devir_otomobil_adet` (noter devri ikinci el otomobil
+   adedi) — bir **hacim** serisidir, ilan fiyatı DEĞİLDİR. K8'in "ilan fiyatı
+   yönü" kararının yerini ALMAZ; K8 fiyat hedefi için hâlâ geçerli ve
+   dondurulmuş (N<50) durumdadır. İki hedef PARALEL ve AYRI konulardır.
+2. **Ufuk ve sınıflar:** doğrudan üç sınıflı (up/stable/down) aylık yön;
+   etiket, bir günlük satırın bulunduğu referans ayın hacmi ile bir sonraki
+   takvim ayının hacmi karşılaştırılarak kurulur. Frekans GÜNLÜK kalır (ay
+   hizalı doldurma nedeniyle ay-içi tekrar var — pseudo-replikasyon riski
+   PM raporunda açıkça işaretlenir).
+3. **Stable bandı:** SABIT ±%5 (K2'deki oynaklık-uyarlamalı/sigma tabanlı
+   yaklaşım bu görev için kullanılmaz — K2 fiyat hedefine özgü kalır, hacim
+   hedefinde basit ve yorumlanabilir sabit eşik tercih edildi). ±%3/±%10
+   yalnızca duyarlılık senaryosudur.
+4. **Ürün çıktısı:** `p_down`/`p_stable`/`p_up` + seçilen sınıf + maksimum-
+   olasılık tabanlı `raw_confidence`. Kalibre edilmemiş olasılıklar açıkça
+   "raw" adlandırılır; validation örneklemi (özellikle DF-B'de) güvenilir
+   kalibrasyon için yetersizse kalibre edilmiş gibi sunulmaz.
+5. **Gerekçe:** (a) veri yeterliliği — hacim serisinde fiyat serisine göre
+   çok daha fazla dolu/geçerli ay var (N<50 kapısını fiyattan farklı olarak
+   büyük ölçüde aşıyor); (b) sınıf dağılımı fiyat serisine göre daha dengeli.
+6. **Kapsam sınırı:** Bu sinyal fiyatlama kararlarına bir GİRDİ/yardımcı
+   göstergedir — K8'in "ilan fiyatı yönü" hedefinin YERİNE GEÇMEZ ve
+   doğrudan fiyat tahmini olarak sunulamaz.
+
+Uygulama: `scripts/model/yon_degerlendirme.py` (target-bağımsız saf
+fonksiyonlar: sabit-yüzde-eşikli etiketleme, purge'li kronolojik split,
+ay-ağırlığı, olasılık doğrulama, MCC/macro-F1/accuracy/per-class metrikleri)
+ve `scripts/model/model_06_hacim_yon_siniflandirma.py` (AutoGluon
+`TabularPredictor(problem_type="multiclass")` ile DF-A/DF-B ayrı eğitim —
+bkz. `data/processed/raporlar/pm_rapor_hacim_yon_3sinif_baseline.md`).
 
 ## B. Faz Bulgularından Doğan Bağlayıcı Notlar (N)
 

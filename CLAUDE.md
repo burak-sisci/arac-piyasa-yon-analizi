@@ -22,6 +22,28 @@ Bu iki aşamanın ortak noktası: nihai hedef aynı (fiyat yönü tahmini için
 literatüre VE veriye dayalı bir baseline). README.md'deki "Aşama A / Aşama B"
 bölümleri güncel durumu tutar; buradaki ayrım kalıcıdır, değişmez.
 
+**Not (2026-08-06, K9):** Aşama A'nın "fiyat yönü" literatürü ve K8 kararı
+(ilan fiyatının nominal yönü) tarihsel referans olarak korunur — proxy fiyat
+serisi N<50 keşifsel geçitte dondurulmuş durumdadır. Aşama B'nin ŞU ANKİ
+aktif operasyonel target'ı günlük `noter_devir_otomobil_adet` (hacim)
+serisinin doğrudan üç-sınıflı (up/stable/down) yönüdür — gerekçe: veri
+yeterliliği (N<50 kapısını fiyattan farklı olarak aşıyor) ve daha dengeli
+sınıf dağılımı. Bu hacim sinyali fiyatlama kararlarına bir GİRDİdir, K8'in
+yerine geçen doğrudan bir fiyat tahmini değildir. Ayrıntı: `docs/00_karar_kaydi.md`
+K9.
+
+## Çalışma Rolü Hiyerarşisi (Aşama B, 2026-08-06 itibarıyla)
+
+- **Codex** — denetmen ve karar/onay mercii. Bağlayıcı kararları (K/N
+  maddeleri) onaylar/reddeder; repoyu salt-okunur denetler.
+- **Claude Code** — "Kodcu": Codex tarafından onaylanan işi uygular, kod
+  yazar, test eder, PM raporu üretir.
+- **Perplexity** — "Araştırmacı": dış araştırma (literatür/veri kaynağı
+  taraması) yürütür.
+- Codex onayından geçmeyen hiçbir yeni bağlayıcı karar uygulanmaz; belirsizlik
+  durumunda mevcut K/N kararlarına sadık kalınır ve açık soru olarak PM
+  raporuna yazılır (bkz. Zorunlu Kural 10).
+
 ## Hedef Kitle: Geliştirici Ekip Profili
 
 - İleri seviye. Model eğitimi, zaman serisi analizi ve sınıflandırma deneyimliler.

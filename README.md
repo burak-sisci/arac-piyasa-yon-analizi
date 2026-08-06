@@ -45,9 +45,12 @@ Aşama A'nın bulgularını gerçek veriyle test eden, adım adım ilerleyen akt
    yok, 2021-01→2023-12 (kısmi, kalite düşen) kapsandı, ana 2024-2026
    dosyasıyla birleştirilmedi; sonuçlar `pm_rapor_enag_2018_genisletme.md`'de.
 
-**Açık durum:** Nihai hedef tanımı (K1 — hangi değişken, hangi ufuk, hangi
-eşik) proje sahibinin kararını bekliyor; bu ana kadarki çalışma karar için
-kanıt üretiyor, karar vermiyor. `data/` klasörüne bkz.
+**Durum:** Aktif Aşama B target'ı **K9 ile kararlaştırılmıştır** — günlük
+granülerlikte `noter_devir_otomobil_adet` (hacim) serisinin doğrudan
+üç-sınıflı (up/stable/down) yönü. K1'in aylık tahmin ufku, bu çalışma
+kapsamında bir varsayım olarak kullanılıyor (nihai/bağlayıcı hedef
+değişken/ufuk/eşik seçimi hâlâ proje sahibinin nihai onayına açıktır;
+K9 bu arada geçerli aktif çalışma hedefidir). `data/` klasörüne bkz.
 
 ### Nasıl çalışır (veri mühendisliği döngüsü)
 
@@ -106,5 +109,37 @@ kanıt üretiyor, karar vermiyor. `data/` klasörüne bkz.
       endeksi yalnızca 2018-01'den itibaren)
 - [x] ENAG kontrol serisi geriye genişletme denemesi (kısmi: 2021-01→2023-12,
       2018-2020 elde edilemedi, ana dosyayla birleştirilmedi)
-- [ ] Nihai hedef tanımı (K1) — proje sahibi kararı bekliyor
-- [ ] Model kurma / tahmin — başlatılmadı (ayrı aşama)
+- [x] Aktif hedef tanımı — K9 ile kararlaştırıldı: günlük granülerlikte
+      `noter_devir_otomobil_adet` üç-sınıf yönü (aşağıya bkz.); K1'in aylık
+      tahmin ufku bu çalışma için varsayımdır. Nihai/bağlayıcı hedef
+      değişken seçimi (K1) proje sahibinin nihai onayına hâlâ açıktır.
+- [ ] İlan fiyatı yön hedefi (K8) — dondurulmuş: proxy_fiyat_cari_tl
+      serisinde 28 dolu fiyat ayı / yaklaşık 25 hesaplanabilir yön etiketi
+      N<50 (N12)
+      keşifsel geçidinde kaldığı için model eğitimi başlatılamıyor. Bu hedef
+      terk edilmedi, yalnızca N≥50'ye ulaşana kadar aktif çalışma dışıdır.
+- [x] **Aktif operasyonel hedef — hacim yönü, doğrudan üç sınıf (K9,
+      2026-08-06):** `noter_devir_otomobil_adet` (hacim) serisinin bir
+      sonraki takvim ayına göre up/stable/down yönü, sabit ±%5 eşik,
+      günlük frekans. Target-bağımsız değerlendirme altyapısı
+      (`scripts/model/yon_degerlendirme.py`, 21 pytest testi) + AutoGluon
+      `TabularPredictor(problem_type="multiclass")` ile DF-A/DF-B ayrı
+      eğitim (`scripts/model/model_06_hacim_yon_siniflandirma.py`).
+      Test sonucu (purge'li kronolojik split, ay-ağırlıklı): **DF-A**
+      MCC=0.242/macro-F1=0.276/acc=%33 (n=12 ay) — mevsimsel-yön(t-12ay)
+      baseline'ı (MCC=0.394/F1=0.579/acc=%58) **GEÇEMEDİ**, "sinyal yok"
+      dürüst bulgusu (N6/N13). **DF-B** (yalnızca 15 bağımsız eğitim ayı —
+      KEŞİFSEL) MCC=0.387/macro-F1=0.413/acc=%50 (n=6 ay), tüm naif
+      baseline'ları geçti ama örneklem çok küçük, genellenebilir değil.
+      Olasılıklar RAW (kalibre edilmemiş). Ayrıntı:
+      `pm_rapor_hacim_yon_3sinif_baseline.md`, karar gerekçesi
+      `docs/00_karar_kaydi.md` K9.
+- [ ] Model kurma / tahmin — K8 (fiyat) hedefi için N≥50 eşiğine ulaşılana
+      kadar başlatılmadı; hacim hedefi (K9) için DF-A/DF-B baseline denemesi
+      yukarıda tamamlandı, sonraki iterasyon (feature/model geliştirme) PM
+      onayı bekliyor. (`scripts/model/model_01`/`model_02` — commit'li,
+      AutoGluon TimeSeries SEVİYE baseline'ı + PM raporu
+      `pm_rapor_modelleme_fazi_1.md`/`_fazi_2.md` — bu üç-sınıf yön
+      protokolünün parçası değildir ama PM onaylı ayrı bir çalışmadır.
+      `model_03`/`model_04`/`model_05` ise untracked, PM onayından geçmemiş
+      denemelerdir — bu paketin dışındadır.)
