@@ -64,3 +64,13 @@ ile kıyaslanır.
 
 Birden fazla hüküm ateşlenirse tümü raporlanır; öncelik `C > B > D > A`.
 Sonuç ne olursa olsun yeni model, test açma veya K değişikliği yapılmaz.
+
+## Koşu sonrası Pusula düzeltme notu (sonuç lehine değiştirme değildir)
+
+İlk ön-kayıtta A, “tüm oracle tavanları null95'i aşmıyor”; C ise “en az bir
+oracle null95'i ≥0,15 marjla aşıyor” diye tanımlanarak `(0; 0,15)` arasında
+mantıksal bir ölü bölge bırakılmıştır. RF tavanının null95'i yalnız 0,0013
+aşması bu boşluğu görünür kılmıştır. Pusula, kendi spesifikasyon kusurunu
+şöyle kapatmıştır: A'nın oracle koşulu C'nin tümleyenidir — hiçbir oracle
+null95'i en az 0,15 marjla aşmıyorsa, diğer A koşullarıyla birlikte A ateşler.
+Bu düzeltme negatif hükme çıkar; yeni aday veya lehte eşik üretmez.

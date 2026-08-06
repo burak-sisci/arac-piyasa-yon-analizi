@@ -162,3 +162,13 @@ Birincil DF-A 101 bağımsız etiketli ayla veri yeterlilik geçidini aşarken,
       Holm, macro-F1 ve yıllık jackknife koşullarında terfi yok; haftalık ek
       bilgi doğrulanmadı. Kilitli test açılmadı. Ayrıntı:
       `pm_rapor_nowcast_rolling_origin.md`.
+- [x] **Model 11 hedef ve bilgi tavanı teşhisi:** Ön-kayıtlı üç dış kırılma,
+      lag/geçiş yapısı, beş sabit stable-band ve permütasyon-null oracle
+      tavanları test-dışı dönemde ölçüldü. Hiçbir lag Holm sonrası anlamlı
+      değil; lag-1 persistence MCC=-0,020 ve CI sıfırı içeriyor; hiçbir bant
+      maddi farklı değil. Oracle tavanları ezber null'ını ≥0,15 aşmadı.
+      Pusula hükmü: mevcut bilgi temsilleri altında bu hedefte saptanabilir
+      öngörü becerisi yoktur. Test açılmadı, hedef/K değişmedi. Kullanıcı
+      kararı bekleyen üç seçenek: kapat; bilgi kümesini değiştir; ufuk/sınıf
+      sayısını yeniden tanımla. Ayrıntı: `docs/10_asama_b_nowcast_kapanis_sentezi.md`
+      ve `pm_rapor_model11_hedef_bilgi_tavani.md`.
