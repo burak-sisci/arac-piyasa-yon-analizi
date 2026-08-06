@@ -147,4 +147,10 @@ Birincil DF-A 101 bağımsız etiketli ayla veri yeterlilik geçidini aşarken,
       tahmin/pazar cut-off; cari ayın M/M-1 yönü, kapalı ±%5 stable bandı;
       ay-gruplu snapshot ve ay-eşit ağırlık; lag2 gerçek-zaman koruması;
       resmî/dini tam-yarım gün tatil takvimi. DF-A: 101 bağımsız ay,
-      DF-B: 29 ay (yalnız keşifsel). Model eğitimi henüz başlatılmadı.
+      DF-B: 29 ay (yalnız keşifsel). Validation-only baseline ve dört
+      düşük-kapasiteli aday denendi; test açılmadı. En iyi naif baseline
+      `M-2 persistence` (MCC=0,110; macro-F1=0,415), en iyi aday sığ Random
+      Forest (MCC=0,037; macro-F1=0,189) oldu ve terfi kapısını geçemedi.
+      Hafta 1→4 MCC eğrisi monoton değil; mevcut özelliklerle haftalık ek
+      bilgi doğrulanmadı. Ayrıntı:
+      `pm_rapor_nowcast_baseline_ve_dusuk_kapasite.md`.

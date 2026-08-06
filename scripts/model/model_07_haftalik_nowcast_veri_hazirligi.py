@@ -77,24 +77,45 @@ def main() -> None:
 
     df_a = pd.read_csv(DF_DIR / "df_a_v3_noter_penceresi_2015_bugun.csv", low_memory=False)
     df_b = pd.read_csv(DF_DIR / "df_b_v3_enag_betam_2024_bugun.csv", low_memory=False)
+    karisik = pd.read_csv(
+        DF_DIR / "df_gunluk_karisik_frekans_2015_bugun.csv", low_memory=False
+    )
     df_a = _target_penceresini_kes(df_a)
     df_b = _target_penceresini_kes(df_b)
 
     # DF-B'de gerçek günlük feature yoktu. Aynı tarihli DF-A USD/TRY serisi,
     # yalnız tarih anahtarıyla eklenir; target veya başka DF-A sütunu taşınmaz.
-    usd = df_a[["tarih", "usdtry_orta"]].copy()
-    df_b = df_b.merge(usd, on="tarih", how="left", validate="one_to_one")
+    yuksek_frekans = karisik[["tarih", "eurtry_orta", "otv_event_gunu_mu"]].copy()
+    df_a = df_a.merge(yuksek_frekans, on="tarih", how="left", validate="one_to_one")
+    usd_eur_otv = df_a[
+        ["tarih", "usdtry_orta", "eurtry_orta", "otv_event_gunu_mu"]
+    ].copy()
+    df_b = df_b.merge(usd_eur_otv, on="tarih", how="left", validate="one_to_one")
+
+    # Faiz kaynagi yerelde aylik ortalamadir. Referans ayi anahtariyla seri
+    # yeniden kurulur; snapshot katmani cari/lag1 yerine lag2 uygular.
+    faiz_satirlari = karisik.dropna(subset=["faiz_referans_ay"])[
+        ["faiz_referans_ay", "tasit_kredisi_faiz", "politika_faizi"]
+    ].drop_duplicates("faiz_referans_ay")
+    faiz_haritasi = faiz_satirlari.set_index("faiz_referans_ay")
+    for veri in (df_a, df_b):
+        ay_anahtari = pd.to_datetime(veri["tarih"]).dt.to_period("M").astype(str)
+        veri["tasit_kredisi_faiz"] = ay_anahtari.map(faiz_haritasi["tasit_kredisi_faiz"])
+        veri["politika_faizi"] = ay_anahtari.map(faiz_haritasi["politika_faizi"])
 
     aylik_a = [
         "tufe_aylik_degisim",
         "tufe_yillik_degisim",
         "odmd_otomobil_adet",
         "tuketici_guven_endeksi",
+        "tasit_kredisi_faiz",
+        "politika_faizi",
     ]
     aylik_b = [
         c for c in df_b.columns
         if c not in {
             "tarih", TARGET, "noter_devir_toplam_adet", "usdtry_orta",
+            "eurtry_orta", "otv_event_gunu_mu",
             # Ekonomik lag ile yayın lag'ini üst üste bindirmemek için bu
             # önceden gecikmeli sütunlar Stage 1 snapshot'ına alınmaz.
             "tasit_kredisi_faiz_lag4ay", "politika_faizi_lag5ay",
@@ -104,20 +125,22 @@ def main() -> None:
     snapshots = {
         "DF-A": hn.haftalik_snapshot_uret(
             df_a,
-            gunluk_feature_sutunlari=["usdtry_orta"],
+            gunluk_feature_sutunlari=["usdtry_orta", "eurtry_orta"],
+            olay_feature_sutunlari=["otv_event_gunu_mu"],
             aylik_feature_sutunlari=aylik_a,
             esik_yuzde=ESIK_YUZDE,
             en_kucuk_aylik_lag=2,
-            target_lag_aylari=[2, 3, 12],
+            target_lag_aylari=[2, 3, 12, 13],
             tatil_tarihleri=turkiye_resmi_tatil_agirliklari(2018, 2026),
         ),
         "DF-B": hn.haftalik_snapshot_uret(
             df_b,
-            gunluk_feature_sutunlari=["usdtry_orta"],
+            gunluk_feature_sutunlari=["usdtry_orta", "eurtry_orta"],
+            olay_feature_sutunlari=["otv_event_gunu_mu"],
             aylik_feature_sutunlari=aylik_b,
             esik_yuzde=ESIK_YUZDE,
             en_kucuk_aylik_lag=2,
-            target_lag_aylari=[2, 3, 12],
+            target_lag_aylari=[2, 3, 12, 13],
             tatil_tarihleri=turkiye_resmi_tatil_agirliklari(2018, 2026),
         ),
     }
@@ -151,6 +174,21 @@ def main() -> None:
             "dogal_frekans": "gunluk_is_gunu",
             "snapshot_kurali": "cari ay başlangıcından pazar cut-off'una kadar",
             "as_of": "cut-off veya öncesindeki son dolu iş günü",
+        },
+        "eurtry_orta": {
+            "dogal_frekans": "gunluk_is_gunu",
+            "snapshot_kurali": "cari ay baslangicindan pazar cut-off'una kadar",
+            "as_of": "EVDS tarih damgasi cut-off veya oncesinde; pazartesi tahmininde kullanilir",
+        },
+        "otv_event_gunu_mu": {
+            "dogal_frekans": "olay_bazli",
+            "snapshot_kurali": "yalniz yururluk tarihi cut-off veya oncesindeyse cari ay sayisi/gun farki",
+            "as_of": "kayitli gercek yururluk tarihi",
+        },
+        "faiz_featurelari": {
+            "dogal_frekans": "aylik_ortalama",
+            "snapshot_kurali": "iki takvim ayi gecikmeli",
+            "as_of": "cari/lag1 reddedildi; lag2 konservatif",
         },
         "aylik_featurelar": {
             "dogal_frekans": "aylik/ayliklastirilmis",

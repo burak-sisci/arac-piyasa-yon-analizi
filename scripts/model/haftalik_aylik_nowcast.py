@@ -117,6 +117,7 @@ def haftalik_snapshot_uret(
     target_sutunu: str = "noter_devir_otomobil_adet",
     tarih_sutunu: str = "tarih",
     gunluk_feature_sutunlari: Iterable[str] = (),
+    olay_feature_sutunlari: Iterable[str] = (),
     aylik_feature_sutunlari: Iterable[str] = (),
     esik_yuzde: float = 5.0,
     en_kucuk_aylik_lag: int = 2,
@@ -135,6 +136,7 @@ def haftalik_snapshot_uret(
         )
 
     gunluk_feature_sutunlari = list(gunluk_feature_sutunlari)
+    olay_feature_sutunlari = list(olay_feature_sutunlari)
     aylik_feature_sutunlari = list(aylik_feature_sutunlari)
     target_lag_aylari = sorted(set(int(x) for x in target_lag_aylari))
     if isinstance(tatil_tarihleri, Mapping):
@@ -155,12 +157,17 @@ def haftalik_snapshot_uret(
         tarih_sutunu,
         target_sutunu,
         *gunluk_feature_sutunlari,
+        *olay_feature_sutunlari,
         *aylik_feature_sutunlari,
     }
     eksik = sorted(gerekli - set(gunluk_df.columns))
     if eksik:
         raise ValueError(f"Gerekli sütunlar eksik: {eksik}")
-    if target_sutunu in gunluk_feature_sutunlari or target_sutunu in aylik_feature_sutunlari:
+    if (
+        target_sutunu in gunluk_feature_sutunlari
+        or target_sutunu in olay_feature_sutunlari
+        or target_sutunu in aylik_feature_sutunlari
+    ):
         raise ValueError("Cari target feature listesine eklenemez")
 
     df = gunluk_df[list(gerekli)].copy()
@@ -215,6 +222,15 @@ def haftalik_snapshot_uret(
         satir["is_gunu_ilerleme_orani"] = float(gecen_is_gunu / aydaki_is_gunu)
         for sutun in gunluk_feature_sutunlari:
             satir.update(_gunluk_ozet(cari_ay_parcasi[sutun], sutun))
+        for sutun in olay_feature_sutunlari:
+            olay = pd.to_numeric(cari_ay_parcasi[sutun], errors="coerce").fillna(0.0)
+            if not olay.isin([0.0, 1.0]).all():
+                raise ValueError(f"{sutun!r} olay feature'i yalniz 0/1 icermelidir")
+            olayli = cari_ay_parcasi.loc[olay.eq(1.0), tarih_sutunu]
+            satir[f"{sutun}_cari_ay_sayisi"] = int(olay.sum())
+            satir[f"{sutun}_son_olaydan_gun"] = (
+                int((kesit - olayli.max()).days) if not olayli.empty else np.nan
+            )
         for sutun, aylik_seri in aylik_feature_serileri.items():
             satir[f"{sutun}_lag{en_kucuk_aylik_lag}ay"] = aylik_seri.get(
                 ay - en_kucuk_aylik_lag, np.nan

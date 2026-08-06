@@ -190,3 +190,31 @@ def test_nowcast_split_eksik_embargo_reddedilir():
             "2024-03", "2024-12",
             embargo_ay_sayisi=2,
         )
+
+
+def test_olay_feature_yalniz_kesit_oncesini_sayar():
+    df = _ornek_gunluk_df()
+    df["otv_event"] = 0
+    df.loc[df["tarih"] == "2024-02-10", "otv_event"] = 1
+    sonuc = hn.haftalik_snapshot_uret(
+        df,
+        olay_feature_sutunlari=["otv_event"],
+        target_lag_aylari=[2],
+    )
+    subat = sonuc[sonuc["hedef_ay"] == pd.Period("2024-02", "M")]
+    ilk = subat[subat["kesit_tarihi"] == pd.Timestamp("2024-02-04")].iloc[0]
+    ikinci = subat[subat["kesit_tarihi"] == pd.Timestamp("2024-02-11")].iloc[0]
+    assert ilk["otv_event_cari_ay_sayisi"] == 0
+    assert pd.isna(ilk["otv_event_son_olaydan_gun"])
+    assert ikinci["otv_event_cari_ay_sayisi"] == 1
+    assert ikinci["otv_event_son_olaydan_gun"] == 1
+
+
+def test_olay_feature_binary_olmayan_degeri_reddeder():
+    df = _ornek_gunluk_df()
+    df["olay"] = 0
+    df.loc[df.index[0], "olay"] = 2
+    with pytest.raises(ValueError, match="yalniz 0/1"):
+        hn.haftalik_snapshot_uret(
+            df, olay_feature_sutunlari=["olay"], target_lag_aylari=[2]
+        )
