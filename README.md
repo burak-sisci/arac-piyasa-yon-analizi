@@ -172,3 +172,12 @@ Birincil DF-A 101 bağımsız etiketli ayla veri yeterlilik geçidini aşarken,
       kararı bekleyen üç seçenek: kapat; bilgi kümesini değiştir; ufuk/sınıf
       sayısını yeniden tanımla. Ayrıntı: `docs/10_asama_b_nowcast_kapanis_sentezi.md`
       ve `pm_rapor_model11_hedef_bilgi_tavani.md`.
+- [x] **Model 11 sonrası üç karar notebooku:** Pusula ve Rota ortak yazımıyla
+      (1) negatif bulguyla kapatma, (2) target + up/stable/down korunarak yeni
+      öncü bilgi arama şartnamesi ve (3) ufuk/toplulaştırma/sınıf sözleşmesi
+      alternatifleri için çalıştırılabilir karar laboratuvarları üretildi.
+      Yeni veri/model koşulmadı; kilitli test açılmadı ve nihai seçenek kullanıcı
+      adına seçilmedi. Ayrıntı: `notebooks/karar_lab_01_hedefi_kapat.ipynb`,
+      `notebooks/karar_lab_02_bilgi_kumesi_genislet.ipynb`,
+      `notebooks/karar_lab_03_ufuk_sinif_degisikligi.ipynb` ve
+      `pm_rapor_uc_karar_notebook_paketi.md`.

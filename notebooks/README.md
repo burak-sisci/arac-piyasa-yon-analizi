@@ -44,3 +44,20 @@ açılabilir — yalnızca `ipykernel` gerekir: `pip install ipykernel`.)
 büyük tablo dumpları) diff'leri şişirebilir. Commit etmeden önce
 "Restart & Clear Output" yapman önerilir — zorunlu değil, bu proje
 otonomi sınırının dışında, senin tercihin.
+
+## Yönetilen karar notebookları
+
+Proje sahibinin 2026-08-07 tarihli talebiyle, tamamlanan aşamalar için
+öğretici ve teknik karar desteği sağlayan notebooklar da bu klasörde tutulur.
+Bunlar ad-hoc analizlerden farklı olarak çalıştırılır, QA'dan geçer ve PM
+raporuyla birlikte commit edilir.
+
+- `karar_lab_01_hedefi_kapat.ipynb`: negatif bulguyla mevcut hattı kapatma
+  gerekçesi ve yeniden açma koşulu.
+- `karar_lab_02_bilgi_kumesi_genislet.ipynb`: target ve üç sınıf korunurken
+  yeni öncü bilgi için arama/kabul şartnamesi.
+- `karar_lab_03_ufuk_sinif_degisikligi.ipynb`: ufuk, toplulaştırma ve sınıf
+  sözleşmesi alternatiflerinin fizibilitesi.
+
+Bu üç notebook Model 09-11'in mevcut kanıtını yeniden işler; yeni model fit
+etmez ve kilitli test dönemini açmaz.
