@@ -49,3 +49,5 @@ Thumbs.db
 # Editör
 .vscode/
 .idea/
+# Yerel ajan proje bağlamı
+CLAUDE.md
