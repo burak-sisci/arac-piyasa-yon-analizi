@@ -128,6 +128,18 @@ K9.
     (5) Varsayımlar ve Kararlar (K/N kararlarına uygunluk), (6) Açık Sorular /
     PM Onayı Gerekenler, (7) Önerilen Sonraki Adım (başlatılmaz, yalnızca önerilir).
     Rapor oturumda özet olarak da gösterilir.
+11. Proje sahibinin kalıcı notebook talimatı (aynen):
+
+    > bundan sonra senden tamamlanan her aşama için ders kitabı tadında bir .jpynb dosyası yazmanı istiyorum. sıradan birinin anlayabileceği kadar basit ve teknik kararlar verebilecek kadar eğitici olsun. bunu claude.md dosyasına aynen yaz. bundan sonra ki tüm çalışmalarda durum bu şekilde olacak.
+
+    Uygulama standardı: Her tamamlanan aşama için geçerli Jupyter Notebook
+    uzantısıyla (`.ipynb`) bir ders kitabı notebook'u üretilir. Notebook;
+    sıradan bir okuyucunun izleyebileceği açık anlatımı, teknik karar verecek
+    kişinin ihtiyaç duyacağı yöntem/gerekçe/varsayım/ölçüm ayrıntılarını,
+    çalıştırılabilir kod hücrelerini, sonuçların yorumunu, sınırlılıkları ve
+    sonraki karar noktalarını birlikte içerir. İlgili notebook üretilmeden
+    aşama tamamlanmış sayılmaz; notebook aşamanın kod, test, PM raporu ve
+    README güncellemesiyle aynı mantıksal commit/push paketine girer.
 
 ## Otonomi Sınırı — Kullanıcı Gerekli / Gerekli Değil
 
