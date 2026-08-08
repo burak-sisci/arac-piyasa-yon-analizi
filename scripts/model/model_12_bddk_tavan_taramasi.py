@@ -8,6 +8,7 @@ değildir; hüküm yalnız maliyet önceliklendiren heuristik bir taramadır.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import sys
@@ -39,6 +40,7 @@ import hedef_teshis as ht  # noqa: E402
 import model_09_dusuk_kapasiteli_nowcast as m09  # noqa: E402
 import model_11_hedef_bilgi_tavani as m11  # noqa: E402
 import yon_degerlendirme as yd  # noqa: E402
+import turkiye_tatil_takvimi as ttk  # noqa: E402
 
 BDDk_URL = (
     "https://www.bddk.org.tr/BultenHaftalik/tr/Gelismis/"
@@ -46,6 +48,8 @@ BDDk_URL = (
 )
 BDDk_BASLANGIC = "3.01.2014 00:00:00"
 BDDk_BITIS = "31.07.2026 00:00:00"
+BDDk_CACHE = MODEL_DIR / "model_12_bddk_tasit_haftalik_cari.csv"
+BDDk_CACHE_SHA256 = "4ED663DC373C6BB6C63A7A2D910D22408C574CF71210FFB9453E7EB087F030DE"
 BDDk_FEATURELARI = [
     "bddk_tasit_bakiye_4h_degisim_pct",
     "bddk_tasit_bakiye_13h_degisim_pct",
@@ -86,6 +90,19 @@ TATIL_KAYMALARI = {
     "2026-05-26": "Kurban Bayramı",
 }
 
+IZINLI_ARALIK_ISTISNALARI = {
+    ("2018-08-17", "2018-08-20", 3),
+    ("2018-08-20", "2018-08-31", 11),
+    ("2021-07-16", "2021-07-19", 3),
+    ("2021-07-19", "2021-07-30", 11),
+}
+ISTISNA_TATIL_ILK_GUNU = {
+    ("2018-08-17", "2018-08-20", 3): "2018-08-21",
+    ("2018-08-20", "2018-08-31", 11): "2018-08-21",
+    ("2021-07-16", "2021-07-19", 3): "2021-07-20",
+    ("2021-07-19", "2021-07-30", 11): "2021-07-20",
+}
+
 REFERANS = {
     "lojistik_l2_c01": {
         "tavan_gozlenen": 0.2147571548065723,
@@ -106,25 +123,52 @@ REFERANS = {
 }
 
 
-def seri_takvimini_dogrula(seri: pd.DataFrame) -> dict:
+def _istisna_sozlesmesini_dogrula() -> None:
+    if len(IZINLI_ARALIK_ISTISNALARI) != 4:
+        raise RuntimeError("BDDK aralık istisnası listesi tam dört tuple olmalı")
+    if set(ISTISNA_TATIL_ILK_GUNU) != IZINLI_ARALIK_ISTISNALARI:
+        raise RuntimeError("BDDK aralık istisnalarının tatil bağı eksik")
+    tatiller = ttk.turkiye_resmi_tatil_agirliklari(2018, 2021)
+    for olay_yili in (2018, 2021):
+        olay = sorted(x for x in IZINLI_ARALIK_ISTISNALARI if x[0].startswith(str(olay_yili)))
+        if len(olay) != 2 or [x[2] for x in olay] != [3, 11]:
+            raise RuntimeError(f"{olay_yili}: istisna örüntüsü 3 gün sonra 11 gün olmalı")
+        if olay[0][1] != olay[1][0] or (
+            pd.Timestamp(olay[1][1]) - pd.Timestamp(olay[0][0])
+        ).days != 14:
+            raise RuntimeError(f"{olay_yili}: 3+11 istisna çifti tam 14 gün olmalı")
+        ilk_gun = pd.Timestamp(ISTISNA_TATIL_ILK_GUNU[olay[0]])
+        arife = ilk_gun - pd.Timedelta(days=1)
+        if tatiller.get(arife) != 0.5 or tatiller.get(ilk_gun) != 1.0:
+            raise RuntimeError(f"{olay_yili}: istisna doğrulanmış tatil takvimine bağlanamadı")
+        if any(pd.Timestamp(x[0]) != arife and pd.Timestamp(x[1]) != arife for x in olay):
+            raise RuntimeError(f"{olay_yili}: istisna çifti arife kapanışına bağlanmıyor")
+
+
+def seri_takvimini_dogrula(seri: pd.DataFrame, *, tam_resmi_seri: bool = False) -> dict:
     """Tekillik, sıralılık, haftalık aralık ve tatil kaymalarını denetler."""
     tarihler = pd.DatetimeIndex(seri["referans_hafta"])
     if not tarihler.is_unique or not tarihler.is_monotonic_increasing:
         raise RuntimeError("BDDK referans haftaları tekil ve kesin artan olmalı")
+    _istisna_sozlesmesini_dogrula()
     araliklar = pd.Series(tarihler).diff().dropna().dt.days
-    aralik_disi = araliklar.loc[~araliklar.between(4, 10)]
-    if not aralik_disi.empty:
-        ciftler = [
-            {
-                "onceki": str(tarihler[i - 1].date()),
-                "sonraki": str(tarihler[i].date()),
-                "gun": int(araliklar.loc[i]),
-            }
-            for i in aralik_disi.index
-        ]
+    ciftler = [
+        (str(tarihler[i - 1].date()), str(tarihler[i].date()), int(araliklar.loc[i]))
+        for i in araliklar.index
+    ]
+    kabul_edilmeyen = [
+        x for x in ciftler if x not in IZINLI_ARALIK_ISTISNALARI and not 4 <= x[2] <= 10
+    ]
+    if kabul_edilmeyen:
         raise RuntimeError(
             "BDDK ardışık referans haftası aralığı [4,10] gün dışında: "
-            f"{ciftler}"
+            f"{kabul_edilmeyen}"
+        )
+    gorulen_istisnalar = set(ciftler) & IZINLI_ARALIK_ISTISNALARI
+    if tam_resmi_seri and gorulen_istisnalar != IZINLI_ARALIK_ISTISNALARI:
+        raise RuntimeError(
+            "BDDK resmî serisi dört takvim istisnasını tam tüketmedi: "
+            f"{sorted(gorulen_istisnalar)}"
         )
     kaymis = [t for t in tarihler if t.dayofweek != 4]
     eslesen = [
@@ -137,6 +181,8 @@ def seri_takvimini_dogrula(seri: pd.DataFrame) -> dict:
         "gozlem_sayisi": int(len(tarihler)),
         "ardisik_aralik_min_gun": int(araliklar.min()),
         "ardisik_aralik_maks_gun": int(araliklar.max()),
+        "izinli_aralik_istisnalari": [list(x) for x in sorted(gorulen_istisnalar)],
+        "izinli_istisna_sayisi": len(gorulen_istisnalar),
         "cuma_disi_hafta_sayisi": len(kaymis),
         "tatille_eslesen_haftalar": eslesen,
         "tatille_eslesmeyen_haftalar": eslesmeyen,
@@ -181,10 +227,25 @@ def bddk_serisini_cek(timeout: int = 30) -> tuple[pd.DataFrame, dict]:
         index=False,
         encoding="utf-8-sig",
     )
-    takvim_denetimi = seri_takvimini_dogrula(seri)
+    takvim_denetimi = seri_takvimini_dogrula(seri, tam_resmi_seri=True)
     if seri["bakiye_milyon_tl"].le(0).any():
         raise RuntimeError("BDDK taşıt kredisi bakiyesi pozitif olmalı")
     return seri, takvim_denetimi
+
+
+def bddk_serisini_cacheden_oku(yol: Path = BDDk_CACHE) -> tuple[pd.DataFrame, dict]:
+    """Son izinli resmî yanıtı hash doğrulamasıyla yükler; ağ çağrısı yapmaz."""
+    gercek_hash = hashlib.sha256(yol.read_bytes()).hexdigest().upper()
+    if gercek_hash != BDDk_CACHE_SHA256:
+        raise RuntimeError(
+            f"BDDK cache SHA-256 uyuşmadı: {gercek_hash} != {BDDk_CACHE_SHA256}"
+        )
+    seri = pd.read_csv(yol)
+    seri["referans_hafta"] = pd.to_datetime(seri["referans_hafta"], errors="raise")
+    seri["bakiye_milyon_tl"] = pd.to_numeric(seri["bakiye_milyon_tl"], errors="raise")
+    if len(seri) != 657 or seri["bakiye_milyon_tl"].le(0).any():
+        raise RuntimeError("BDDK cache kapsamı veya pozitif bakiye denetimi geçmedi")
+    return seri, seri_takvimini_dogrula(seri, tam_resmi_seri=True)
 
 
 def tufe_birim_ve_lag_dogrula(snapshot: pd.DataFrame) -> dict:
@@ -238,6 +299,20 @@ def aylik_bddk_featurelari(
         nominal = {4: 28, 13: 91, 52: 364}
         aralik = {k: int((w0 - tarih).days) for k, tarih in gecmis.items()}
         sapma = {k: abs(aralik[k] - nominal[k]) for k in aralik}
+        asimetrik = {}
+        for k in (4, 13, 52):
+            gecisler = {
+                (
+                    str(s.index[i - 1].date()),
+                    str(s.index[i].date()),
+                    int((s.index[i] - s.index[i - 1]).days),
+                )
+                for i in range(pos - k + 1, pos + 1)
+            }
+            asimetrik[k] = any(
+                len(gecisler & {x for x in IZINLI_ARALIK_ISTISNALARI if x[0].startswith(yil)}) == 1
+                for yil in ("2018", "2021")
+            )
         n4 = (float(s.iloc[pos]) / float(s.iloc[pos - 4]) - 1.0) * 100.0
         n13 = (float(s.iloc[pos]) / float(s.iloc[pos - 13]) - 1.0) * 100.0
         n52 = (float(s.iloc[pos]) / float(s.iloc[pos - 52]) - 1.0) * 100.0
@@ -257,6 +332,9 @@ def aylik_bddk_featurelari(
             "aralik_sapma_4h_7gun_ustu": sapma[4] > 7,
             "aralik_sapma_13h_7gun_ustu": sapma[13] > 7,
             "aralik_sapma_52h_7gun_ustu": sapma[52] > 7,
+            "asimetrik_tatil_kesimi_4h": asimetrik[4],
+            "asimetrik_tatil_kesimi_13h": asimetrik[13],
+            "asimetrik_tatil_kesimi_52h": asimetrik[52],
         })
     sonuc = pd.DataFrame(satirlar)
     nan = {c: int(sonuc[c].isna().sum()) for c in BDDk_FEATURELARI}
@@ -278,6 +356,18 @@ def aylik_bddk_featurelari(
             "4h": int(sonuc["aralik_sapma_4h_7gun_ustu"].sum()),
             "13h": int(sonuc["aralik_sapma_13h_7gun_ustu"].sum()),
             "52h": int(sonuc["aralik_sapma_52h_7gun_ustu"].sum()),
+        },
+        "asimetrik_tatil_kesimi": {
+            f"{k}h": {
+                "origin_sayisi": int(sonuc[f"asimetrik_tatil_kesimi_{k}h"].sum()),
+                "gerceklesen_aralik_gunleri": sorted(
+                    sonuc.loc[
+                        sonuc[f"asimetrik_tatil_kesimi_{k}h"],
+                        f"gerceklesen_aralik_{k}h_gun",
+                    ].astype(int).unique().tolist()
+                ),
+            }
+            for k in (4, 13, 52)
         },
     }
     return sonuc, denetim
@@ -425,7 +515,7 @@ def main() -> None:
     basla = time.perf_counter()
     MODEL_DIR.mkdir(parents=True, exist_ok=True)
 
-    seri, takvim_meta = bddk_serisini_cek()
+    seri, takvim_meta = bddk_serisini_cacheden_oku()
     seri.to_csv(MODEL_DIR / "model_12_bddk_tasit_haftalik_cari.csv", index=False, encoding="utf-8-sig")
     veri, features, feature_meta, tufe_meta = _snapshot_ve_feature_hazirla(seri)
     features_yaz = features.copy()
@@ -446,9 +536,9 @@ def main() -> None:
         "analiz_penceresi": ["2021-03", "2025-04"],
         "test": "2025-07..2026-06 ACILMADI_KILITLI",
         "ag_erisim": {
-            "seri_http_cagrisi": 2,
+            "seri_http_cagrisi": 3,
             "revizyon_belgesi_erisim": 2,
-            "toplam": 4,
+            "toplam": 5,
             "butce": 8,
         },
         "bddk_serisi": {
@@ -458,6 +548,8 @@ def main() -> None:
             "birim": "milyon_TL",
             "ilk_yayim_vintaji": False,
             "kaynak": BDDk_URL,
+            "cache_sha256": BDDk_CACHE_SHA256,
+            "cache_hash_yuklemede_dogrulandi": True,
             "takvim_denetimi": takvim_meta,
         },
         "revizyon_bulgusu": {

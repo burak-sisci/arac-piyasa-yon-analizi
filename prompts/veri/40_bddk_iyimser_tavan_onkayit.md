@@ -208,3 +208,34 @@ konfigürasyonları, 1.000 permütasyon, seed=410 ve harness toleransları
 sapma bayrakları da aynen korunmuştur. Düzeltme sonuç görülmeden yapıldı; yeniden
 koşu ancak bu not, yeni doğrulama ve regresyon testi commit edildikten sonra
 başlatılır.
+
+## 12. Koşu öncesi uzun bayram haftası düzeltmesi — 2026-08-08
+
+İlk takvim düzeltmesi commit edildikten, fakat yine herhangi bir model fit'i
+veya sonuç üretilmeden önce, iki Kurban Bayramı çevresinde dört ardışık tarih
+çifti `[4,10]` gün kapısının dışında kaldı:
+
+- `2018-08-17 → 2018-08-20`: 3 gün
+- `2018-08-20 → 2018-08-31`: 11 gün
+- `2021-07-16 → 2021-07-19`: 3 gün
+- `2021-07-19 → 2021-07-30`: 11 gün
+
+Repo'nun daha önce 2429 sayılı Kanun ve Diyanet yıllık listeleriyle doğrulanmış
+tatil takvimi Kurban Bayramı ilk günlerini sırasıyla `2018-08-21` ve
+`2021-07-20` olarak sabitler. Pazartesi arife kapanışını izleyen uzun tatil,
+her iki olayda mekanik `3+11=14` gün örüntüsü üretir. Pusula Opus/max
+`DEVAM_KABUL` kararıyla yalnız yukarıdaki dört exact `(önceki, sonraki, gün)`
+tuple'ı beyaz listeye alınmıştır. Diğer bütün ardışık tarihler `[4,10]`
+aralığında kalmak zorundadır. Beyaz liste dört öğeden uzun olamaz; dördü de tam
+resmî seride tüketilmeli, doğrulanmış tatil takvimine programatik bağlanmalı ve
+her 3 günlük geçişi hemen 11 günlük geçiş izleyerek toplam 14 gün etmelidir.
+
+Üçüncü ve son izinli seri çağrısının yanıtı model sonucu görülmeden yerel cache'e
+kaydedildi: 657 satır, `2014-01-03..2026-07-31`, SHA-256
+`4ED663DC373C6BB6C63A7A2D910D22408C574CF71210FFB9453E7EB087F030DE`.
+Yeniden ağ çağrısı yasaktır; koşu bu cache'i yüklerken hash'i doğrular ve
+uyuşmazlıkta durur. Ağ sayacı `seri=3`, `toplam=5` olarak raporlanır. Her
+4/13/52-gözlem aralığı için 3/11 çiftini asimetrik kesen origin sayısı ve bu
+originlerde gerçekleşen gün aralıkları ayrıca raporlanır; bu bir karar kapısı
+değil dürüstlük kaydıdır. Karar eşikleri, dört feature, model konfigürasyonları,
+seed=410, 1.000 permütasyon ve harness toleransları değişmemiştir.

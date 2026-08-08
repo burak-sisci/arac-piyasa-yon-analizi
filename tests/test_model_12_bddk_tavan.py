@@ -36,7 +36,7 @@ def test_tatil_kaymasinda_capa_ve_konumsal_geri_indeksleme():
         "referans_hafta": tarihler,
         "bakiye_milyon_tl": np.arange(100.0, 230.0),
     })
-    takvim = m12.seri_takvimini_dogrula(seri)
+    takvim = m12.seri_takvimini_dogrula(seri, tam_resmi_seri=False)
     ay = pd.Period("2015-06", "M")
     sonuc, _ = m12.aylik_bddk_featurelari(seri, [ay], pd.Series({ay: 1.0}))
     satir = sonuc.iloc[0]
@@ -54,6 +54,27 @@ def test_takvim_denetimi_haftalik_boslukta_durur():
     seri = _sentetik_seri().drop(index=10).reset_index(drop=True)
     with pytest.raises(RuntimeError, match=r"\[4,10\]"):
         m12.seri_takvimini_dogrula(seri)
+
+
+def test_exact_3_11_bayram_ciftleri_tuketilir_ve_14_gun_korunur():
+    tarihler = pd.date_range("2014-01-03", "2026-07-31", freq="W-FRI")
+    tarihler = tarihler.where(tarihler != pd.Timestamp("2018-08-24"), pd.Timestamp("2018-08-20"))
+    tarihler = tarihler.where(tarihler != pd.Timestamp("2021-07-23"), pd.Timestamp("2021-07-19"))
+    seri = pd.DataFrame({
+        "referans_hafta": tarihler,
+        "bakiye_milyon_tl": np.arange(1.0, len(tarihler) + 1.0),
+    })
+    denetim = m12.seri_takvimini_dogrula(seri, tam_resmi_seri=True)
+    assert denetim["izinli_istisna_sayisi"] == 4
+    assert denetim["ardisik_aralik_min_gun"] == 3
+    assert denetim["ardisik_aralik_maks_gun"] == 11
+
+
+def test_cache_hash_uyusmazliginda_durur(tmp_path):
+    sahte = tmp_path / "bddk.csv"
+    sahte.write_text("referans_hafta,bakiye_milyon_tl\n2026-01-02,1\n", encoding="utf-8")
+    with pytest.raises(RuntimeError, match="SHA-256"):
+        m12.bddk_serisini_cacheden_oku(sahte)
 
 
 def test_dort_feature_formulu_carpimsal_reel():
