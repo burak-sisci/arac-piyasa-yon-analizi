@@ -179,8 +179,16 @@ Birincil DF-A 101 bağımsız etiketli ayla veri yeterlilik geçidini aşarken,
       tarandı. Kontrol harness'i birebir geçti. BDDK'lı lojistik C=1 kolunun
       kendi marjı `-0,0592` iken kontrol koluna göre delta marjı `+0,2402` oldu;
       ön-kayıt hükmü **ON_ELEME_ZAYIF / HEURISTIK**tir. Bu performans veya terfi
-      değildir; otomatik sonraki dal C=0,01 kapasite-düşürülmüş tekrardır.
+      değildir; otomatik sonraki dal C=0,01 kapasite-düşürülmüş tekrarı olarak
+      Model 13'te tamamlandı.
       Kilitli test açılmadı. Ayrıntı: `pm_rapor_bddk_tavan_taramasi.md`.
+- [x] **Model 13 BDDK C=0,01 terminal tekrarı:** Kapasite manipülasyonu kontrol
+      null95'ini `0,4220`'ye düşürerek geçti. BDDK'lı C=0,01 kolunda gözlenen
+      artış null95 artışından büyük olsa da delta marj yalnız `+0,0268`, mutlak
+      kol2 marjı `-0,1815` oldu. Ön-kayıt hükmü
+      **KAPASITE_DUSUK_ISARET_YOK / HEURISTIK**; daha fazla C taraması yasak,
+      BDDK normal yeniden-açma önceliğiyle `ONCELIK_DUSURULDU`. Kilitli test
+      açılmadı. Ayrıntı: `pm_rapor_bddk_kapasite_dusuk_tekrar.md`.
 - [x] **Model 11 sonrası üç karar notebooku:** Pusula ve Rota ortak yazımıyla
       (1) negatif bulguyla kapatma, (2) target + up/stable/down korunarak yeni
       öncü bilgi arama şartnamesi ve (3) ufuk/toplulaştırma/sınıf sözleşmesi
