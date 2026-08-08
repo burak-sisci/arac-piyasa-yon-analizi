@@ -51,6 +51,18 @@ Kaynaklar:
 - BDDK, [Veri yayınları SSS](https://www.bddk.org.tr/Sss/Liste/110): revizyonların
   takip eden dönemlerde veriyi değiştirebileceğini açıklar.
 
+### Model 12/13 sonrası BDDK kart güncellemesi — 2026-08-08
+
+BDDK kartı, erişim/vintaj fizibilitesi ile iki kapasite taraması sonrasında
+**normal yeniden-açma önceliğiyle `ONCELIK_DUSURULDU`** durumundadır; ekonomik
+olarak kapatılmamıştır. Delta marj, kapasite azaldıkça C=1 `+0,2402` → C=0,1
+`+0,1091` → C=0,01 `+0,0268` biçiminde monoton azaldı; kontrol null95 de
+`0,4684 → 0,4450 → 0,4220` geriledi. Görünür katkının daha güçlü
+düzenlileştirmede buharlaşması, Model 12'deki tek-noktalı zayıf işaretin
+kapasite/ezber artefaktı olduğunu gösteren ana gerekçedir. Kamuya açık izinli
+ilk-yayım vintajı veya revizyona-kapalı kardeş gösterge ortaya çıkarsa kart
+normal öncelikle yeniden değerlendirilebilir; başka C taraması yapılamaz.
+
 ## Aday kartı 2 — BETAM–sahibindex ilan arzı ve ilan yaşı
 
 | Alan | Kayıt |

@@ -189,6 +189,16 @@ Birincil DF-A 101 bağımsız etiketli ayla veri yeterlilik geçidini aşarken,
       **KAPASITE_DUSUK_ISARET_YOK / HEURISTIK**; daha fazla C taraması yasak,
       BDDK normal yeniden-açma önceliğiyle `ONCELIK_DUSURULDU`. Kilitli test
       açılmadı. Ayrıntı: `pm_rapor_bddk_kapasite_dusuk_tekrar.md`.
+- [x] **Revizyona kapalı yeni öncü aile taraması (Prompt 42):** TCMB haftalık
+      kart işlem adedi, SBM trafik poliçe adedi ve TÜİK NACE 45 satış hacmi
+      yedi resmî/birincil sayfada tarandı. TCMB revizyon+mekanizma, SBM
+      kapsam+mutable kayıt+yenileme karışımı, TÜİK revizyon+boşluk
+      eşlemesi+eşzamanlılık kapılarında düştü. Hüküm
+      **BU_TURDA_UYGUN_ADAY_YOK**; veri/model/test başlatılmadı. İki sınırlı
+      taramada altı aday ailesinde temiz mekanizma ile kamuya açık ilk-yayım
+      korunumu birlikte kurulamadı. Yeni yön kullanıcı kararını bekliyor:
+      Seçenek 2'yi kapat; ileriye dönük gölge vintaj arşivi kur; veya Seçenek
+      3'e geç. Ayrıntı: `pm_rapor_revizyona_kapali_yeni_aday_taramasi.md`.
 - [x] **Model 11 sonrası üç karar notebooku:** Pusula ve Rota ortak yazımıyla
       (1) negatif bulguyla kapatma, (2) target + up/stable/down korunarak yeni
       öncü bilgi arama şartnamesi ve (3) ufuk/toplulaştırma/sınıf sözleşmesi
