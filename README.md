@@ -136,8 +136,9 @@ Birincil DF-A 101 bağımsız etiketli ayla veri yeterlilik geçidini aşarken,
       `docs/00_karar_kaydi.md` K9.
 - [ ] Model kurma / tahmin — K8 (fiyat) hedefi için N≥50 eşiğine ulaşılana
       kadar başlatılmadı; hacim hedefi (K9) için DF-A/DF-B baseline denemesi
-      yukarıda tamamlandı, sonraki iterasyon (feature/model geliştirme) PM
-      onayı bekliyor. (`scripts/model/model_01`/`model_02` — commit'li,
+      yukarıda tamamlandı; sonraki hacim iterasyonları kullanıcı onayıyla Model
+      11 bilgi-tavanı ve Model 12 yeni-öncü taramasına taşındı. K8 fiyat hedefi
+      için modelleme kapısı hâlâ kapalıdır. (`scripts/model/model_01`/`model_02` — commit'li,
       AutoGluon TimeSeries SEVİYE baseline'ı + PM raporu
       `pm_rapor_modelleme_fazi_1.md`/`_fazi_2.md` — bu üç-sınıf yön
       protokolünün parçası değildir ama PM onaylı ayrı bir çalışmadır.
@@ -172,6 +173,14 @@ Birincil DF-A 101 bağımsız etiketli ayla veri yeterlilik geçidini aşarken,
       kararı bekleyen üç seçenek: kapat; bilgi kümesini değiştir; ufuk/sınıf
       sayısını yeniden tanımla. Ayrıntı: `docs/10_asama_b_nowcast_kapanis_sentezi.md`
       ve `pm_rapor_model11_hedef_bilgi_tavani.md`.
+- [x] **Model 12 BDDK heuristik ön-elemesi:** Güncel/revize 657 haftalık resmî
+      taşıt kredisi serisinden M−2 kesimli 4/13/52-hafta ve reel 4-hafta
+      dönüşümleri, Model 11 kontrol koluna karşı aynı 1.000 permütasyonla
+      tarandı. Kontrol harness'i birebir geçti. BDDK'lı lojistik C=1 kolunun
+      kendi marjı `-0,0592` iken kontrol koluna göre delta marjı `+0,2402` oldu;
+      ön-kayıt hükmü **ON_ELEME_ZAYIF / HEURISTIK**tir. Bu performans veya terfi
+      değildir; otomatik sonraki dal C=0,01 kapasite-düşürülmüş tekrardır.
+      Kilitli test açılmadı. Ayrıntı: `pm_rapor_bddk_tavan_taramasi.md`.
 - [x] **Model 11 sonrası üç karar notebooku:** Pusula ve Rota ortak yazımıyla
       (1) negatif bulguyla kapatma, (2) target + up/stable/down korunarak yeni
       öncü bilgi arama şartnamesi ve (3) ufuk/toplulaştırma/sınıf sözleşmesi
