@@ -427,13 +427,13 @@ def main() -> None:
     sonuc = {
         "model": "Model 12 BDDK heuristik on-eleme",
         "durum": "test_disi_in_sample_permutasyon_taramasi",
-        "on_kayit_commit": "061996c",
+        "on_kayit_commit": "8fa2ead",
         "analiz_penceresi": ["2021-03", "2025-04"],
         "test": "2025-07..2026-06 ACILMADI_KILITLI",
         "ag_erisim": {
-            "seri_http_cagrisi": 1,
+            "seri_http_cagrisi": 2,
             "revizyon_belgesi_erisim": 2,
-            "toplam": 3,
+            "toplam": 4,
             "butce": 8,
         },
         "bddk_serisi": {
