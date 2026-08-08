@@ -114,9 +114,17 @@ def seri_takvimini_dogrula(seri: pd.DataFrame) -> dict:
     araliklar = pd.Series(tarihler).diff().dropna().dt.days
     aralik_disi = araliklar.loc[~araliklar.between(4, 10)]
     if not aralik_disi.empty:
+        ciftler = [
+            {
+                "onceki": str(tarihler[i - 1].date()),
+                "sonraki": str(tarihler[i].date()),
+                "gun": int(araliklar.loc[i]),
+            }
+            for i in aralik_disi.index
+        ]
         raise RuntimeError(
             "BDDK ardışık referans haftası aralığı [4,10] gün dışında: "
-            f"{aralik_disi.tolist()}"
+            f"{ciftler}"
         )
     kaymis = [t for t in tarihler if t.dayofweek != 4]
     eslesen = [
@@ -166,6 +174,13 @@ def bddk_serisini_cek(timeout: int = 30) -> tuple[pd.DataFrame, dict]:
     seri = seri.sort_values("referans_hafta").reset_index(drop=True)
     if len(seri) < 650:
         raise RuntimeError(f"BDDK kapsamı beklenenden kısa: {len(seri)} hafta")
+    # Ağ bütçesindeki son çağrı da doğrulamada dursa resmî yanıt kaybolmasın.
+    MODEL_DIR.mkdir(parents=True, exist_ok=True)
+    seri.to_csv(
+        MODEL_DIR / "model_12_bddk_tasit_haftalik_cari.csv",
+        index=False,
+        encoding="utf-8-sig",
+    )
     takvim_denetimi = seri_takvimini_dogrula(seri)
     if seri["bakiye_milyon_tl"].le(0).any():
         raise RuntimeError("BDDK taşıt kredisi bakiyesi pozitif olmalı")
