@@ -68,7 +68,11 @@ yasaktır.
 ## 4. Haftalık seriden aylık origin özelliği
 
 Haftalık seri `B(w)`, yayımlanan referans hafta bitiş tarihleriyle indekslenir.
-Tarihlerin Cuma olduğu gözlemden assert edilir; varsayılmaz.
+Referans tarihleri tekil ve kesin artan olmalı; ardışık tarihler arasındaki fark
+4–10 gün aralığında kalmalı ve toplam gözlem sayısı kaydedilmelidir. Cuma dışındaki
+referans tarihleri hata sayılmaz: resmî tatil nedeniyle önceki iş gününe çekilen
+haftalar ayrıca tatil adıyla eşleştirilir; eşleşmeyen kayma koşuyu durdurmaz, veri
+kalitesi bayrağı olarak raporlanır.
 
 Origin ayı `M` için çapa `w0(M)`, `M−2` ayının son takvim gününe eşit veya ondan
 önce biten son yayımlanmış haftadır. `w0−k`, takvim aritmetiği değil yayımlanmış
@@ -187,3 +191,20 @@ BDDK yeniden açma koşulları:
 Ara BDDK serisi ve feature CSV'si commit edilmez. Hedef, sınıf, ±%5 band,
 haftalık cari-ay nowcast, iki aylık bilgi disiplini ve kilitli test yasağı
 değişmez. Kullanıcı dirty/untracked dosyalarına dokunulmaz.
+
+## 11. Koşu öncesi takvim doğrulama düzeltmesi — 2026-08-08
+
+Tam permütasyon koşusu ve herhangi bir model sonucu üretilmeden önceki ilk veri
+doğrulamasında, 657 resmî BDDK gözleminin 26'sının Cuma yerine önceki iş gününde
+kapandığı görüldü. Örnekler `2015-04-30` (1 Mayıs), `2024-04-09` (Ramazan
+Bayramı) ve `2026-05-26` (Kurban Bayramı) haftalarıdır. Bu nedenle “bütün
+tarihler Cuma” kabulü, Pusula'nın Opus/max denetimi ve `DEVAM_KABUL` kararıyla
+yukarıdaki takvim doğrulama predikatına çevrildi.
+
+Bu düzeltme yalnız yanlış olgusal Cuma kabulünü giderir. `w0` ve `w0−k`
+konumsal indeksleme kuralları, karar eşikleri, dört feature, model
+konfigürasyonları, 1.000 permütasyon, seed=410 ve harness toleransları
+**değişmemiştir**. Konumsal aralıkların nominal süreden yedi günden fazla
+sapma bayrakları da aynen korunmuştur. Düzeltme sonuç görülmeden yapıldı; yeniden
+koşu ancak bu not, yeni doğrulama ve regresyon testi commit edildikten sonra
+başlatılır.
