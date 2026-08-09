@@ -204,6 +204,13 @@ Birincil DF-A 101 bağımsız etiketli ayla veri yeterlilik geçidini aşarken,
       Δmacro-F1 `-0,0325`, Holm-5 alt sınırı `-0,3340` ve 2023 yıl-dışı işareti
       negatif. Altı kapının ikisi geçti; hüküm **ORDINAL_TEK_ADAY_TERFI_YOK**.
       Kilitli test açılmadı. Ayrıntı: `pm_rapor_model15_frank_hall_ordinal.md`.
+- [x] **Model 16 nested persistence–lojistik hibrit:** Her dış origin'in yalnız
+      train aylarında iç rolling ile `[0; 0,25; 0,50; 0,75; 1]` karışım
+      ağırlığı seçildi. 1.725 iç + 50 dış fit sonucunda MCC `0,0031`, macro-F1
+      `0,3136`; persistence'a ΔMCC `-0,0134`, Δmacro-F1 `-0,0506`. Train-içi
+      seçim dışarı genellenmedi; yedi kapının ikisi geçti ve hüküm
+      **NESTED_HIBRIT_TERFI_YOK** oldu. Kilitli test açılmadı. Ayrıntı:
+      `pm_rapor_model16_nested_persistence_lojistik_hibrit.md`.
 - [x] **Revizyona kapalı yeni öncü aile taraması (Prompt 42):** TCMB haftalık
       kart işlem adedi, SBM trafik poliçe adedi ve TÜİK NACE 45 satış hacmi
       yedi resmî/birincil sayfada tarandı. TCMB revizyon+mekanizma, SBM
