@@ -197,6 +197,13 @@ Birincil DF-A 101 bağımsız etiketli ayla veri yeterlilik geçidini aşarken,
       Holm alt sınırı `-0,2020` kaldığı için dört terminal kapının yalnız üçü
       geçti; hüküm **SINYAL_YOK_14_FEATURE**, terfi yok. Kilitli test açılmadı.
       Ayrıntı: `pm_rapor_model14_mevcut_asof_feature_genisletme.md`.
+- [x] **Model 15 Frank–Hall ordinal tek aday:** Aynı 14 as-of feature ile iki
+      kümülatif L2 lojistik alt-model, ön-kayıtlı monoton olasılık projeksiyonu
+      ve canlı Model 14 kontrolü altında sınandı. MCC `0,0857`, macro-F1
+      `0,3316`, accuracy `%45,5`; M−2 persistence'a ΔMCC `+0,0692` fakat
+      Δmacro-F1 `-0,0325`, Holm-5 alt sınırı `-0,3340` ve 2023 yıl-dışı işareti
+      negatif. Altı kapının ikisi geçti; hüküm **ORDINAL_TEK_ADAY_TERFI_YOK**.
+      Kilitli test açılmadı. Ayrıntı: `pm_rapor_model15_frank_hall_ordinal.md`.
 - [x] **Revizyona kapalı yeni öncü aile taraması (Prompt 42):** TCMB haftalık
       kart işlem adedi, SBM trafik poliçe adedi ve TÜİK NACE 45 satış hacmi
       yedi resmî/birincil sayfada tarandı. TCMB revizyon+mekanizma, SBM
