@@ -32,7 +32,9 @@ soldaki sınıf kazanır. Tek aday adı `lojistik_c01_maliyet_014`.
 
 Maliyet katsayısı, probability kalibrasyonu, threshold, feature veya C
 taraması yoktur. Argmax lojistik tahminleri aynı süreçte Model 14 L2 C=0,1
-tahminleriyle 1.400 satırda birebir eşleşmelidir.
+adayının 50 origin × 4 hafta = 200 tahminiyle birebir eşleşmelidir. Model 14
+birleşik tablosunun 1.400 satırı yedi yaklaşımın toplamıdır ve bu aday-bazlı
+kontrolün satır sayısı değildir.
 
 ## 3. Canlı Referans ve Yedili Aile
 
@@ -58,7 +60,7 @@ Tümü zorunlu:
 4. Her leave-one-year-out ΔMCC>0.
 5. Model 14 en iyisini MCC ve macro-F1'da kesin aşma.
 6. Train-çoğunluğunu MCC ve macro-F1'da aşma.
-7. Argmax kontrol tahminlerinin Model 14 L2 ile 1.400/1.400 eşleşmesi.
+7. Argmax kontrol tahminlerinin Model 14 L2 ile 200/200 eşleşmesi.
 
 Başarı `TERFI_ADAYI_BULUNDU_MODEL17`; aksi halde
 `ASIMETRIK_MALIYET_TERFI_YOK`. Kilitli test otomatik açılmaz.
