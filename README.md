@@ -211,6 +211,13 @@ Birincil DF-A 101 bağımsız etiketli ayla veri yeterlilik geçidini aşarken,
       seçim dışarı genellenmedi; yedi kapının ikisi geçti ve hüküm
       **NESTED_HIBRIT_TERFI_YOK** oldu. Kilitli test açılmadı. Ayrıntı:
       `pm_rapor_model16_nested_persistence_lojistik_hibrit.md`.
+- [x] **Model 17 sabit asimetrik ordinal maliyet:** Model 14 L2 olasılıklarına
+      diagonal `0`, komşu hata `1`, reversal `4` maliyeti uygulandı. MCC
+      `0,0896` ile en yüksek nokta değerine çıksa da macro-F1 `0,2725`, accuracy
+      `%31`; Δmacro-F1 `-0,0916`, Holm-7 alt sınırı `-0,2711` ve 2023 yıl-dışı
+      farkı negatif. Yedi kapının ikisi geçti; hüküm
+      **ASIMETRIK_MALIYET_TERFI_YOK**. Kilitli test açılmadı. Ayrıntı:
+      `pm_rapor_model17_asimetrik_ordinal_maliyet.md`.
 - [x] **Revizyona kapalı yeni öncü aile taraması (Prompt 42):** TCMB haftalık
       kart işlem adedi, SBM trafik poliçe adedi ve TÜİK NACE 45 satış hacmi
       yedi resmî/birincil sayfada tarandı. TCMB revizyon+mekanizma, SBM
