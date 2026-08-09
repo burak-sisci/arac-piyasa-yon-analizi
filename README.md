@@ -192,7 +192,7 @@ Birincil DF-A 101 bağımsız etiketli ayla veri yeterlilik geçidini aşarken,
 - [x] **Model 14 mevcut as-of feature genişletme:** Model 09'un 10 feature'ına
       cari-ay USD/TRY oynaklığı, M−2 tüketici güveni, M−2 ODMD adedi ve M−2
       yaklaşık reel politika faizi eklendi. En iyi L2 C=0,1 adayı MCC'yi
-      `-0,0587` kontrol değerinden `0,0886`'ya taşıdı; M−2 persistence'a karşı
+      `-0,0700` kontrol değerinden `0,0886`'ya taşıdı; M−2 persistence'a karşı
       ΔMCC `+0,0721`, Δmacro-F1 `+0,0017` ve yıl-dışı işaret 5/5 pozitifti.
       Holm alt sınırı `-0,2020` kaldığı için dört terminal kapının yalnız üçü
       geçti; hüküm **SINYAL_YOK_14_FEATURE**, terfi yok. Kilitli test açılmadı.

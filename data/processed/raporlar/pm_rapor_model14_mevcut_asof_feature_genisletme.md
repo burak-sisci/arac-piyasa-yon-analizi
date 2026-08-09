@@ -27,9 +27,10 @@ olmadığı için terfi etmedi. Karar: **SINYAL_YOK_14_FEATURE**. Bu ifade, nokt
 tahminindeki iyileşmenin inkârı değil; doğrulayıcı belirsizlik kapısının
 geçilemediği anlamına gelir.
 
-Kontrol→test feature etkisi en iyi adayda MCC için `+0,1473`, macro-F1 için
-`+0,1242` oldu. Kontrol kod yolu, aynı HEAD'de çalışan Model 10 ile
-1.400/1.400 tahminde birebir eşleşti. Çalışma süresi 77 saniyedir.
+Kontrol→test feature etkisi en iyi adayda MCC için `+0,1586`, macro-F1 için
+`+0,1285` oldu (kontrol lojistik L2 C=0,1: MCC `-0,0700`, macro-F1 `0,2374` —
+Model 10 ile birebir). Kontrol kod yolu, aynı HEAD'de çalışan Model 10 ile
+1.400/1.400 tahminde birebir eşleşti. Çalışma süresi 73,4 saniyedir.
 
 ## 3. Karşılaşılan Sorunlar
 
