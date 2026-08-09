@@ -189,6 +189,14 @@ Birincil DF-A 101 bağımsız etiketli ayla veri yeterlilik geçidini aşarken,
       **KAPASITE_DUSUK_ISARET_YOK / HEURISTIK**; daha fazla C taraması yasak,
       BDDK normal yeniden-açma önceliğiyle `ONCELIK_DUSURULDU`. Kilitli test
       açılmadı. Ayrıntı: `pm_rapor_bddk_kapasite_dusuk_tekrar.md`.
+- [x] **Model 14 mevcut as-of feature genişletme:** Model 09'un 10 feature'ına
+      cari-ay USD/TRY oynaklığı, M−2 tüketici güveni, M−2 ODMD adedi ve M−2
+      yaklaşık reel politika faizi eklendi. En iyi L2 C=0,1 adayı MCC'yi
+      `-0,0587` kontrol değerinden `0,0886`'ya taşıdı; M−2 persistence'a karşı
+      ΔMCC `+0,0721`, Δmacro-F1 `+0,0017` ve yıl-dışı işaret 5/5 pozitifti.
+      Holm alt sınırı `-0,2020` kaldığı için dört terminal kapının yalnız üçü
+      geçti; hüküm **SINYAL_YOK_14_FEATURE**, terfi yok. Kilitli test açılmadı.
+      Ayrıntı: `pm_rapor_model14_mevcut_asof_feature_genisletme.md`.
 - [x] **Revizyona kapalı yeni öncü aile taraması (Prompt 42):** TCMB haftalık
       kart işlem adedi, SBM trafik poliçe adedi ve TÜİK NACE 45 satış hacmi
       yedi resmî/birincil sayfada tarandı. TCMB revizyon+mekanizma, SBM

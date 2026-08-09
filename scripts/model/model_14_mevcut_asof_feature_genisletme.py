@@ -1,14 +1,20 @@
 """Model 14: mevcut as-of feature genisletme — kontrol (10) vs test (14) kolu.
 
 Onkayit: prompts/veri/43_model14_mevcut_asof_feature_genisletme_onkayit.md
-(Pusula, commit 8a2e13a). Model 10'un test-disi rolling-origin protokolu
-(50 origin, 2 ay embargo, sabit seed, hareketli-blok bootstrap+Holm,
-yil-disi jackknife) birebir korunur. Tek fark: test kolu, Model 07
-snapshot'inda kesit tarihinde zaten bilinen ama Model 09'un 10
-feature'inda KULLANILMAYAN 4 sizintisiz kolondan kurulu kucuk bir aile
-ekler (onkayit Bolum 2/3). Kontrol kolu Model 09'un 10 feature'iyla
-birebir ayni hesaptir ve committed Model 10 ciktisiyla deterministik
-olarak dogrulanir (onkayit STOP_ONLY_IF madde 8).
+(Pusula, commit 8a2e13a; Bolum 9 duzeltmesiyle guncellendi). Model 10'un
+test-disi rolling-origin protokolu (50 origin, 2 ay embargo, sabit seed,
+hareketli-blok bootstrap+Holm, yil-disi jackknife) birebir korunur. Tek
+fark: test kolu, Model 07 snapshot'inda kesit tarihinde zaten bilinen ama
+Model 09'un 10 feature'inda KULLANILMAYAN 4 sizintisiz kolondan kurulu
+kucuk bir aile ekler (onkayit Bolum 2/3).
+
+Kontrol kolu Model 09'un 10 feature'iyla birebir ayni hesaptir. Onkayit
+Bolum 9 duzeltmesi geregi, dogrulama referansi git-ignored/eski yerel
+model_10_rolling_origin_*.json/csv DOSYALARI DEGIL, ayni surecte ayni
+HEAD'den CANLI cagrilan `model_10_rolling_origin_nowcast._rolling_tahminleri`
+kod yoludur (bkz. `model10_kod_yolu_referansi`). Bu esitlik saglanmazsa
+main() test kolunun metriklerini hic hesaplamadan/yorumlamadan
+STOP_ONLY_IF_KONTROL_KOD_YOLU_UYUSMAZLIGI ile durur.
 
 Kilitli test (2025-07..2026-06) bu script tarafindan hicbir asamada
 okunmaz; ilk adim olarak snapshot'tan cikarilir ve originler ayrica
@@ -386,7 +392,11 @@ def main() -> None:
         kontrol_tahmin, model10_referans
     )
     if not tahmin_dogrulama["birebir_uyumlu"]:
-        raise AssertionError("Kontrol kolu guncel Model10 kod yoluyla uyusmuyor")
+        raise AssertionError(
+            "STOP_ONLY_IF_KONTROL_KOD_YOLU_UYUSMAZLIGI: kontrol kolu, ayni surecte "
+            "canli cagrilan Model 10 kod yoluyla birebir uyusmuyor; test kolu "
+            "hesaplanmadan/yorumlanmadan duruldu (onkayit Bolum 9)."
+        )
 
     test_ozet, test_tahmin, _ = kol_calistir(snapshot, TEST_FEATURELAR, "test_14_feature")
 
