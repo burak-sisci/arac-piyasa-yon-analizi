@@ -214,7 +214,7 @@ prompt açılır (AGENTS.md kural 4 ruhuna uygun).
 
 ## 9. Sonuç Öncesi Protokol Düzeltmesi — Kontrol Artefaktı Referansı
 
-**Tarih:** 2026-08-09  
+**Tarih:** 2026-08-09
 **Durum:** Model 14 test kolu çalıştırılmadan ve hiçbir 14-feature performans
 sonucu görülmeden kilitlendi.
 
