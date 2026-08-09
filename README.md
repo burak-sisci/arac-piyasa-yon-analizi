@@ -218,6 +218,14 @@ Birincil DF-A 101 bağımsız etiketli ayla veri yeterlilik geçidini aşarken,
       farkı negatif. Yedi kapının ikisi geçti; hüküm
       **ASIMETRIK_MALIYET_TERFI_YOK**. Kilitli test açılmadı. Ayrıntı:
       `pm_rapor_model17_asimetrik_ordinal_maliyet.md`.
+- [ ] **Model 14–17 performans terminal sentezi (inceleniyor):** Model 14 L2
+      C=0,1, MCC `0,0886` / macro-F1 `0,3659` ile gelecekteki bağımsız
+      doğrulama için **DONDURULDU_GELISTIRME_ADAYI_TERFI_DEGIL** statüsünde.
+      Model 15–17 iki birincil metriği birlikte iyileştirmedi. Aynı 50 origin
+      üzerinde yeni algoritma/feature/threshold araması durduruldu; kilitli test
+      kapalı. Sonraki yön yeni ilk-yayım bilgi, yeni bağımsız ay veya bağlayıcı
+      hedef sözleşmesi kararı gerektiriyor. Ayrıntı:
+      `docs/11_asama_b_model_performans_terminal_sentezi.md`.
 - [x] **Revizyona kapalı yeni öncü aile taraması (Prompt 42):** TCMB haftalık
       kart işlem adedi, SBM trafik poliçe adedi ve TÜİK NACE 45 satış hacmi
       yedi resmî/birincil sayfada tarandı. TCMB revizyon+mekanizma, SBM
