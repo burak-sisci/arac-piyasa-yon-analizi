@@ -226,12 +226,15 @@ Birincil DF-A 101 bağımsız etiketli ayla veri yeterlilik geçidini aşarken,
       kapalı. Sonraki yön yeni ilk-yayım bilgi, yeni bağımsız ay veya bağlayıcı
       hedef sözleşmesi kararı gerektiriyor. Ayrıntı:
       `docs/11_asama_b_model_performans_terminal_sentezi.md`.
-- [ ] **Model 18 prospektif izleme (ön-kayıt kilitli):** Dondurulmuş Model 14
+- [x] **Model 18 prospektif izleme:** Dondurulmuş Model 14
       `lojistik_l2_c01` için aynı 50 origin’i yeniden kullanmayan, kilitli test
       yön etiketlerini üretmeyen ve gerçekleşmeden önce hash’li tahmin biriktiren
-      ileri izleme sözleşmesi Prompt 48 ile sabitlendi. Terminal değerlendirme
-      12 eksiksiz yeni bağımsız ay dolmadan teknik olarak kapalıdır; uygulama ve
-      ilk 2026-08 kaydı bekleniyor.
+      ileri izleme sözleşmesi Prompt 48 ile sabitlendi ve uygulandı. İlk
+      `2026-08-02` kesiti `down` (`p=0,4315`) olarak kaydedildi; yedi günlük
+      arşiv gecikmesi nedeniyle `gercek_zamanli_mi=false`. Bu performans sonucu
+      değildir; tamamlanmış sayaç `N=0/12` ve terminal değerlendirme teknik
+      olarak kapalıdır. Odaklı test `30/30`, tam paket `161/161` geçti.
+      Ayrıntı: `pm_rapor_model18_prospektif_izleme.md`.
 - [x] **Revizyona kapalı yeni öncü aile taraması (Prompt 42):** TCMB haftalık
       kart işlem adedi, SBM trafik poliçe adedi ve TÜİK NACE 45 satış hacmi
       yedi resmî/birincil sayfada tarandı. TCMB revizyon+mekanizma, SBM
