@@ -1,6 +1,9 @@
 # Dönüşüm çıktıları (docx/pptx/pdf) — git'e girmez
 exports/
 
+# Toplantı sunumları ve görsel çıktıları — yerelde kalır
+sunumlar/
+
 # Çekilen veri — git'e girmez (prompt/kod versiyonlanır, veri versiyonlanmaz;
 # karar K5: yalnızca kamuya açık kaynaklar, şirket içi veri repoya girmez)
 # Veri, kaynak adına göre alt klasörlere ayrılmıştır (data/raw/usdtry/,
