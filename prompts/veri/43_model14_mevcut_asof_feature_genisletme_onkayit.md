@@ -211,3 +211,38 @@ düzeltme" kullanıcı gerekli değildir).
 Bu ön-kayıt commit'lendikten sonra hiçbir madde proje sahibi/Codex onayı
 olmadan gevşetilemez; değişiklik gerekirse yeni bir revizyon notuyla ayrı bir
 prompt açılır (AGENTS.md kural 4 ruhuna uygun).
+
+## 9. Sonuç Öncesi Protokol Düzeltmesi — Kontrol Artefaktı Referansı
+
+**Tarih:** 2026-08-09  
+**Durum:** Model 14 test kolu çalıştırılmadan ve hiçbir 14-feature performans
+sonucu görülmeden kilitlendi.
+
+İlk odaklı testte kontrol kolunun güncel Model 10 koduyla aynı süreçte ürettiği
+1.400 tahminin tamamı birebir eşleşmiş; buna karşılık
+`data/processed/model/model_10_rolling_origin_{ozet.json,tahminleri.csv}` yerel
+dosyalarıyla eşleşme sağlanmamıştır. Denetimde bu iki artefaktın
+`.gitignore:17` nedeniyle Git tarafından **izlenmediği**, dolayısıyla ön-kayıtta
+yanlış biçimde "committed Model 10 çıktısı" diye tanımlandığı ve yerelde eski
+kalabildiği doğrulanmıştır. Bu bir Model 14 sonucu değildir; test kolu henüz
+çalıştırılmamıştır.
+
+Bu nedenle Bölüm 4b ve STOP_ONLY_IF madde 8 aşağıdaki daha güçlü ve taşınabilir
+kuralla düzeltilmiştir:
+
+- Kontrol referansı, eski/izlenmeyen yerel JSON veya CSV değildir.
+- Referans, **aynı Python sürecinde, aynı HEAD kodundan** çağrılan
+  `model_10_rolling_origin_nowcast._rolling_tahminleri(snapshot)` çıktısıdır.
+- Model 14'ün parametrik 10-feature kontrol yolu ile bu güncel Model 10 kod
+  yolunun 1.400 tahmini; `fold`, `hedef_ay`, `train_ay_sayisi`, `hafta_sirasi`,
+  `yaklasim`, `gercek`, `tahmin` alanlarında satır satır birebir eşleşmelidir.
+- Origin/embargo/model listesi/bootstrap seed ve tekrar sabitleri ayrıca Model
+  10 modülünden doğrudan alınır ve assertion ile doğrulanır.
+- Bu çalışma-anı eşitliği sağlanmazsa deney, test kolunun metrikleri
+  yorumlanmadan `STOP_ONLY_IF_KONTROL_KOD_YOLU_UYUSMAZLIGI` ile durur.
+- Git-ignored eski Model 10 artefaktları denetim izi olarak hash'lenebilir,
+  ancak başarı/durdurma kapısına girmez ve güncel referans sayılmaz.
+
+Bu düzeltme feature/model/hiperparametre/başarı kapısını değiştirmez; yalnız
+yeniden-üretim referansını yanlış ve sürümlenmemiş bir dosyadan, aynı HEAD'deki
+çalıştırılabilir Model 10 kod yoluna taşır.
