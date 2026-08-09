@@ -61,3 +61,11 @@ raporuyla birlikte commit edilir.
 
 Bu üç notebook Model 09-11'in mevcut kanıtını yeniden işler; yeni model fit
 etmez ve kilitli test dönemini açmaz.
+
+## Model tarihçesi notebooku
+
+- `model_tarihsel_gelisim_ve_farklar_ders_kitabi.ipynb`: Model 01–18’in
+  kronolojik gelişimini, her aşamanın önceki aşamadan temel farkını, metrik
+  rejimlerini ve terminal hükümlerini tek denetimli anlatıda birleştirir. Yeni
+  model fit etmez; Model 03–05’in untracked/PM-onaysız statüsünü ve Model 18’in
+  N<12 peeking yasağını açıkça korur.

@@ -235,6 +235,13 @@ Birincil DF-A 101 bağımsız etiketli ayla veri yeterlilik geçidini aşarken,
       değildir; tamamlanmış sayaç `N=0/12` ve terminal değerlendirme teknik
       olarak kapalıdır. Odaklı test `30/30`, tam paket `161/161` geçti.
       Ayrıntı: `pm_rapor_model18_prospektif_izleme.md`.
+- [x] **Model 01–18 tarihsel gelişim notebooku:** Seviye tahmininden doğrudan
+      yön sınıflandırmasına, as-of nowcast sözleşmesine, bilgi-tavanı
+      teşhislerine, Model 14–17 kontrollü müdahalelerine ve Model 18 prospektif
+      izlemeye uzanan zincir tek ders kitabında birleştirildi. MASE ile MCC ayrı
+      tutuldu; eğitim-dışı aşamalar ve Model 03–05’in untracked statüsü açıkça
+      işaretlendi. Ayrıntı: `model_tarihsel_gelisim_ve_farklar_ders_kitabi.ipynb`
+      ve `pm_rapor_model_tarihsel_gelisim_notebook.md`.
 - [x] **Revizyona kapalı yeni öncü aile taraması (Prompt 42):** TCMB haftalık
       kart işlem adedi, SBM trafik poliçe adedi ve TÜİK NACE 45 satış hacmi
       yedi resmî/birincil sayfada tarandı. TCMB revizyon+mekanizma, SBM
