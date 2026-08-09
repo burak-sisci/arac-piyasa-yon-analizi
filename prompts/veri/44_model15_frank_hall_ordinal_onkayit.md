@@ -88,15 +88,22 @@ Canlı Model 14 L2 C=0,1 nokta değerleri aşağıdaki yayımlanmış referansla
 - M−2 persistence MCC `0.0165080995517002`
 - M−2 persistence macro-F1 `0.36415215989684074`
 
-Çalışma ortamı, Model 14 raporunu üreten ortamla sabittir:
+Çalışma ortamı, Model 14'ün doğrulanmış ve proje boyunca kullanılan izole
+ortamıyla sabittir:
 
+- yorumlayıcı: `.venv312/Scripts/python.exe`
 - Python `3.12.7` (Anaconda build)
-- scikit-learn `1.5.1`
-- NumPy/pandas sürümleri sonuç JSON'una yazılır.
+- scikit-learn `1.7.2`
+- NumPy `2.3.5`
+- pandas `2.3.3`
 
 Sürüm veya canlı Model 14 referansı uyuşmazsa Model 15 tahmini yorumlanmadan
 durulur. Bu ortam kilidi taşınabilirlik tercihi değil, karşılaştırma
 determinizmi koşuludur.
+
+Not: sistem Anaconda yorumlayıcısında scikit-learn `1.5.1`, NumPy `1.26.4` ve
+pandas `2.2.2` vardır; Model 14 kontrol kolunda farklı lojistik tahminler
+ürettiği doğrulanmıştır. Model 15 için bu yorumlayıcı yasaktır.
 
 ## 5. Birleşik Beşli Hipotez Ailesi
 
