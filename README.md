@@ -196,7 +196,11 @@ Birincil DF-A 101 bağımsız etiketli ayla veri yeterlilik geçidini aşarken,
       ΔMCC `+0,0721`, Δmacro-F1 `+0,0017` ve yıl-dışı işaret 5/5 pozitifti.
       Holm alt sınırı `-0,2020` kaldığı için dört terminal kapının yalnız üçü
       geçti; hüküm **SINYAL_YOK_14_FEATURE**, terfi yok. Kilitli test açılmadı.
-      Ayrıntı: `pm_rapor_model14_mevcut_asof_feature_genisletme.md`.
+      Ayrıntı: `pm_rapor_model14_mevcut_asof_feature_genisletme.md`. DF-B ile
+      ayrıca yapılan kilit-öncesi keşifsel tekrar yalnız 3 bağımsız ay üretti;
+      accuracy `%0`, macro-F1 `0,0000`, MCC `-0,6124` oldu. Bu düşük-N sonucu
+      terfi kanıtı değildir; ana DF-A hattı değişmedi. Ayrıntı:
+      `pm_rapor_model14_df_b_karsilastirma.md`.
 - [x] **Model 15 Frank–Hall ordinal tek aday:** Aynı 14 as-of feature ile iki
       kümülatif L2 lojistik alt-model, ön-kayıtlı monoton olasılık projeksiyonu
       ve canlı Model 14 kontrolü altında sınandı. MCC `0,0857`, macro-F1
