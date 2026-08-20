@@ -1,0 +1,80 @@
+================================================================================
+ARAC PIYASASI ICIN DIS KAYNAKLI YENI TARGET ADAYLARI ONERILERI
+================================================================================
+Proje Sorusu: "Araclar ne kadar hizli satisa donuyor / piyasa likiditesi nedir?"
+Tarih: 2026-08-17
+
+--------------------------------------------------------------------------------
+1. QUICK FINANS & SMARTIQ: IKINCI EL ORTALAMA STOKTA KALMA SURESI (GUN)
+--------------------------------------------------------------------------------
+* Target Degisken Adi: target_smartiq_stokta_kalma_gun
+* Veri Kaynagi: Quick Finans & SmartIQ Aylik Ikinci El Oto Degerlendirme Raporlari
+* Kapsam / Frekans: 2022 - 2026 (Aylik, yaklasik 36+ ay)
+* Birim: Gun (Stokta Kalma Suresi)
+
+* Neden Degerli?:
+  - SmartIQ, Turkiye genelindeki yetkili saticilar, galeriler ve B2B kurumsal filo 
+    stoklarindaki araclarin alimindan satisina kadar gecen ortalama stokta kalma 
+    gun sayisini segment bazinda (B, C, D, SUV) ve yakit tipine gore olcmektedir.
+  - Mevcut BETAM (bireysel ilan portal kalis suresi) verimizi profesyonel bayi/galeri 
+    stok devir hizi tarafinda dogrudan ve bagimsiz olarak tamamlar.
+
+* Nasil Cekilir / Entegre Edilir?:
+  - Quick Finans basin bultenleri ve SmartIQ PDF arsivinden web scraper / PDF parser 
+    scripti ile veri cekilebilir.
+  - Projedeki 'data/quickfinans_stokta_kalma/' dizinine aktarilip master veri 
+    setine birlestirilebilir.
+
+
+--------------------------------------------------------------------------------
+2. TCMB EVDS / BDDK: NET TASIT KREDISI AKIS & BUYUME HIZI (%)
+--------------------------------------------------------------------------------
+* Target Degisken Adi: target_tasit_kredisi_akisi_hizi_pct
+* Veri Kaynagi: TCMB EVDS (Elektronik Veri Dagitim Sistemi) & BDDK Haftalik Bulten
+* Seri Kodlari: TP.KTF11 (Tasit Kredisi Stoku) / BDDK Tuketici Kredileri Tasit
+* Kapsam / Frekans: 2015 - 2026 (Haftalik ve Aylik, 138+ ay)
+* Birim: Yuzde Log Degisim / Aylik Net Akis (100 * ln(Stok_t / Stok_t-1))
+
+* Neden Degerli?:
+  - Turkiye'de arac satis hizini ve donusumunu dogrudan kilitleyen veya hizlandiran 
+    en temel motor bankacilik sistemindeki krediye erisim hizi ve kredi musluklaridir.
+  - Bankalarin ve finansman sirketlerinin haftalik/aylik net tasit kredisi 
+    kullandirim hacmindeki ivme, araclarin paraya ve resmi satisa donusme 
+    hizinin en dogrudan finansal karsiligidir.
+
+* Nasil Cekilir / Entegre Edilir?:
+  - TCMB EVDS API uzerinden Python 'evds' kutuphanesi veya REST API ile 2015'ten 
+    gunumuze kadar kesintisiz 10+ yillik zaman serisi olarak saniyeler icinde 
+    cekilip 'data/faiz/' altina eklenebilir.
+
+
+--------------------------------------------------------------------------------
+3. GOOGLE TRENDS: ARAC SATIN ALMA TALEP & NIYET HIZI ENDEKSI
+--------------------------------------------------------------------------------
+* Target Degisken Adi: target_google_trends_arac_talep_hizi
+* Veri Kaynagi: Google Trends API (Python 'pytrends' kutuphanesi)
+* Anahtar Kelimeler: "araba al", "ikinci el araba", "oto alim satim", "tasit kredisi"
+* Kapsam / Frekans: 2015 - 2026 (Haftalik ve Aylik normalize indeks, 138+ ay)
+* Birim: Arama Yoğunluk Momentum Endeksi (0 - 100 veya Log Aylik Degisim)
+
+* Neden Degerli?:
+  - Bir arac ilana cikip resmi satisa donusmeden 2 ila 4 hafta once potansiyel 
+    alicilar Google'da arastirma ve fiyat sorgulamasi yapar.
+  - Arama hacmindeki ivme (momentum), piyasadaki potansiyel alici niyetinin satis 
+    hizina donusmesini gosteren en guclu oncu (leading) likidite gostergesidir.
+
+* Nasil Cekilir / Entegre Edilir?:
+  - Python 'pytrends' kutuphanesi ile API anahtari gerekmeksizin Turkiye (geo='TR') 
+    lokasyonu filtrelenerek 2015-2026 arasi haftalik/aylik olarak otomatik 
+    cekilip 'data/google_trends/' klasorune kaydedilebilir.
+
+
+================================================================================
+OZET KARSILASTIRMA TABLOSU
+================================================================================
+Hedef Degisken              Kaynak          Frekans      Tarih Araligi   Stratejik Katki
+--------------------------------------------------------------------------------
+1. SmartIQ Stok Gunu        Quick Finans    Aylik        2022 - 2026     B2B bayi/galeri satis suresini olcer
+2. Tasit Kredisi Akis Hizi  TCMB / BDDK     Haftalik/Ay  2015 - 2026     Finansal fonlama ve satis akis hizi
+3. Google Trends Talep Hizi Google Trends   Haftalik/Ay  2015 - 2026     Oncu talep ve satin alma niyeti hizi
+================================================================================
