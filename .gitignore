@@ -24,6 +24,37 @@ data/processed/*/*
 !data/processed/raporlar/*.md
 !data/processed/dataframes/*.md
 
+# Kaynak adına göre düz data/<kaynak>/ klasörleri (data/raw, data/processed
+# dışında — modelleme fazı betiklerinin doğrudan yazdığı konumlar) — aynı
+# kural (K5, veri versiyonlanmaz) burada da geçerli; yalnızca .gitkeep ve
+# README.md istisna.
+data/alim_gucu/*
+data/altintry/*
+data/arabamcom/*
+data/betam/*
+data/birlesik_target_setleri/*
+data/birlesik_veri_seti/*
+data/doas_stok_devir/*
+data/enag/*
+data/eurtry/*
+data/faiz/*
+data/indicata/*
+data/noter_devir/*
+data/odmd/*
+data/odmd_oyder/*
+data/osd/*
+data/otv/*
+data/proxy_fiyat/*
+data/quickfinans_stokta_kalma/*
+data/target_bazli_birlesik_setler/*
+data/tokkder/*
+data/trafige_kayitli_otomobiller/*
+data/tufe/*
+data/tuketici_guveni/*
+data/usdtry/*
+!data/*/.gitkeep
+!data/*/README.md
+
 # API anahtarları / gizli bilgiler — asla git'e girmez
 .env
 
