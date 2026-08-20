@@ -1,0 +1,123 @@
+	Time limit exceeded... Skipping SeasonalNaive.
+	Time limit exceeded... Skipping ETS.
+	Time limit exceeded... Skipping Theta.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/92 [00:00<?, ?it/s]Loading weights: 100%|██████████| 92/92 [00:00<00:00, 3245.36it/s]
+	Time limit exceeded... Skipping Chronos2.
+	Time limit exceeded... Skipping SeasonalNaive.
+	Time limit exceeded... Skipping ETS.
+	Time limit exceeded... Skipping Theta.
+Loading weights:   0%|          | 0/92 [00:00<?, ?it/s]Loading weights: 100%|██████████| 92/92 [00:00<00:00, 1429.94it/s]
+	Time limit exceeded... Skipping SeasonalNaive.
+	Time limit exceeded... Skipping ETS.
+	Time limit exceeded... Skipping Theta.
+Loading weights:   0%|          | 0/92 [00:00<?, ?it/s]Loading weights: 100%|██████████| 92/92 [00:00<00:00, 1532.88it/s]
+Loading weights:   0%|          | 0/92 [00:00<?, ?it/s]Loading weights: 100%|██████████| 92/92 [00:00<00:00, 2598.35it/s]
+	Time limit exceeded... Skipping SeasonalNaive.
+	Time limit exceeded... Skipping ETS.
+	Time limit exceeded... Skipping Theta.
+Loading weights:   0%|          | 0/92 [00:00<?, ?it/s]Loading weights: 100%|██████████| 92/92 [00:00<00:00, 1876.68it/s]
+Loading weights:   0%|          | 0/92 [00:00<?, ?it/s]Loading weights: 100%|██████████| 92/92 [00:00<00:00, 1087.77it/s]
+	Time limit exceeded... Skipping SeasonalNaive.
+	Time limit exceeded... Skipping ETS.
+	Time limit exceeded... Skipping Theta.
+Loading weights:   0%|          | 0/92 [00:00<?, ?it/s]Loading weights: 100%|██████████| 92/92 [00:00<00:00, 1340.45it/s]
+Loading weights:   0%|          | 0/92 [00:00<?, ?it/s]Loading weights: 100%|██████████| 92/92 [00:00<00:00, 1362.93it/s]
+	Time limit exceeded... Skipping SeasonalNaive.
+	Time limit exceeded... Skipping ETS.
+	Time limit exceeded... Skipping Theta.
+Loading weights:   0%|          | 0/92 [00:00<?, ?it/s]Loading weights: 100%|██████████| 92/92 [00:00<00:00, 951.73it/s]
+	Time limit exceeded... Skipping Chronos2.
+{
+  "target": "target_capraz_kuyruk_stok_seviyesi",
+  "n_obs_toplam": 28,
+  "tarih_araligi": "2024-01 -> 2026-06",
+  "aday_feature_sayisi": 47,
+  "korelasyon_sonrasi_feature_sayisi": 31,
+  "final_feature_sayisi": 15,
+  "final_feature_listesi": [
+    "betam_satis_orani_pct_lag1",
+    "sin_ay",
+    "enag_aylik_degisim",
+    "betam_talep_aylik_pct_lag1",
+    "tufe_aylik_degisim",
+    "otomobil_satinalma_ihtimali_endeksi",
+    "osd_kamyonet_adet",
+    "arabam_ortalama_ilan_fiyati_tl_lag1",
+    "arabam_reel_aylik_degisim_pct_lag1",
+    "osd_binek_kamyonet_toplam_adet",
+    "otv_event_ay_mi",
+    "betam_dom_gun_lag1",
+    "ceyrek",
+    "odmd_hta_adet",
+    "noter_devir_toplam_adet"
+  ],
+  "disislanan_kolonlar": {
+    "hedefin_ham_kaynak_kolonu_disi": [
+      "betam_dom_gun",
+      "noter_devir_otomobil_adet"
+    ],
+    "genel_sizinti_yasaklari": [
+      "betam_raporlanan_reel_degisim_pct_karisik",
+      "otv_ay_farki_en_yakin_olay_sizinti_riski",
+      "proxy_arabam_fiyat_referansi_audit"
+    ],
+    "ayni_ay_yerine_lag1_yapilan_aile_kolonlari": [
+      "arabam_ortalama_ilan_fiyati_tl",
+      "arabam_reel_aylik_degisim_pct",
+      "betam_dom_gun",
+      "betam_nominal_yillik_degisim_pct",
+      "betam_ortalama_ilan_fiyati_tl",
+      "betam_satis_orani_pct",
+      "betam_talep_aylik_pct",
+      "indicata_ilan_yayinlanan_adet",
+      "indicata_ortalama_satis_hizi_gun",
+      "indicata_perakende_fiyat_aylik_pct",
+      "indicata_satis_ilan_orani_pct",
+      "indicata_satisa_donen_adet",
+      "indicata_toptan_fiyat_aylik_pct"
+    ]
+  },
+  "backtest_ay_sayisi": 6,
+  "backtest_aylari": [
+    "2025-12",
+    "2026-01",
+    "2026-03",
+    "2026-04",
+    "2026-05",
+    "2026-06"
+  ],
+  "mase_olcek_payda_ortalama_mutlak_mevsimsel_fark": 50122.26248028674,
+  "durum": "TAMAMLANDI",
+  "model_metrikleri": {
+    "mae": 46177.0275827882,
+    "rmse": 64732.51602190535,
+    "bias": -26948.904671239357,
+    "mase": 0.9212877730918428,
+    "smape_pct": 9.915062916829365,
+    "yon_dogrulugu": 0.8333333333333334,
+    "n_test_ay": 6
+  },
+  "baseline_metrikleri_gecen_yil_ayni_ay": {
+    "mae": 66765.95197132617,
+    "rmse": 72538.88774110925,
+    "bias": -35739.69856630824,
+    "mase": 1.3320618157966322,
+    "smape_pct": 14.828494004945165,
+    "yon_dogrulugu": 0.8333333333333334,
+    "n_test_ay": 6
+  },
+  "model_kapsama_p10_p90": {
+    "kapsama_orani": 0.5,
+    "n_gecerli": 6,
+    "nominal_araligin_genisligi_ortalama": 71875.27061791946
+  },
+  "en_iyi_modeller_fold_bazinda": [
+    "DirectTabular",
+    "DirectTabular",
+    "WeightedEnsemble",
+    "WeightedEnsemble",
+    "WeightedEnsemble",
+    "Toto2"
+  ]
+}

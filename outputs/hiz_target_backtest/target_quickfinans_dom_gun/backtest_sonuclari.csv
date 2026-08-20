@@ -1,0 +1,7 @@
+﻿ay,gercek,model_tahmin,baseline_gecen_yil_ayni_ay,onceki_bilinen_gercek,en_iyi_model
+2026-01,47.0,39.24919891357422,51.0,45.0,RecursiveTabular
+2026-02,45.0,48.15537573161878,51.0,47.0,WeightedEnsemble
+2026-03,45.0,42.73336332935398,50.0,45.0,WeightedEnsemble
+2026-04,46.0,45.22871910115724,52.0,45.0,WeightedEnsemble
+2026-05,48.0,46.55512490590414,50.0,46.0,WeightedEnsemble
+2026-06,50.0,48.56623808208265,52.0,48.0,WeightedEnsemble

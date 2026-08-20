@@ -1,0 +1,13 @@
+SELECT_SECILEN_KOL=T1
+SELECT_SECILEN_MODEL=Chronos2
+SELECT_MAE=11.578849
+SELECT_RMSE=14.293185
+SELECT_DA_YUZDE=66.666667
+CONFIRM_MAE=8.157648
+CONFIRM_RMSE=9.607720
+CONFIRM_DA_YUZDE=75.000000
+ALL_PAIRED_WIN=14/24
+ALL_MCNEMAR_P=0.54882812
+KRITERLER={"mae_24_en_az_yuzde5_iyi": true, "paired_win_en_az_17": false, "mcnemar_p_altinda_005": false, "en_buyuk_2_cikarilinca_net_pozitif": true}
+KOVARYAT_KABUL=False
+NOT=Model yalnız SELECT bloğunda mekanik olarak seçildi; CONFIRM sonucuna göre değiştirilmedi.

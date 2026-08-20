@@ -1,0 +1,5 @@
+﻿Hedef Degisken,Birim,Gozlem Sayisi,Tarih Araligi,En Iyi Model,Test MAE,Test RMSE,Test MAPE (%),Test R2
+Days on Market (BETAM DOM - Gun),Gun,28,2024-01 -> 2026-06,WeightedEnsemble,1.6576,2.0587,6.74,-1.8212
+Satis / Ilan Orani (Indicata %),%,43,2023-01 -> 2026-07,WeightedEnsemble,5.4084,5.8263,12.35,-0.1348
+Piyasa Devir Orani (Noter / Park),Oran,102,2018-01 -> 2026-06,SeasonalNaive,0.0052,0.0066,17.46,-4.5132
+1 Aylik Hacim Buyume Hizi (% Log),%,101,2018-02 -> 2026-06,WeightedEnsemble,21.1061,22.6945,381.87,-1.1879

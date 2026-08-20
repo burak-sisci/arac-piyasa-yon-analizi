@@ -1,0 +1,28 @@
+﻿Feature,Target Korelasyonu (r),Mutlak Korelasyon (|r|),Durum,Aciklama
+betam_satis_orani_pct_lag1,-0.7462,0.7462,SECILDI (Modele Girdi),Target korelasyonu r=-0.746
+noter_devir_otomobil_adet_lag1,-0.6236,0.6236,SECILDI (Modele Girdi),Target korelasyonu r=-0.624
+arabam_reel_aylik_degisim_pct_lag1,-0.6199,0.6199,SECILDI (Modele Girdi),Target korelasyonu r=-0.620
+tufe_yillik_degisim_lag1,0.5029,0.5029,SECILDI (Modele Girdi),Target korelasyonu r=0.503
+cos_ay,-0.4696,0.4696,SECILDI (Modele Girdi),Target korelasyonu r=-0.470
+indicata_satisa_donen_adet_lag1,-0.4398,0.4398,SECILDI (Modele Girdi),Target korelasyonu r=-0.440
+enag_yillik_degisim_lag1,0.4385,0.4385,Elendi (Kural 2: |r_ij| > 0.90),tufe_yillik_degisim_lag1 ile r=0.969 > 0.90
+ay,-0.4326,0.4326,SECILDI (Modele Girdi),Target korelasyonu r=-0.433
+ceyrek,-0.4014,0.4014,Elendi (Kural 2: |r_ij| > 0.90),ay ile r=0.971 > 0.90
+sin_ay,0.3278,0.3278,SECILDI (Modele Girdi),Target korelasyonu r=0.328
+otv_event_ay_mi_lag1,-0.2577,0.2577,SECILDI (Modele Girdi),Target korelasyonu r=-0.258
+otomobil_satinalma_ihtimali_endeksi_lag1,-0.2568,0.2568,SECILDI (Modele Girdi),Target korelasyonu r=-0.257
+indicata_ilan_yayinlanan_adet_lag1,-0.2451,0.2451,SECILDI (Modele Girdi),Target korelasyonu r=-0.245
+usdtry_ortalama_lag1,-0.2325,0.2325,SECILDI (Modele Girdi),Target korelasyonu r=-0.232
+enag_aylik_degisim_lag1,0.2192,0.2192,SECILDI (Modele Girdi),Target korelasyonu r=0.219
+eurtry_ortalama_lag1,-0.2138,0.2138,Elendi (Kural 2: |r_ij| > 0.90),usdtry_ortalama_lag1 ile r=0.990 > 0.90
+tufe_aylik_degisim_lag1,0.1922,0.1922,Elendi (Kural 2: |r_ij| > 0.90),enag_aylik_degisim_lag1 ile r=0.913 > 0.90
+tasit_kredisi_faiz_lag1,0.1918,0.1918,SECILDI (Modele Girdi),Target korelasyonu r=0.192
+arabam_ortalama_ilan_fiyati_tl_lag1,-0.1632,0.1632,Elendi (Kural 2: |r_ij| > 0.90),usdtry_ortalama_lag1 ile r=0.978 > 0.90
+betam_talep_aylik_pct_lag1,-0.1544,0.1544,SECILDI (Modele Girdi),Target korelasyonu r=-0.154
+indicata_satis_ilan_orani_pct_lag1,-0.1341,0.1341,SECILDI (Modele Girdi),Target korelasyonu r=-0.134
+altin_gram_try_lag1,-0.1335,0.1335,Elendi (Kural 2: |r_ij| > 0.90),usdtry_ortalama_lag1 ile r=0.967 > 0.90
+tuketici_guven_endeksi_lag1,-0.1212,0.1212,SECILDI (Modele Girdi),Target korelasyonu r=-0.121
+odmd_otomobil_adet_lag1,-0.1204,0.1204,SECILDI (Modele Girdi),Target korelasyonu r=-0.120
+betam_ortalama_ilan_fiyati_tl_lag1,-0.1146,0.1146,Elendi (Kural 2: |r_ij| > 0.90),usdtry_ortalama_lag1 ile r=0.967 > 0.90
+osd_binek_adet_lag1,-0.0728,0.0728,Elendi (Kural 1: |r| < 0.10),Target korelasyonu -0.073 < 0.10
+politika_faizi_lag1,-0.0045,0.0045,Elendi (Kural 1: |r| < 0.10),Target korelasyonu -0.004 < 0.10

@@ -1,0 +1,1 @@
+T1 FULL_SERIES_FILL_COUNTS={"noter_devir_otomobil_adet": 0, "osd_binek_adet": 0, "otv_event_ay_mi": 0}

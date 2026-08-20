@@ -1,0 +1,106 @@
+	Time limit exceeded... Skipping SeasonalNaive.
+	Time limit exceeded... Skipping ETS.
+	Time limit exceeded... Skipping Theta.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/92 [00:00<?, ?it/s]Loading weights: 100%|██████████| 92/92 [00:00<00:00, 2350.97it/s]
+	Time limit exceeded... Skipping Chronos2.
+	Time limit exceeded... Skipping SeasonalNaive.
+	Time limit exceeded... Skipping Theta.
+Loading weights:   0%|          | 0/92 [00:00<?, ?it/s]Loading weights: 100%|██████████| 92/92 [00:00<00:00, 4074.03it/s]
+Loading weights:   0%|          | 0/92 [00:00<?, ?it/s]Loading weights: 100%|██████████| 92/92 [00:00<00:00, 3502.96it/s]
+	Time limit exceeded... Skipping Theta.
+Loading weights:   0%|          | 0/92 [00:00<?, ?it/s]Loading weights: 100%|██████████| 92/92 [00:00<00:00, 2429.12it/s]
+	Time limit exceeded... Skipping Theta.
+Loading weights:   0%|          | 0/92 [00:00<?, ?it/s]Loading weights: 100%|██████████| 92/92 [00:00<00:00, 3061.00it/s]
+Loading weights:   0%|          | 0/92 [00:00<?, ?it/s]Loading weights: 100%|██████████| 92/92 [00:00<00:00, 3902.63it/s]
+	Time limit exceeded... Skipping Theta.
+Loading weights:   0%|          | 0/92 [00:00<?, ?it/s]Loading weights: 100%|██████████| 92/92 [00:00<00:00, 3109.85it/s]
+	Time limit exceeded... Skipping Theta.
+Loading weights:   0%|          | 0/92 [00:00<?, ?it/s]Loading weights: 100%|██████████| 92/92 [00:00<00:00, 3684.62it/s]
+{
+  "target": "target_capraz_ikinciel_yeniarac_satis_orani",
+  "n_obs_toplam": 101,
+  "tarih_araligi": "2018-01 -> 2026-05",
+  "aday_feature_sayisi": 46,
+  "korelasyon_sonrasi_feature_sayisi": 31,
+  "final_feature_sayisi": 16,
+  "final_feature_listesi": [
+    "odmd_toplam_adet",
+    "trafige_kayitli_toplam_otomobil_adet",
+    "konut_kredisi_faiz_ktf12",
+    "tufe_yillik_degisim",
+    "betam_nominal_yillik_degisim_pct_lag1",
+    "arabam_reel_aylik_degisim_pct_lag1",
+    "noter_devir_toplam_adet",
+    "ay",
+    "sin_ay",
+    "tuketici_guven_endeksi",
+    "otv_event_ay_mi",
+    "indicata_satis_ilan_orani_pct_lag1",
+    "indicata_satisa_donen_adet_lag1",
+    "betam_talep_aylik_pct_lag1",
+    "betam_dom_gun_lag1",
+    "enag_aylik_degisim"
+  ],
+  "disislanan_kolonlar": {
+    "hedefin_ham_kaynak_kolonu_disi": [
+      "noter_devir_otomobil_adet",
+      "odmd_otomobil_adet"
+    ],
+    "genel_sizinti_yasaklari": [
+      "betam_raporlanan_reel_degisim_pct_karisik",
+      "otv_ay_farki_en_yakin_olay_sizinti_riski",
+      "proxy_arabam_fiyat_referansi_audit"
+    ],
+    "ayni_ay_yerine_lag1_yapilan_aile_kolonlari": [
+      "arabam_ortalama_ilan_fiyati_tl",
+      "arabam_reel_aylik_degisim_pct",
+      "betam_dom_gun",
+      "betam_nominal_yillik_degisim_pct",
+      "betam_ortalama_ilan_fiyati_tl",
+      "betam_satis_orani_pct",
+      "betam_talep_aylik_pct",
+      "indicata_ilan_yayinlanan_adet",
+      "indicata_ortalama_satis_hizi_gun",
+      "indicata_perakende_fiyat_aylik_pct",
+      "indicata_satis_ilan_orani_pct",
+      "indicata_satisa_donen_adet",
+      "indicata_toptan_fiyat_aylik_pct"
+    ]
+  },
+  "backtest_ay_sayisi": 6,
+  "backtest_aylari": [
+    "2025-12",
+    "2026-01",
+    "2026-02",
+    "2026-03",
+    "2026-04",
+    "2026-05"
+  ],
+  "mase_olcek_payda_ortalama_mutlak_mevsimsel_fark": 4.643113415668705,
+  "durum": "TAMAMLANDI",
+  "model_metrikleri": {
+    "mae": 0.5180503945503564,
+    "rmse": 0.7095200382436522,
+    "bias": -0.42167240093983765,
+    "mase": 0.11157392640940827,
+    "yon_dogrulugu": 1.0,
+    "n_test_ay": 6
+  },
+  "baseline_metrikleri_gecen_yil_ayni_ay": {
+    "mae": 0.5769417335615787,
+    "rmse": 0.7808684844959808,
+    "bias": -0.4687078606278455,
+    "mase": 0.12425751471299934,
+    "yon_dogrulugu": 1.0,
+    "n_test_ay": 6
+  },
+  "en_iyi_modeller_fold_bazinda": [
+    "WeightedEnsemble",
+    "WeightedEnsemble",
+    "WeightedEnsemble",
+    "WeightedEnsemble",
+    "WeightedEnsemble",
+    "WeightedEnsemble"
+  ]
+}

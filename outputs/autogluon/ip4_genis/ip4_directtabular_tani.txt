@@ -1,0 +1,10 @@
+T0_declared_known_covariates=[]
+T0_tabular_features=["lag1", "lag2", "lag3", "lag4", "lag5", "lag6", "lag7", "lag11", "lag12", "lag13", "lag23", "lag24", "lag25", "lag35", "lag36", "lag37", "month_of_year"]
+T0_declared_and_present=[]
+T0_all_declared_present=True
+T0_covariate_drop_warnings=[]
+T1_declared_known_covariates=["noter_devir_otomobil_adet_lag3", "osd_binek_adet_lag3", "otv_event_ay_mi_lag3"]
+T1_tabular_features=["noter_devir_otomobil_adet_lag3", "osd_binek_adet_lag3", "otv_event_ay_mi_lag3", "__scaled_noter_devir_otomobil_adet_lag3", "__scaled_osd_binek_adet_lag3", "lag1", "lag2", "lag3", "lag4", "lag5", "lag6", "lag7", "lag11", "lag12", "lag13", "lag23", "lag24", "lag25", "lag35", "lag36", "lag37", "month_of_year"]
+T1_declared_and_present=["noter_devir_otomobil_adet_lag3", "osd_binek_adet_lag3", "otv_event_ay_mi_lag3"]
+T1_all_declared_present=True
+T1_covariate_drop_warnings=[]

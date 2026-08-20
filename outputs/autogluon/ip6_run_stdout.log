@@ -1,0 +1,286 @@
+IP6 A1_A2 VERI ASSERTLERI GECTI
+T0 ORIGIN 01/64 2020-02 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2020-02 seconds=23.09
+T0 ORIGIN 02/64 2020-03 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2020-03 seconds=6.20
+T0 ORIGIN 03/64 2020-04 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2020-04 seconds=3.25
+T0 ORIGIN 04/64 2020-05 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2020-05 seconds=2.91
+T0 ORIGIN 05/64 2020-06 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2020-06 seconds=2.67
+T0 ORIGIN 06/64 2020-07 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2020-07 seconds=2.67
+T0 ORIGIN 07/64 2020-08 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2020-08 seconds=3.47
+T0 ORIGIN 08/64 2020-09 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2020-09 seconds=2.60
+T0 ORIGIN 09/64 2020-10 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2020-10 seconds=2.61
+T0 ORIGIN 10/64 2020-11 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2020-11 seconds=2.62
+T0 ORIGIN 11/64 2020-12 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2020-12 seconds=2.59
+T0 ORIGIN 12/64 2021-01 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2021-01 seconds=2.62
+T0 ORIGIN 13/64 2021-02 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2021-02 seconds=2.61
+T0 ORIGIN 14/64 2021-03 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2021-03 seconds=2.69
+T0 ORIGIN 15/64 2021-04 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2021-04 seconds=2.67
+T0 ORIGIN 16/64 2021-05 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2021-05 seconds=2.68
+T0 ORIGIN 17/64 2021-06 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2021-06 seconds=2.64
+T0 ORIGIN 18/64 2021-07 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2021-07 seconds=2.78
+T0 ORIGIN 19/64 2021-08 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2021-08 seconds=2.71
+T0 ORIGIN 20/64 2021-09 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2021-09 seconds=2.81
+T0 ORIGIN 21/64 2021-10 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2021-10 seconds=2.79
+T0 ORIGIN 22/64 2021-11 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2021-11 seconds=2.76
+T0 ORIGIN 23/64 2021-12 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2021-12 seconds=2.95
+T0 ORIGIN 24/64 2022-01 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2022-01 seconds=2.84
+T0 ORIGIN 25/64 2022-02 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2022-02 seconds=4.98
+T0 ORIGIN 26/64 2022-03 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2022-03 seconds=2.84
+T0 ORIGIN 27/64 2022-04 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2022-04 seconds=2.72
+T0 ORIGIN 28/64 2022-05 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2022-05 seconds=2.83
+T0 ORIGIN 29/64 2022-06 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2022-06 seconds=2.72
+T0 ORIGIN 30/64 2022-07 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2022-07 seconds=2.97
+T0 ORIGIN 31/64 2022-08 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2022-08 seconds=2.80
+T0 ORIGIN 32/64 2022-09 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2022-09 seconds=2.79
+T0 ORIGIN 33/64 2022-10 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2022-10 seconds=2.71
+T0 ORIGIN 34/64 2022-11 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2022-11 seconds=2.70
+T0 ORIGIN 35/64 2022-12 rejim=SOK blok=SELECT known=[]
+T0 FIT_DONE 2022-12 seconds=3.05
+T0 ORIGIN 36/64 2023-01 rejim=NORMAL blok=CONFIRM known=[]
+T0 FIT_DONE 2023-01 seconds=2.99
+T0 ORIGIN 37/64 2023-02 rejim=NORMAL blok=CONFIRM known=[]
+T0 FIT_DONE 2023-02 seconds=3.44
+T0 ORIGIN 38/64 2023-03 rejim=NORMAL blok=CONFIRM known=[]
+T0 FIT_DONE 2023-03 seconds=2.77
+T0 ORIGIN 39/64 2023-04 rejim=NORMAL blok=CONFIRM known=[]
+T0 FIT_DONE 2023-04 seconds=2.77
+T0 ORIGIN 40/64 2023-05 rejim=NORMAL blok=CONFIRM known=[]
+T0 FIT_DONE 2023-05 seconds=2.74
+T0 ORIGIN 41/64 2023-06 rejim=NORMAL blok=CONFIRM known=[]
+T0 FIT_DONE 2023-06 seconds=2.88
+T0 ORIGIN 42/64 2023-07 rejim=NORMAL blok=CONFIRM known=[]
+T0 FIT_DONE 2023-07 seconds=3.47
+T0 ORIGIN 43/64 2023-08 rejim=NORMAL blok=CONFIRM known=[]
+T0 FIT_DONE 2023-08 seconds=2.83
+T0 ORIGIN 44/64 2023-09 rejim=NORMAL blok=CONFIRM known=[]
+T0 FIT_DONE 2023-09 seconds=2.87
+T0 ORIGIN 45/64 2023-10 rejim=NORMAL blok=CONFIRM known=[]
+T0 FIT_DONE 2023-10 seconds=2.71
+T0 ORIGIN 46/64 2023-11 rejim=NORMAL blok=CONFIRM known=[]
+T0 FIT_DONE 2023-11 seconds=2.98
+T0 ORIGIN 47/64 2023-12 rejim=NORMAL blok=CONFIRM known=[]
+T0 FIT_DONE 2023-12 seconds=2.82
+T0 ORIGIN 48/64 2024-01 rejim=NORMAL blok=CONFIRM known=[]
+T0 FIT_DONE 2024-01 seconds=2.76
+T0 ORIGIN 49/64 2024-02 rejim=NORMAL blok=CONFIRM known=[]
+T0 FIT_DONE 2024-02 seconds=2.69
+T0 ORIGIN 50/64 2024-03 rejim=NORMAL blok=CONFIRM known=[]
+T0 FIT_DONE 2024-03 seconds=3.01
+T0 ORIGIN 51/64 2024-04 rejim=NORMAL blok=CONFIRM known=[]
+T0 FIT_DONE 2024-04 seconds=2.73
+T0 ORIGIN 52/64 2024-05 rejim=NORMAL blok=CONFIRM known=[]
+T0 FIT_DONE 2024-05 seconds=2.82
+T0 ORIGIN 53/64 2024-06 rejim=NORMAL blok=CONFIRM known=[]
+T0 FIT_DONE 2024-06 seconds=3.20
+T0 ORIGIN 54/64 2024-07 rejim=NORMAL blok=CONFIRM known=[]
+T0 FIT_DONE 2024-07 seconds=2.73
+T0 ORIGIN 55/64 2024-08 rejim=NORMAL blok=CONFIRM known=[]
+T0 FIT_DONE 2024-08 seconds=2.87
+T0 ORIGIN 56/64 2024-09 rejim=NORMAL blok=CONFIRM known=[]
+T0 FIT_DONE 2024-09 seconds=2.77
+T0 ORIGIN 57/64 2024-10 rejim=NORMAL blok=CONFIRM known=[]
+T0 FIT_DONE 2024-10 seconds=2.81
+T0 ORIGIN 58/64 2024-11 rejim=NORMAL blok=CONFIRM known=[]
+T0 FIT_DONE 2024-11 seconds=3.09
+T0 ORIGIN 59/64 2024-12 rejim=NORMAL blok=CONFIRM known=[]
+T0 FIT_DONE 2024-12 seconds=3.22
+T0 ORIGIN 60/64 2025-01 rejim=NORMAL blok=CONFIRM known=[]
+T0 FIT_DONE 2025-01 seconds=2.74
+T0 ORIGIN 61/64 2025-02 rejim=NORMAL blok=CONFIRM known=[]
+T0 FIT_DONE 2025-02 seconds=2.75
+T0 ORIGIN 62/64 2025-03 rejim=NORMAL blok=CONFIRM known=[]
+T0 FIT_DONE 2025-03 seconds=2.79
+T0 ORIGIN 63/64 2025-04 rejim=NORMAL blok=CONFIRM known=[]
+T0 FIT_DONE 2025-04 seconds=2.90
+T0 ORIGIN 64/64 2025-05 rejim=NORMAL blok=CONFIRM known=[]
+T0 FIT_DONE 2025-05 seconds=2.77
+T1 ORIGIN 01/64 2020-02 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2020-02 seconds=2.84
+T1 ORIGIN 02/64 2020-03 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2020-03 seconds=2.76
+T1 ORIGIN 03/64 2020-04 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2020-04 seconds=2.87
+T1 ORIGIN 04/64 2020-05 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2020-05 seconds=2.95
+T1 ORIGIN 05/64 2020-06 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2020-06 seconds=2.77
+T1 ORIGIN 06/64 2020-07 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2020-07 seconds=2.94
+T1 ORIGIN 07/64 2020-08 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2020-08 seconds=2.78
+T1 ORIGIN 08/64 2020-09 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2020-09 seconds=2.85
+T1 ORIGIN 09/64 2020-10 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2020-10 seconds=2.97
+T1 ORIGIN 10/64 2020-11 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2020-11 seconds=2.79
+T1 ORIGIN 11/64 2020-12 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2020-12 seconds=2.77
+T1 ORIGIN 12/64 2021-01 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2021-01 seconds=2.74
+T1 ORIGIN 13/64 2021-02 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2021-02 seconds=2.79
+T1 ORIGIN 14/64 2021-03 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2021-03 seconds=2.75
+T1 ORIGIN 15/64 2021-04 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2021-04 seconds=2.82
+T1 ORIGIN 16/64 2021-05 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2021-05 seconds=2.78
+T1 ORIGIN 17/64 2021-06 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2021-06 seconds=2.73
+T1 ORIGIN 18/64 2021-07 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2021-07 seconds=2.88
+T1 ORIGIN 19/64 2021-08 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2021-08 seconds=2.74
+T1 ORIGIN 20/64 2021-09 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2021-09 seconds=2.82
+T1 ORIGIN 21/64 2021-10 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2021-10 seconds=2.81
+T1 ORIGIN 22/64 2021-11 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2021-11 seconds=2.86
+T1 ORIGIN 23/64 2021-12 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2021-12 seconds=2.86
+T1 ORIGIN 24/64 2022-01 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2022-01 seconds=3.05
+T1 ORIGIN 25/64 2022-02 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2022-02 seconds=3.34
+T1 ORIGIN 26/64 2022-03 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2022-03 seconds=2.78
+T1 ORIGIN 27/64 2022-04 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2022-04 seconds=2.83
+T1 ORIGIN 28/64 2022-05 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2022-05 seconds=2.81
+T1 ORIGIN 29/64 2022-06 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2022-06 seconds=2.82
+T1 ORIGIN 30/64 2022-07 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2022-07 seconds=3.08
+T1 ORIGIN 31/64 2022-08 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2022-08 seconds=2.88
+T1 ORIGIN 32/64 2022-09 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2022-09 seconds=3.13
+T1 ORIGIN 33/64 2022-10 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2022-10 seconds=2.95
+T1 ORIGIN 34/64 2022-11 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2022-11 seconds=2.75
+T1 ORIGIN 35/64 2022-12 rejim=SOK blok=SELECT known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2022-12 seconds=2.82
+T1 ORIGIN 36/64 2023-01 rejim=NORMAL blok=CONFIRM known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2023-01 seconds=2.85
+T1 ORIGIN 37/64 2023-02 rejim=NORMAL blok=CONFIRM known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2023-02 seconds=3.95
+T1 ORIGIN 38/64 2023-03 rejim=NORMAL blok=CONFIRM known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2023-03 seconds=3.71
+T1 ORIGIN 39/64 2023-04 rejim=NORMAL blok=CONFIRM known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2023-04 seconds=2.81
+T1 ORIGIN 40/64 2023-05 rejim=NORMAL blok=CONFIRM known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2023-05 seconds=2.79
+T1 ORIGIN 41/64 2023-06 rejim=NORMAL blok=CONFIRM known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2023-06 seconds=2.89
+T1 ORIGIN 42/64 2023-07 rejim=NORMAL blok=CONFIRM known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2023-07 seconds=2.79
+T1 ORIGIN 43/64 2023-08 rejim=NORMAL blok=CONFIRM known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2023-08 seconds=2.88
+T1 ORIGIN 44/64 2023-09 rejim=NORMAL blok=CONFIRM known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2023-09 seconds=2.93
+T1 ORIGIN 45/64 2023-10 rejim=NORMAL blok=CONFIRM known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2023-10 seconds=2.78
+T1 ORIGIN 46/64 2023-11 rejim=NORMAL blok=CONFIRM known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2023-11 seconds=2.81
+T1 ORIGIN 47/64 2023-12 rejim=NORMAL blok=CONFIRM known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2023-12 seconds=2.87
+T1 ORIGIN 48/64 2024-01 rejim=NORMAL blok=CONFIRM known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2024-01 seconds=2.92
+T1 ORIGIN 49/64 2024-02 rejim=NORMAL blok=CONFIRM known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2024-02 seconds=3.35
+T1 ORIGIN 50/64 2024-03 rejim=NORMAL blok=CONFIRM known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2024-03 seconds=3.17
+T1 ORIGIN 51/64 2024-04 rejim=NORMAL blok=CONFIRM known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2024-04 seconds=2.84
+T1 ORIGIN 52/64 2024-05 rejim=NORMAL blok=CONFIRM known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2024-05 seconds=2.86
+T1 ORIGIN 53/64 2024-06 rejim=NORMAL blok=CONFIRM known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2024-06 seconds=2.77
+T1 ORIGIN 54/64 2024-07 rejim=NORMAL blok=CONFIRM known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2024-07 seconds=2.83
+T1 ORIGIN 55/64 2024-08 rejim=NORMAL blok=CONFIRM known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2024-08 seconds=3.00
+T1 ORIGIN 56/64 2024-09 rejim=NORMAL blok=CONFIRM known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2024-09 seconds=2.84
+T1 ORIGIN 57/64 2024-10 rejim=NORMAL blok=CONFIRM known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2024-10 seconds=2.77
+T1 ORIGIN 58/64 2024-11 rejim=NORMAL blok=CONFIRM known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2024-11 seconds=2.93
+T1 ORIGIN 59/64 2024-12 rejim=NORMAL blok=CONFIRM known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2024-12 seconds=2.86
+T1 ORIGIN 60/64 2025-01 rejim=NORMAL blok=CONFIRM known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2025-01 seconds=2.90
+T1 ORIGIN 61/64 2025-02 rejim=NORMAL blok=CONFIRM known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2025-02 seconds=2.78
+T1 ORIGIN 62/64 2025-03 rejim=NORMAL blok=CONFIRM known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2025-03 seconds=2.89
+T1 ORIGIN 63/64 2025-04 rejim=NORMAL blok=CONFIRM known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2025-04 seconds=2.81
+T1 ORIGIN 64/64 2025-05 rejim=NORMAL blok=CONFIRM known=['noter_devir_otomobil_adet_lag1', 'tufe_aylik_degisim_lag1', 'osd_kamyonet_adet_lag1', 'osd_binek_kamyonet_toplam_adet_lag1', 'odmd_hta_adet_lag1']
+T1 FIT_DONE 2025-05 seconds=2.92
+
+IP6 SECIM
+SECIM_BLOKU=SOK_2020-02_2022-12
+SECILEN_KOL=T1
+SECILEN_MODEL=Chronos2
+SOK_MAE=23.508077
+SOK_DA=19/35
+NORMAL_MAE=11.397418
+NORMAL_DA=19/29
+NORMAL_SONUCA_BAKILARAK_MODEL_DEGISTIRILMEDI=True
+
+IP6 KARAR
+SECILEN=T1_Chronos2
+TUM_MAE=18.020434
+TUM_DA=38/64 (59.3750%)
+TUM_DA_BINOM_P=0.08432146
+TUM_SIFIR_PAIRED_WIN=34/64
+NORMAL_SIFIR_PAIRED_WIN=15/29
+NAIVE_MCNEMAR_P=0.30199561
+KRITERLER={'sifir_paired_win_en_az_40': False, 'sifira_gore_mae_en_az_yuzde10_iyi': False, 'en_buyuk_2_cikarilinca_net_pozitif': True, 'DA_en_az_40': False, 'naive_McNemar_p_altinda_005': False, 'normal_MAE_farki_pozitif': True, 'normal_paired_win_en_az_15': True}
+IP6_KABUL=False
+
+NAIVE_DA_SOK_NORMAL_TUM
+ rejim  DA_adet  n  DA_yuzde
+NORMAL       11 29 37.931034
+   SOK       19 35 54.285714
+   TUM       30 64 46.875000
+ASSERT max_origin=2025-05-01 test_rows=0 prediction_length=1
+TEST BLOKUNA DOKUNULMADI.

@@ -1,0 +1,9 @@
+SECILEN=T1_Chronos2
+TUM_MAE=18.020434
+TUM_DA=38/64 (59.3750%)
+TUM_DA_BINOM_P=0.08432146
+TUM_SIFIR_PAIRED_WIN=34/64
+NORMAL_SIFIR_PAIRED_WIN=15/29
+NAIVE_MCNEMAR_P=0.30199561
+KRITERLER={'sifir_paired_win_en_az_40': False, 'sifira_gore_mae_en_az_yuzde10_iyi': False, 'en_buyuk_2_cikarilinca_net_pozitif': True, 'DA_en_az_40': False, 'naive_McNemar_p_altinda_005': False, 'normal_MAE_farki_pozitif': True, 'normal_paired_win_en_az_15': True}
+IP6_KABUL=False

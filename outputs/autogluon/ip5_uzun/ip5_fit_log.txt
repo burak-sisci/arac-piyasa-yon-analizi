@@ -1,0 +1,240 @@
+T0 ORIGIN 01/60 2020-04 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2020-04 seconds=21.14
+T0 ORIGIN 02/60 2020-05 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2020-05 seconds=9.41
+T0 ORIGIN 03/60 2020-06 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2020-06 seconds=3.23
+T0 ORIGIN 04/60 2020-07 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2020-07 seconds=2.67
+T0 ORIGIN 05/60 2020-08 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2020-08 seconds=2.94
+T0 ORIGIN 06/60 2020-09 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2020-09 seconds=3.71
+T0 ORIGIN 07/60 2020-10 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2020-10 seconds=2.97
+T0 ORIGIN 08/60 2020-11 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2020-11 seconds=2.51
+T0 ORIGIN 09/60 2020-12 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2020-12 seconds=2.57
+T0 ORIGIN 10/60 2021-01 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2021-01 seconds=2.68
+T0 ORIGIN 11/60 2021-02 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2021-02 seconds=2.63
+T0 ORIGIN 12/60 2021-03 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2021-03 seconds=2.73
+T0 ORIGIN 13/60 2021-04 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2021-04 seconds=2.78
+T0 ORIGIN 14/60 2021-05 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2021-05 seconds=2.66
+T0 ORIGIN 15/60 2021-06 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2021-06 seconds=2.70
+T0 ORIGIN 16/60 2021-07 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2021-07 seconds=2.64
+T0 ORIGIN 17/60 2021-08 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2021-08 seconds=2.64
+T0 ORIGIN 18/60 2021-09 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2021-09 seconds=3.00
+T0 ORIGIN 19/60 2021-10 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2021-10 seconds=2.68
+T0 ORIGIN 20/60 2021-11 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2021-11 seconds=2.78
+T0 ORIGIN 21/60 2021-12 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2021-12 seconds=2.68
+T0 ORIGIN 22/60 2022-01 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2022-01 seconds=2.82
+T0 ORIGIN 23/60 2022-02 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2022-02 seconds=2.95
+T0 ORIGIN 24/60 2022-03 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2022-03 seconds=2.83
+T0 ORIGIN 25/60 2022-04 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2022-04 seconds=3.00
+T0 ORIGIN 26/60 2022-05 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2022-05 seconds=2.79
+T0 ORIGIN 27/60 2022-06 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2022-06 seconds=3.04
+T0 ORIGIN 28/60 2022-07 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2022-07 seconds=2.73
+T0 ORIGIN 29/60 2022-08 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2022-08 seconds=3.14
+T0 ORIGIN 30/60 2022-09 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2022-09 seconds=2.69
+T0 ORIGIN 31/60 2022-10 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2022-10 seconds=2.82
+T0 ORIGIN 32/60 2022-11 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2022-11 seconds=2.78
+T0 ORIGIN 33/60 2022-12 rejim=SOK_2020_04_2022_12 known=[]
+T0 FIT_DONE 2022-12 seconds=2.70
+T0 ORIGIN 34/60 2023-01 rejim=NORMAL_2023_01_2025_03 known=[]
+T0 FIT_DONE 2023-01 seconds=2.69
+T0 ORIGIN 35/60 2023-02 rejim=NORMAL_2023_01_2025_03 known=[]
+T0 FIT_DONE 2023-02 seconds=2.73
+T0 ORIGIN 36/60 2023-03 rejim=NORMAL_2023_01_2025_03 known=[]
+T0 FIT_DONE 2023-03 seconds=2.68
+T0 ORIGIN 37/60 2023-04 rejim=NORMAL_2023_01_2025_03 known=[]
+T0 FIT_DONE 2023-04 seconds=3.43
+T0 ORIGIN 38/60 2023-05 rejim=NORMAL_2023_01_2025_03 known=[]
+T0 FIT_DONE 2023-05 seconds=2.77
+T0 ORIGIN 39/60 2023-06 rejim=NORMAL_2023_01_2025_03 known=[]
+T0 FIT_DONE 2023-06 seconds=3.56
+T0 ORIGIN 40/60 2023-07 rejim=NORMAL_2023_01_2025_03 known=[]
+T0 FIT_DONE 2023-07 seconds=2.66
+T0 ORIGIN 41/60 2023-08 rejim=NORMAL_2023_01_2025_03 known=[]
+T0 FIT_DONE 2023-08 seconds=2.87
+T0 ORIGIN 42/60 2023-09 rejim=NORMAL_2023_01_2025_03 known=[]
+T0 FIT_DONE 2023-09 seconds=2.91
+T0 ORIGIN 43/60 2023-10 rejim=NORMAL_2023_01_2025_03 known=[]
+T0 FIT_DONE 2023-10 seconds=2.66
+T0 ORIGIN 44/60 2023-11 rejim=NORMAL_2023_01_2025_03 known=[]
+T0 FIT_DONE 2023-11 seconds=3.37
+T0 ORIGIN 45/60 2023-12 rejim=NORMAL_2023_01_2025_03 known=[]
+T0 FIT_DONE 2023-12 seconds=2.73
+T0 ORIGIN 46/60 2024-01 rejim=NORMAL_2023_01_2025_03 known=[]
+T0 FIT_DONE 2024-01 seconds=2.60
+T0 ORIGIN 47/60 2024-02 rejim=NORMAL_2023_01_2025_03 known=[]
+T0 FIT_DONE 2024-02 seconds=2.70
+T0 ORIGIN 48/60 2024-03 rejim=NORMAL_2023_01_2025_03 known=[]
+T0 FIT_DONE 2024-03 seconds=2.67
+T0 ORIGIN 49/60 2024-04 rejim=NORMAL_2023_01_2025_03 known=[]
+T0 FIT_DONE 2024-04 seconds=2.68
+T0 ORIGIN 50/60 2024-05 rejim=NORMAL_2023_01_2025_03 known=[]
+T0 FIT_DONE 2024-05 seconds=2.68
+T0 ORIGIN 51/60 2024-06 rejim=NORMAL_2023_01_2025_03 known=[]
+T0 FIT_DONE 2024-06 seconds=3.73
+T0 ORIGIN 52/60 2024-07 rejim=NORMAL_2023_01_2025_03 known=[]
+T0 FIT_DONE 2024-07 seconds=2.88
+T0 ORIGIN 53/60 2024-08 rejim=NORMAL_2023_01_2025_03 known=[]
+T0 FIT_DONE 2024-08 seconds=2.62
+T0 ORIGIN 54/60 2024-09 rejim=NORMAL_2023_01_2025_03 known=[]
+T0 FIT_DONE 2024-09 seconds=2.63
+T0 ORIGIN 55/60 2024-10 rejim=NORMAL_2023_01_2025_03 known=[]
+T0 FIT_DONE 2024-10 seconds=2.80
+T0 ORIGIN 56/60 2024-11 rejim=NORMAL_2023_01_2025_03 known=[]
+T0 FIT_DONE 2024-11 seconds=2.65
+T0 ORIGIN 57/60 2024-12 rejim=NORMAL_2023_01_2025_03 known=[]
+T0 FIT_DONE 2024-12 seconds=2.68
+T0 ORIGIN 58/60 2025-01 rejim=NORMAL_2023_01_2025_03 known=[]
+T0 FIT_DONE 2025-01 seconds=3.40
+T0 ORIGIN 59/60 2025-02 rejim=NORMAL_2023_01_2025_03 known=[]
+T0 FIT_DONE 2025-02 seconds=2.71
+T0 ORIGIN 60/60 2025-03 rejim=NORMAL_2023_01_2025_03 known=[]
+T0 FIT_DONE 2025-03 seconds=2.77
+T1 ORIGIN 01/60 2020-04 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2020-04 seconds=2.79
+T1 ORIGIN 02/60 2020-05 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2020-05 seconds=2.68
+T1 ORIGIN 03/60 2020-06 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2020-06 seconds=2.71
+T1 ORIGIN 04/60 2020-07 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2020-07 seconds=2.63
+T1 ORIGIN 05/60 2020-08 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2020-08 seconds=2.68
+T1 ORIGIN 06/60 2020-09 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2020-09 seconds=2.72
+T1 ORIGIN 07/60 2020-10 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2020-10 seconds=2.73
+T1 ORIGIN 08/60 2020-11 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2020-11 seconds=2.73
+T1 ORIGIN 09/60 2020-12 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2020-12 seconds=2.64
+T1 ORIGIN 10/60 2021-01 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2021-01 seconds=2.76
+T1 ORIGIN 11/60 2021-02 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2021-02 seconds=2.61
+T1 ORIGIN 12/60 2021-03 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2021-03 seconds=2.73
+T1 ORIGIN 13/60 2021-04 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2021-04 seconds=3.40
+T1 ORIGIN 14/60 2021-05 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2021-05 seconds=2.60
+T1 ORIGIN 15/60 2021-06 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2021-06 seconds=2.66
+T1 ORIGIN 16/60 2021-07 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2021-07 seconds=2.60
+T1 ORIGIN 17/60 2021-08 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2021-08 seconds=2.63
+T1 ORIGIN 18/60 2021-09 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2021-09 seconds=2.70
+T1 ORIGIN 19/60 2021-10 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2021-10 seconds=2.63
+T1 ORIGIN 20/60 2021-11 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2021-11 seconds=3.73
+T1 ORIGIN 21/60 2021-12 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2021-12 seconds=2.80
+T1 ORIGIN 22/60 2022-01 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2022-01 seconds=2.65
+T1 ORIGIN 23/60 2022-02 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2022-02 seconds=2.65
+T1 ORIGIN 24/60 2022-03 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2022-03 seconds=2.70
+T1 ORIGIN 25/60 2022-04 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2022-04 seconds=2.91
+T1 ORIGIN 26/60 2022-05 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2022-05 seconds=2.67
+T1 ORIGIN 27/60 2022-06 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2022-06 seconds=2.83
+T1 ORIGIN 28/60 2022-07 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2022-07 seconds=2.72
+T1 ORIGIN 29/60 2022-08 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2022-08 seconds=3.12
+T1 ORIGIN 30/60 2022-09 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2022-09 seconds=2.61
+T1 ORIGIN 31/60 2022-10 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2022-10 seconds=2.69
+T1 ORIGIN 32/60 2022-11 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2022-11 seconds=2.83
+T1 ORIGIN 33/60 2022-12 rejim=SOK_2020_04_2022_12 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2022-12 seconds=2.70
+T1 ORIGIN 34/60 2023-01 rejim=NORMAL_2023_01_2025_03 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2023-01 seconds=2.66
+T1 ORIGIN 35/60 2023-02 rejim=NORMAL_2023_01_2025_03 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2023-02 seconds=2.72
+T1 ORIGIN 36/60 2023-03 rejim=NORMAL_2023_01_2025_03 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2023-03 seconds=2.77
+T1 ORIGIN 37/60 2023-04 rejim=NORMAL_2023_01_2025_03 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2023-04 seconds=2.90
+T1 ORIGIN 38/60 2023-05 rejim=NORMAL_2023_01_2025_03 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2023-05 seconds=3.00
+T1 ORIGIN 39/60 2023-06 rejim=NORMAL_2023_01_2025_03 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2023-06 seconds=3.90
+T1 ORIGIN 40/60 2023-07 rejim=NORMAL_2023_01_2025_03 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2023-07 seconds=2.74
+T1 ORIGIN 41/60 2023-08 rejim=NORMAL_2023_01_2025_03 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2023-08 seconds=2.95
+T1 ORIGIN 42/60 2023-09 rejim=NORMAL_2023_01_2025_03 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2023-09 seconds=2.81
+T1 ORIGIN 43/60 2023-10 rejim=NORMAL_2023_01_2025_03 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2023-10 seconds=2.70
+T1 ORIGIN 44/60 2023-11 rejim=NORMAL_2023_01_2025_03 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2023-11 seconds=2.67
+T1 ORIGIN 45/60 2023-12 rejim=NORMAL_2023_01_2025_03 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2023-12 seconds=2.76
+T1 ORIGIN 46/60 2024-01 rejim=NORMAL_2023_01_2025_03 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2024-01 seconds=2.67
+T1 ORIGIN 47/60 2024-02 rejim=NORMAL_2023_01_2025_03 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2024-02 seconds=3.54
+T1 ORIGIN 48/60 2024-03 rejim=NORMAL_2023_01_2025_03 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2024-03 seconds=2.70
+T1 ORIGIN 49/60 2024-04 rejim=NORMAL_2023_01_2025_03 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2024-04 seconds=6.54
+T1 ORIGIN 50/60 2024-05 rejim=NORMAL_2023_01_2025_03 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2024-05 seconds=2.68
+T1 ORIGIN 51/60 2024-06 rejim=NORMAL_2023_01_2025_03 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2024-06 seconds=4.40
+T1 ORIGIN 52/60 2024-07 rejim=NORMAL_2023_01_2025_03 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2024-07 seconds=2.66
+T1 ORIGIN 53/60 2024-08 rejim=NORMAL_2023_01_2025_03 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2024-08 seconds=2.70
+T1 ORIGIN 54/60 2024-09 rejim=NORMAL_2023_01_2025_03 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2024-09 seconds=2.76
+T1 ORIGIN 55/60 2024-10 rejim=NORMAL_2023_01_2025_03 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2024-10 seconds=2.68
+T1 ORIGIN 56/60 2024-11 rejim=NORMAL_2023_01_2025_03 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2024-11 seconds=3.33
+T1 ORIGIN 57/60 2024-12 rejim=NORMAL_2023_01_2025_03 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2024-12 seconds=2.89
+T1 ORIGIN 58/60 2025-01 rejim=NORMAL_2023_01_2025_03 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2025-01 seconds=2.72
+T1 ORIGIN 59/60 2025-02 rejim=NORMAL_2023_01_2025_03 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2025-02 seconds=2.85
+T1 ORIGIN 60/60 2025-03 rejim=NORMAL_2023_01_2025_03 known=['noter_devir_otomobil_adet_lag3', 'osd_binek_adet_lag3', 'otv_event_ay_mi_lag3']
+T1 FIT_DONE 2025-03 seconds=2.77

@@ -1,0 +1,8 @@
+{
+  "target_formulu": "noter_devir_otomobil_adet / trafige_kayitli_toplam_otomobil_adet",
+  "yuz_ile_carpildi": false,
+  "target_formulu_dogrulandi": true,
+  "feature_secimi_yalniz_train_doneminde": true,
+  "secilen_feature_sayisi": 11,
+  "ayrilan_feature_sayisi": 27
+}

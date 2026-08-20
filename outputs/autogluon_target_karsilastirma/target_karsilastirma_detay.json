@@ -1,0 +1,118 @@
+[
+  {
+    "target_name": "target_betam_dom_gun",
+    "display_name": "Days on Market (BETAM DOM - Gun)",
+    "unit": "Gun",
+    "gozlem_sayisi": 28,
+    "egitim_ayi": 25,
+    "test_ayi": 3,
+    "tarih_araligi": "2024-01 -> 2026-06",
+    "en_iyi_model": "WeightedEnsemble",
+    "test_mae": 1.65759302775065,
+    "test_rmse": 2.0586742359962305,
+    "test_mape_pct": 6.735030198174434,
+    "test_r2": -1.8212461557583954,
+    "test_aylari": [
+      "2026-04",
+      "2026-05",
+      "2026-06"
+    ],
+    "gercek_degerler": [
+      22.2,
+      23.8,
+      25.2
+    ],
+    "tahmin_degerleri": [
+      22.0861,
+      22.0403,
+      22.1008
+    ]
+  },
+  {
+    "target_name": "target_indicata_satis_ilan_orani_pct",
+    "display_name": "Satis / Ilan Orani (Indicata %)",
+    "unit": "%",
+    "gozlem_sayisi": 43,
+    "egitim_ayi": 40,
+    "test_ayi": 3,
+    "tarih_araligi": "2023-01 -> 2026-07",
+    "en_iyi_model": "WeightedEnsemble",
+    "test_mae": 5.408395284016926,
+    "test_rmse": 5.826267562047684,
+    "test_mape_pct": 12.351286707057369,
+    "test_r2": -0.13475009058013399,
+    "test_aylari": [
+      "2026-05",
+      "2026-06",
+      "2026-07"
+    ],
+    "gercek_degerler": [
+      38.35,
+      51.43,
+      47.4
+    ],
+    "tahmin_degerleri": [
+      46.031,
+      45.3778,
+      44.9079
+    ]
+  },
+  {
+    "target_name": "target_devir_orani",
+    "display_name": "Piyasa Devir Orani (Noter / Park)",
+    "unit": "Oran",
+    "gozlem_sayisi": 102,
+    "egitim_ayi": 99,
+    "test_ayi": 3,
+    "tarih_araligi": "2018-01 -> 2026-06",
+    "en_iyi_model": "SeasonalNaive",
+    "test_mae": 0.005242025532519298,
+    "test_rmse": 0.0066186830326793195,
+    "test_mape_pct": 17.46000990701609,
+    "test_r2": -4.513203519688739,
+    "test_aylari": [
+      "2026-04",
+      "2026-05",
+      "2026-06"
+    ],
+    "gercek_degerler": [
+      0.0342,
+      0.0283,
+      0.0341
+    ],
+    "tahmin_degerleri": [
+      0.0389,
+      0.0387,
+      0.0334
+    ]
+  },
+  {
+    "target_name": "target_1ay_hiz",
+    "display_name": "1 Aylik Hacim Buyume Hizi (% Log)",
+    "unit": "%",
+    "gozlem_sayisi": 101,
+    "egitim_ayi": 98,
+    "test_ayi": 3,
+    "tarih_araligi": "2018-02 -> 2026-06",
+    "en_iyi_model": "WeightedEnsemble",
+    "test_mae": 21.106111797681397,
+    "test_rmse": 22.694470418236577,
+    "test_mape_pct": 381.8745051906017,
+    "test_r2": -1.1879434224513554,
+    "test_aylari": [
+      "2026-04",
+      "2026-05",
+      "2026-06"
+    ],
+    "gercek_degerler": [
+      1.393,
+      -18.5318,
+      19.0267
+    ],
+    "tahmin_degerleri": [
+      13.5707,
+      0.3626,
+      -13.2196
+    ]
+  }
+]

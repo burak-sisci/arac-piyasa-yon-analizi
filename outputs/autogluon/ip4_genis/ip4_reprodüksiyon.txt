@@ -1,0 +1,3 @@
+T0_vs_IP2: n=120, max_abs_fark=3.5527136788e-15, exact_1e-8_pass=True
+T1_vs_IP3: n=120, max_abs_fark=7.45057970875e-09, exact_1e-8_pass=True
+T2_vs_IP3: n=120, max_abs_fark=3.5527136788e-15, exact_1e-8_pass=True

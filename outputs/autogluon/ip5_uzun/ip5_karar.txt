@@ -1,0 +1,6 @@
+T1_CHRONOS2_MAE_60=19.825742
+T1_CHRONOS2_DA=38/60 (63.3333%)
+ABLASYON_PAIRED_WIN=42/60
+SIFIR_PAIRED_WIN=32/60
+KRITERLER={'ablasyon_paired_win_en_az_37': True, 'sifir_paired_win_en_az_37': False, 'sifira_gore_mae_en_az_yuzde10_iyi': False, 'yon_dogru_en_az_38': True, 'iki_rejimde_de_mae_farki_pozitif': True}
+IP5_KABUL=False

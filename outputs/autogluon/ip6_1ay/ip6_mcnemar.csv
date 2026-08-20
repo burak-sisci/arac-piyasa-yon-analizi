@@ -1,0 +1,4 @@
+﻿rejim,candidate,reference,n,b_candidate_dogru_naive_yanlis,c_candidate_yanlis_naive_dogru,mcnemar_exact_p
+SOK,T1_Chronos2,naive,35,11,11,1.0
+NORMAL,T1_Chronos2,naive,29,16,8,0.15158963203430176
+TUM,T1_Chronos2,naive,64,27,19,0.3019956131896606

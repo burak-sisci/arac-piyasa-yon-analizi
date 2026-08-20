@@ -1,0 +1,12 @@
+﻿feature,importance,importance_stddev,pozitif_ay_sayisi,negatif_ay_sayisi,test_ayi_sayisi
+arabam_ortalama_ilan_fiyati_tl_lag1,0.0,0.0,0,0,6
+betam_dom_gun_lag1,0.0,0.0,0,0,6
+betam_ortalama_ilan_fiyati_tl_lag1,0.0,0.0,0,0,6
+eurtry_ortalama_lag1,0.0,0.0,0,0,6
+indicata_ilan_yayinlanan_adet_lag1,0.0,0.0,0,0,6
+indicata_perakende_fiyat_aylik_pct_lag1,0.0,0.0,0,0,6
+indicata_satis_ilan_orani_pct_lag1,0.0,0.0,0,0,6
+indicata_satisa_donen_adet_lag1,0.0,0.0,0,0,6
+noter_devir_otomobil_adet_lag1,0.0,0.0,0,0,6
+tasit_kredisi_faiz_lag1,0.0,0.0,0,0,6
+tufe_aylik_degisim_lag1,0.0,0.0,0,0,6
