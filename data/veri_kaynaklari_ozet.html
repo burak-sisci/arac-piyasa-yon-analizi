@@ -1,0 +1,545 @@
+<title>Araç Piyasası Veri Kaynakları</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --bg:#EDEFE9;
+    --surface:#F8F9F4;
+    --surface-2:#FFFFFF;
+    --ink:#1B2420;
+    --ink-muted:#5B665F;
+    --ink-faint:#8A9490;
+    --accent:#2E6E62;
+    --accent-soft:#DCE8E2;
+    --accent-2:#A24A2B;
+    --accent-2-soft:#F1E1D8;
+    --line:#D2D8CC;
+    --line-soft:#E4E7DF;
+    --shadow: 0 1px 2px rgba(27,36,32,0.06), 0 8px 24px rgba(27,36,32,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#131C18;
+      --surface:#1A2420;
+      --surface-2:#1F2B26;
+      --ink:#E8ECE6;
+      --ink-muted:#9CAAA2;
+      --ink-faint:#697A72;
+      --accent:#6FC9B3;
+      --accent-soft:#213933;
+      --accent-2:#E4926A;
+      --accent-2-soft:#33251E;
+      --line:#2B3A34;
+      --line-soft:#20302A;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.25);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#131C18;
+    --surface:#1A2420;
+    --surface-2:#1F2B26;
+    --ink:#E8ECE6;
+    --ink-muted:#9CAAA2;
+    --ink-faint:#697A72;
+    --accent:#6FC9B3;
+    --accent-soft:#213933;
+    --accent-2:#E4926A;
+    --accent-2-soft:#33251E;
+    --line:#2B3A34;
+    --line-soft:#20302A;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.25);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .page{
+    max-width:920px;
+    margin:0 auto;
+    padding:56px 28px 96px;
+  }
+  .eyebrow{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:0.78rem;
+    letter-spacing:0.09em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin:0 0 14px;
+  }
+  h1{
+    font-family:"Fraunces", "Source Serif 4", Georgia, serif;
+    font-optical-sizing:auto;
+    font-weight:600;
+    font-size:clamp(2rem, 4.4vw, 2.9rem);
+    line-height:1.12;
+    letter-spacing:-0.01em;
+    margin:0 0 18px;
+    text-wrap:balance;
+    color:var(--ink);
+  }
+  .lede{
+    max-width:62ch;
+    color:var(--ink-muted);
+    font-size:1.05rem;
+    margin:0 0 34px;
+  }
+  .lede strong{color:var(--ink); font-weight:600;}
+
+  .stats{
+    display:flex;
+    flex-wrap:wrap;
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+    margin-bottom:52px;
+  }
+  .stat{
+    flex:1 1 180px;
+    background:var(--surface);
+    padding:18px 22px;
+  }
+  .stat .n{
+    font-family:"IBM Plex Mono", monospace;
+    font-variant-numeric:tabular-nums;
+    font-size:1.6rem;
+    font-weight:500;
+    color:var(--accent);
+    display:block;
+  }
+  .stat .l{
+    font-size:0.82rem;
+    color:var(--ink-muted);
+    margin-top:2px;
+  }
+
+  section{margin-bottom:52px;}
+  h2{
+    font-family:"Fraunces", serif;
+    font-weight:600;
+    font-size:1.5rem;
+    margin:0 0 6px;
+    letter-spacing:-0.005em;
+  }
+  .section-note{
+    color:var(--ink-muted);
+    font-size:0.94rem;
+    max-width:68ch;
+    margin:0 0 20px;
+  }
+
+  .table-wrap{
+    overflow-x:auto;
+    border:1px solid var(--line);
+    border-radius:10px;
+    background:var(--surface);
+    box-shadow:var(--shadow);
+  }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:0.92rem;
+    min-width:640px;
+  }
+  thead th{
+    text-align:left;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:0.72rem;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    font-weight:500;
+    padding:13px 16px;
+    border-bottom:1px solid var(--line);
+    white-space:nowrap;
+  }
+  tbody td{
+    padding:13px 16px;
+    border-bottom:1px solid var(--line-soft);
+    vertical-align:top;
+    color:var(--ink);
+  }
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:hover{background:var(--surface-2);}
+  .src{font-weight:600;}
+  .src-mono{font-family:"IBM Plex Mono", monospace; font-size:0.86em; color:var(--ink-muted);}
+  .provider{color:var(--ink-muted); font-size:0.93em;}
+  .measure{color:var(--ink); max-width:26ch;}
+  .range{
+    font-family:"IBM Plex Mono", monospace;
+    font-variant-numeric:tabular-nums;
+    white-space:nowrap;
+    color:var(--ink);
+    font-size:0.88em;
+  }
+  .fn{
+    color:var(--accent-2);
+    font-family:"IBM Plex Mono", monospace;
+    font-size:0.8em;
+    text-decoration:none;
+    margin-left:2px;
+  }
+  .fn:hover{text-decoration:underline;}
+  .tag{
+    display:inline-block;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:0.72rem;
+    padding:2.5px 8px;
+    border-radius:20px;
+    border:1px solid var(--line);
+    color:var(--ink-muted);
+    white-space:nowrap;
+  }
+  .tag--official{border-color:var(--accent); color:var(--accent);}
+
+  .formula{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:0.87em;
+    background:var(--surface-2);
+    padding:2px 6px;
+    border-radius:4px;
+    color:var(--ink);
+  }
+
+  .notes{
+    list-style:none;
+    margin:0;
+    padding:0;
+    counter-reset:fn;
+  }
+  .notes li{
+    counter-increment:fn;
+    position:relative;
+    padding:14px 16px 14px 46px;
+    border-bottom:1px solid var(--line-soft);
+    font-size:0.92rem;
+    color:var(--ink-muted);
+  }
+  .notes li:last-child{border-bottom:none;}
+  .notes li::before{
+    content: counter(fn);
+    position:absolute;
+    left:14px; top:14px;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:0.78rem;
+    color:var(--accent-2);
+    background:var(--accent-2-soft);
+    width:22px; height:22px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .notes li strong{color:var(--ink); font-weight:600;}
+  .notes-wrap{
+    border:1px solid var(--line);
+    border-radius:10px;
+    background:var(--surface);
+    box-shadow:var(--shadow);
+  }
+  .back{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:0.78rem;
+    color:var(--ink-faint);
+    text-decoration:none;
+    margin-left:6px;
+  }
+
+  footer{
+    margin-top:64px;
+    padding-top:22px;
+    border-top:1px solid var(--line);
+    color:var(--ink-faint);
+    font-size:0.84rem;
+    font-family:"IBM Plex Mono", monospace;
+  }
+
+  a{color:var(--accent);}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+
+  @media (max-width:640px){
+    .page{padding:40px 18px 72px;}
+  }
+</style>
+
+<div class="page" id="top">
+
+  <p class="eyebrow">Araç Piyasası Yön Analizi — Veri Envanteri</p>
+  <h1>Bu proje verisini nereden alıyor?</h1>
+  <p class="lede">
+    <strong>20 farklı kaynaktan</strong> toplanan aylık/çeyreklik seriler, iki birleşik "master" dosyada
+    buluşuyor. Tamamı kamuya açık kaynaklardır (TÜİK, TCMB EVDS, resmî kurum bültenleri, piyasa raporları) —
+    projede özel veya lisanslı hiçbir veri kullanılmıyor. Aşağıdaki tarih aralıkları, disk üzerindeki güncel
+    dosyalardan doğrudan okunmuştur.
+  </p>
+
+  <div class="stats">
+    <div class="stat"><span class="n">20</span><span class="l">bağımsız veri kaynağı</span></div>
+    <div class="stat"><span class="n">2005 → 2026</span><span class="l">toplam kapsanan tarih aralığı</span></div>
+    <div class="stat"><span class="n">2015 → bugün</span><span class="l">çoğu serinin başlangıcı</span></div>
+    <div class="stat"><span class="n">7</span><span class="l">türetilmiş hedef (target)</span></div>
+  </div>
+
+  <section>
+    <h2>Resmî istatistik ve merkez bankası kaynakları</h2>
+    <p class="section-note">TÜİK veri portalı/gezgini ve TCMB EVDS3 üzerinden indirilen, doğrudan resmî serilerdir.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Kaynak</th><th>Sağlayıcı</th><th>Ölçüyor</th><th>Tarih aralığı</th><th>Yöntem</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="src">noter_devir</td>
+            <td class="provider">TÜİK veri portalı</td>
+            <td class="measure">İkinci el noter devir adedi (toplam + otomobil)</td>
+            <td class="range">2015-01 → 2026-06<br><span style="color:var(--ink-faint)">(otomobil kırılımı 2018-01'den)</span></td>
+            <td><span class="tag tag--official">resmî</span></td>
+          </tr>
+          <tr>
+            <td class="src">odmd</td>
+            <td class="provider">ODMD basın bültenleri</td>
+            <td class="measure">Yeni araç satışı (toplam / otomobil / HTA)</td>
+            <td class="range">2015-01 → 2026-06</td>
+            <td><span class="tag tag--official">resmî</span></td>
+          </tr>
+          <tr>
+            <td class="src">osd</td>
+            <td class="provider">OSD <span class="src-mono">(TCMB EVDS üzerinden)</span></td>
+            <td class="measure">Yerli üretim adedi (binek + hafif ticari)</td>
+            <td class="range">2015-01 → 2026-06</td>
+            <td><span class="tag tag--official">resmî</span></td>
+          </tr>
+          <tr>
+            <td class="src">usdtry / eurtry</td>
+            <td class="provider">TCMB EVDS3</td>
+            <td class="measure">USD/TRY, EUR/TRY döviz kurları</td>
+            <td class="range">2015-01 → 2026-07<br><span style="color:var(--ink-faint)">(EUR/TRY günlük: 2026-08-04'e kadar)</span></td>
+            <td><span class="tag tag--official">resmî</span></td>
+          </tr>
+          <tr>
+            <td class="src">altintry</td>
+            <td class="provider">TCMB EVDS3</td>
+            <td class="measure">Gram altın fiyatı (TL)</td>
+            <td class="range">2015-01 → 2026-05</td>
+            <td><span class="tag tag--official">resmî</span></td>
+          </tr>
+          <tr>
+            <td class="src">tufe</td>
+            <td class="provider">TCMB EVDS3 / TÜİK</td>
+            <td class="measure">TÜFE endeksi, aylık ve yıllık değişim</td>
+            <td class="range">2015-01 → 2026-07</td>
+            <td><span class="tag tag--official">resmî</span></td>
+          </tr>
+          <tr>
+            <td class="src">faiz <a class="fn" href="#fn1">1</a></td>
+            <td class="provider">TCMB EVDS3</td>
+            <td class="measure">Konut kredisi faizi, TCMB ort. fonlama maliyeti</td>
+            <td class="range">2015-01 → 2026-07</td>
+            <td><span class="tag tag--official">resmî</span></td>
+          </tr>
+          <tr>
+            <td class="src">tuketici_guveni</td>
+            <td class="provider">TCMB EVDS3</td>
+            <td class="measure">Tüketici güven endeksi, oto satın alma ihtimali</td>
+            <td class="range">2015-01 → 2026-07</td>
+            <td><span class="tag tag--official">resmî</span></td>
+          </tr>
+          <tr>
+            <td class="src">alim_gucu</td>
+            <td class="provider">TÜİK veri portalı</td>
+            <td class="measure">Brüt ücret-maaş endeksi (2021=100)</td>
+            <td class="range">2018-01 → 2026-03</td>
+            <td><span class="tag tag--official">resmî</span></td>
+          </tr>
+          <tr>
+            <td class="src">otv</td>
+            <td class="provider">Resmî Gazete / haber taraması</td>
+            <td class="measure">ÖTV oran değişikliği olay bayrağı</td>
+            <td class="range">2015-01 → 2026-06</td>
+            <td><span class="tag">olay bazlı</span></td>
+          </tr>
+          <tr>
+            <td class="src">trafige_kayitli_otomobiller</td>
+            <td class="provider">TÜİK veri gezgini</td>
+            <td class="measure">Trafikteki toplam otomobil stoku</td>
+            <td class="range">2005-01 → 2026-06<br><span style="color:var(--ink-faint)">(projenin en uzun serisi)</span></td>
+            <td><span class="tag tag--official">resmî</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Piyasa araştırması ve özel kaynaklar</h2>
+    <p class="section-note">Resmî kurumlar dışında, sektör raporları, yatırımcı sunumları ve haber kaynaklarından derlenen serilerdir — çoğu manuel PDF/haber okumasıyla toplandı.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Kaynak</th><th>Sağlayıcı</th><th>Ölçüyor</th><th>Tarih aralığı</th><th>Yöntem</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="src">betam / proxy_fiyat <a class="fn" href="#fn2">2</a></td>
+            <td class="provider">BETAM (Bahçeşehir Üni.) — sahibindex</td>
+            <td class="measure">İkinci el ilan fiyatı, ilanda kalış süresi, satış oranı</td>
+            <td class="range">2024-01 → 2026-07<br><span style="color:var(--ink-faint)">(+ 2023-11/12 tamamlayıcı)</span></td>
+            <td><span class="tag">rapor, manuel</span></td>
+          </tr>
+          <tr>
+            <td class="src">arabamcom <a class="fn" href="#fn3">3</a></td>
+            <td class="provider">arabam.com — Aylık Fiyat Endeksi</td>
+            <td class="measure">Ortalama ilan fiyatı, reel aylık değişim</td>
+            <td class="range">2024-01 → 2026-06</td>
+            <td><span class="tag">blog, manuel</span></td>
+          </tr>
+          <tr>
+            <td class="src">indicata <a class="fn" href="#fn4">4</a></td>
+            <td class="provider">Indicata Türkiye raporları</td>
+            <td class="measure">Online ilan/satış adedi, satış hızı, fiyat değişimi</td>
+            <td class="range">2023-01 → 2026-07</td>
+            <td><span class="tag">PDF rapor</span></td>
+          </tr>
+          <tr>
+            <td class="src">odmd_oyder <a class="fn" href="#fn5">5</a></td>
+            <td class="provider">Indicata haber sayfası <span class="src-mono">(dolaylı)</span></td>
+            <td class="measure">İkinci el online ilan/satış — kısmi örneklem</td>
+            <td class="range">2022-09 → 2023-08<br><span style="color:var(--ink-faint)">(yalnız 4–10 ay dolu)</span></td>
+            <td><span class="tag">kısmi örneklem</span></td>
+          </tr>
+          <tr>
+            <td class="src">tokkder</td>
+            <td class="provider">TOKKDER + NielsenIQ</td>
+            <td class="measure">Filo 2. el satışı, filo çıkışı, ort. araç yaşı</td>
+            <td class="range">2024-Q4 → 2026-Q1<br><span style="color:var(--ink-faint)">(çeyreklik, düzensiz)</span></td>
+            <td><span class="tag">dergi, manuel</span></td>
+          </tr>
+          <tr>
+            <td class="src">doas_stok_devir</td>
+            <td class="provider">Doğuş Otomotiv (DOAS)</td>
+            <td class="measure">Konsolide grup stok devir süresi (gün)</td>
+            <td class="range">2021-Q4 → 2026-Q1<br><span style="color:var(--ink-faint)">(10 düzensiz çeyrek)</span></td>
+            <td><span class="tag">yatırımcı sunumu</span></td>
+          </tr>
+          <tr>
+            <td class="src">quickfinans_stokta_kalma <a class="fn" href="#fn6">6</a></td>
+            <td class="provider">Quick Finans + SmartIQ</td>
+            <td class="measure">İkinci el ortalama stokta kalma süresi (gün)</td>
+            <td class="range">2024-09 → 2026-06<br><span style="color:var(--ink-faint)">(20 ay, 2 ay boşluk)</span></td>
+            <td><span class="tag">haber kaynaklı</span></td>
+          </tr>
+          <tr>
+            <td class="src">enag</td>
+            <td class="provider">ENAG (bağımsız enflasyon grubu)</td>
+            <td class="measure">Bağımsız enflasyon kontrol serisi</td>
+            <td class="range">2021-01 → 2026-06</td>
+            <td><span class="tag">sosyal medya/haber</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Birleşik (master) veri setleri</h2>
+    <p class="section-note">Yukarıdaki tüm kaynaklar, modelleme öncesinde iki dosyada birleştiriliyor.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Dosya</th><th>İçerik</th><th>Tarih aralığı</th><th>Not</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="src-mono">feature_master_aylik.csv</td>
+            <td class="measure">Tüm kaynakların birleşimi, hedef kolonları hariç — modelleme feature tablosu</td>
+            <td class="range">2015-01 → 2026-07<br><span style="color:var(--ink-faint)">(139 aylık satır)</span></td>
+            <td class="provider">Güncel, düzeltilmiş kolon adları</td>
+          </tr>
+          <tr>
+            <td class="src-mono">arac_piyasasi_master_veri_seti.csv <a class="fn" href="#fn7">7</a></td>
+            <td class="measure">Daha eski/geniş master — hedef kolonları da dahil</td>
+            <td class="range">2005-01 → 2026-08<br><span style="color:var(--ink-faint)">(260 satır)</span></td>
+            <td class="provider">Eski kolon adları korunmuş</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Türetilmiş hedef (target) formülleri</h2>
+    <p class="section-note">Modelleme hedefleri, ham kolonların matematiksel olarak birleştirilmesiyle üretiliyor.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Hedef</th><th>Sıklık</th><th>Formül</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="src-mono">target_1ay_hiz</td>
+            <td class="provider">Aylık</td>
+            <td><span class="formula">100·ln(V_t / V_t-1)</span></td>
+          </tr>
+          <tr>
+            <td class="src-mono">target_3ay_hiz</td>
+            <td class="provider">Aylık</td>
+            <td><span class="formula">100·ln(Σ(t-2..t) / Σ(t-5..t-3))</span></td>
+          </tr>
+          <tr>
+            <td class="src-mono">target_devir_orani</td>
+            <td class="provider">Aylık</td>
+            <td><span class="formula">noter_devir_otomobil_adet / trafige_kayitli_toplam_otomobil_adet</span></td>
+          </tr>
+          <tr>
+            <td class="src-mono">target_capraz_ikinciel_yeniarac_satis_orani</td>
+            <td class="provider">Aylık</td>
+            <td><span class="formula">noter_devir_otomobil_adet / odmd_otomobil_adet</span></td>
+          </tr>
+          <tr>
+            <td class="src-mono">target_capraz_kuyruk_stok_seviyesi</td>
+            <td class="provider">Aylık</td>
+            <td><span class="formula">(noter_devir_otomobil_adet / ay_gün_sayısı) · betam_dom_gun</span></td>
+          </tr>
+          <tr>
+            <td class="src-mono">target_7g_absorpsiyon</td>
+            <td class="provider">Günlük</td>
+            <td class="provider">Ham günlük ilan verisi henüz toplanmadı — hesaplanmadı</td>
+          </tr>
+          <tr>
+            <td class="src-mono">target_7g_kalite_duzeltilmis_fiyat_getirisi</td>
+            <td class="provider">Günlük</td>
+            <td class="provider">Ham günlük fiyat verisi henüz toplanmadı — hesaplanmadı</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Bilinen veri kalitesi notları</h2>
+    <p class="section-note">Kaynak tablolarındaki <a class="fn" href="#fn1" style="margin-left:0;">↑</a> işaretli satırların dayandığı, modelleme sırasında dikkate alınması gereken noktalar.</p>
+    <div class="notes-wrap">
+      <ol class="notes">
+        <li id="fn1"><strong>faiz —</strong> <span class="src-mono">TP.KTF12</span> "taşıt kredisi faizi" değil, <strong>konut kredisi faizidir</strong>; <span class="src-mono">TP.APIFON4</span> "politika faizi" değil, TCMB'nin ağırlıklı ortalama fonlama maliyetidir. Gerçek taşıt kredisi serisi hiç toplanmadı. Eski master dosyada yanlış adlar hâlâ duruyor. <a class="back" href="#top">↩ tabloya dön</a></li>
+        <li id="fn2"><strong>betam —</strong> Rapor başlığındaki ay, bir önceki ayın verisini anlatır (11 raporda doğrulandı) — bu yüzden <span class="src-mono">referans_ayi</span> ile <span class="src-mono">yayım_ayi</span> ayrı tutulur. 2025-02 raporu hiç yayınlanmadı. <a class="back" href="#top">↩ tabloya dön</a></li>
+        <li id="fn3"><strong>arabamcom —</strong> Eski <span class="src-mono">proxy_fiyat</span> dosyasında 2 ay yanlış etiketlenmişti (Mayıs 2026 → 2024, Şubat 2026 → 2025 yazılmıştı); yeni <span class="src-mono">arabamcom</span> klasöründe düzeltildi. <a class="back" href="#top">↩ tabloya dön</a></li>
+        <li id="fn4"><strong>indicata —</strong> Yöntem 3 kez değişti (2024 tam rapor → 2025 özet → 2026 özet v2); <span class="src-mono">ortalama_satis_hizi_gun</span> 2024 sonrası hiç yayınlanmadı; 2023 verileri geriye dönük derlendi (gerçek zamanlı backtest için kullanılamaz). <a class="back" href="#top">↩ tabloya dön</a></li>
+        <li id="fn5"><strong>odmd_oyder —</strong> Klasör adına rağmen asıl kaynağın Indicata'nın kendi haber sayfası olduğu tespit edildi; 36 aydan yalnızca 10'u bulunabildi. <a class="back" href="#top">↩ tabloya dön</a></li>
+        <li id="fn6"><strong>quickfinans —</strong> Kurumun kendi resmî arşivi artık erişilemez durumda; veriler ikincil haber sitelerinden toplandı. SmartIQ'nun kendi çeyreklik serisi farklı bir metodoloji taşır ve Quick Finans'ın aylık serisiyle birleştirilmemelidir. <a class="back" href="#top">↩ tabloya dön</a></li>
+        <li id="fn7"><strong>arac_piyasasi_master_veri_seti.csv —</strong> Daha yeni <span class="src-mono">feature_master_aylik.csv</span> ile bazı kolon adları tutarsız (düzeltilmemiş eski adlar hâlâ bu dosyada duruyor). <a class="back" href="#top">↩ tabloya dön</a></li>
+      </ol>
+    </div>
+  </section>
+
+  <footer>
+    Tüm ham veri dosyaları git'e dahil değildir (yalnızca yapı ve rapor dosyaları izleniyor) — buradaki tarih
+    aralıkları, disk üzerindeki güncel CSV/JSON dosyalarının doğrudan okunmasıyla elde edilmiştir. Tüm kaynaklar
+    kamuya açıktır; projede özel/lisanslı veri kullanılmaz (proje kuralı K5).
+  </footer>
+
+</div>
