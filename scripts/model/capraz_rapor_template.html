@@ -1,0 +1,198 @@
+<title>Çapraz-Feature Hedef Adayları</title>
+<style>
+  .vz {
+    --surface-1: #fcfcfb;
+    --page: #f9f9f7;
+    --ink-1: #0b0b0b;
+    --ink-2: #52514e;
+    --ink-muted: #898781;
+    --grid: #e1e0d9;
+    --border: rgba(11,11,11,0.10);
+    --card: #ffffff;
+    --blue: #2a78d6;
+    --orange: #eb6834;
+    --aqua: #1baf7a;
+    --good: #0ca30c;
+    --warning: #fab219;
+    --critical: #d03b3b;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) .vz {
+      --surface-1: #1a1a19; --page: #0d0d0d; --ink-1: #ffffff; --ink-2: #c3c2b7;
+      --ink-muted: #898781; --grid: #2c2c2a; --border: rgba(255,255,255,0.10);
+      --card: #222221; --blue: #3987e5; --orange: #d95926; --aqua: #199e70;
+      --good: #0ca30c; --warning: #fab219; --critical: #e66767;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] .vz {
+    --surface-1: #1a1a19; --page: #0d0d0d; --ink-1: #ffffff; --ink-2: #c3c2b7;
+    --ink-muted: #898781; --grid: #2c2c2a; --border: rgba(255,255,255,0.10);
+    --card: #222221; --blue: #3987e5; --orange: #d95926; --aqua: #199e70;
+    --good: #0ca30c; --warning: #fab219; --critical: #e66767;
+    color-scheme: dark;
+  }
+  .vz {
+    background: var(--page); color: var(--ink-1);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.5; padding: 40px 20px 64px; box-sizing: border-box; min-height: 100%;
+  }
+  .vz * { box-sizing: border-box; }
+  .wrap { max-width: 1040px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
+  .eyebrow { text-transform: uppercase; letter-spacing: 0.08em; font-size: 12px; font-weight: 700; color: var(--blue); }
+  h1 { font-size: 27px; font-weight: 800; margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
+  .sub { color: var(--ink-2); font-size: 14.5px; max-width: 72ch; }
+  .callout {
+    background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--blue);
+    border-radius: 6px; padding: 16px 18px; font-size: 13.5px; color: var(--ink-2);
+  }
+  .callout b { color: var(--ink-1); }
+  .callout ol, .callout ul { margin: 8px 0 0; padding-left: 18px; }
+  .callout li { margin: 4px 0; }
+  section.target {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 24px 26px 26px; display: flex; flex-direction: column; gap: 16px;
+  }
+  section.target.warn { border-left: 3px solid var(--warning); }
+  section.target.good { border-left: 3px solid var(--good); }
+  .target-head h2 { font-size: 19px; margin: 0 0 4px; font-weight: 750; }
+  .target-meta { font-size: 12.5px; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+  .formula-box {
+    background: var(--surface-1); border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px 16px; font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 12.5px; color: var(--ink-1); overflow-x: auto; white-space: pre;
+  }
+  .verdict-pill {
+    display: inline-block; font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 999px; white-space: nowrap;
+  }
+  .verdict-pill.strong { background: color-mix(in srgb, var(--good) 16%, transparent); color: var(--good); }
+  .verdict-pill.mixed { background: color-mix(in srgb, var(--warning) 20%, transparent); color: #8a5a00; }
+  :root:where(:not([data-theme="light"])) .verdict-pill.mixed, [data-theme="dark"] .verdict-pill.mixed { color: var(--warning); }
+  .verdict-pill.bad { background: color-mix(in srgb, var(--critical) 16%, transparent); color: var(--critical); }
+  .table-img { width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border); }
+  .note { font-size: 12.5px; color: var(--ink-2); }
+  .note b { color: var(--ink-1); }
+  table.bt { border-collapse: collapse; width: 100%; font-size: 12px; font-variant-numeric: tabular-nums; }
+  table.bt th, table.bt td { border: 1px solid var(--border); padding: 6px 9px; text-align: right; }
+  table.bt th:first-child, table.bt td:first-child { text-align: left; }
+  table.bt th { background: var(--surface-1); font-weight: 700; }
+  .wf-flow { display: flex; flex-direction: column; gap: 10px; font-size: 13px; }
+  .wf-step { display: flex; gap: 10px; align-items: flex-start; }
+  .wf-badge {
+    flex: none; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-size: 12px; font-weight: 700; color: white;
+  }
+  .wf-badge.ok { background: var(--good); }
+  .wf-badge.fix { background: var(--warning); color: #3a2a00; }
+  .wf-badge.no { background: var(--critical); }
+  footer { font-size: 11.5px; color: var(--ink-muted); border-top: 1px solid var(--border); padding-top: 16px; }
+  footer code { font-family: ui-monospace, monospace; background: var(--surface-1); padding: 1px 5px; border-radius: 4px; }
+</style>
+
+<div class="vz">
+  <div class="wrap">
+
+    <div class="masthead" style="display:flex; flex-direction:column; gap:10px;">
+      <div class="eyebrow">Araç Piyasası · Çapraz-Feature Türetilmiş Hedefler</div>
+      <h1>Var olan feature'ları çaprazlayarak üretilen 3 yeni target adayı</h1>
+      <div class="sub">
+        <code>target_devir_orani</code>'nin yöntemiyle (iki bağımsız ham feature'ı oran/fark/çarpım
+        olarak birleştirme) 4 farklı ekonomik mantıktan yeni target formülü üretildi ve her biri
+        2 bağımsız skeptik ajanla adversarial doğrulamadan geçirildi. Aşağıda süreç ve nihai
+        AutoGluon backtest sonuçları var.
+      </div>
+    </div>
+
+    <div class="callout">
+      <b>Üretim → doğrulama süreci (4 aday, 8 bağımsız skeptik değerlendirme):</b>
+      <div class="wf-flow" style="margin-top:10px;">
+        <div class="wf-step">
+          <div class="wf-badge ok">✓</div>
+          <div><b>İkinci el / yeni araç satış oranı</b> (noter_devir_otomobil_adet / odmd_otomobil_adet)
+          — iki skeptik de temiz KABUL, target_devir_orani'den istatistiksel olarak bağımsız (MoM korelasyon ~0.02).</div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-badge fix">~</div>
+          <div><b>Kuyruk teorisi (Little's Law) stok göstergesi</b> — ilk öneri (aylık büyüme hızı)
+          matematiksel olarak <code>log(A×B)=log(A)+log(B)</code> özdeşliği gereği target_1ay_hiz +
+          betam_dom_gun log-farkının toplamına eşit çıktı (fark&lt;1.6e-14) — yani gerçek bir etkileşim
+          değil, iki mevcut target'ın toplamı. Skeptiklerin somut düzeltmesiyle <b>seviye (level)</b>
+          olarak yeniden tanımlandı.</div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-badge no">✗</div>
+          <div><b>Üretim–satış dengesizlik oranı</b> (osd_binek_adet, odmd_otomobil_adet) — adversarial
+          doğrulamayı geçmişti (skeptikler yalnızca ihracat confound'u ve isimlendirme konusunda düzeltme
+          istemişti), ancak backtest'te yön doğruluğu baseline'ın 33.3pp gerisinde kaldı; proje kapsamından
+          çıkarıldı.</div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-badge no">✗</div>
+          <div><b>Fiyat-ayarlı devir hızı</b> (noter_devir büyümesi − indicata fiyat değişimi) —
+          <b>reddedildi</b>: ampirik test target_1ay_hiz ile korelasyonun 0.9977 (R²=0.995) olduğunu
+          gösterdi, fiyat terimi varyansın yalnızca ~%0.5'ini açıklıyor — pratikte trivial bir varyasyon.
+          Ayrıca kaynak fiyat verisi ~7 aydır güncellenmemiş.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= TARGET 1: ikinciel_yeniarac (en temiz) ================= -->
+    <section class="target good">
+      <div class="target-head">
+        <h2>target_capraz_ikinciel_yeniarac_satis_orani <span style="color:var(--ink-muted); font-weight:500;">— İkinci El / Yeni Araç Satış Oranı</span></h2>
+        <div class="target-meta">101 gözlem · 2018-01 → 2026-05 · 46 aday feature → 31 korelasyon-sonrası → 16 final feature · 6 backtest ayı</div>
+      </div>
+      <div class="formula-box">target = noter_devir_otomobil_adet / odmd_otomobil_adet</div>
+      <div class="note">
+        <b>Ekonomik anlam:</b> İkinci el piyasası hacminin (noter devri) yeni araç satış hacmine oranı —
+        tüketicilerin ikinci el mi yeni araç mı tercih ettiğine dair bir "talep rotasyonu" göstergesi.
+        target_devir_orani'den farklı: o STOK'a (trafiğe kayıtlı park) oranlıyordu, bu HACİM'e HACİM oranlıyor.
+      </div>
+      <img class="table-img" src="data:image/png;base64,__B64_target_capraz_ikinciel_yeniarac_satis_orani__" alt="metrik tablosu" />
+      <div class="verdict-pill strong">En temiz sonuç: model 5/5 metrikte önde (yön doğruluğunda ikisi de %100)</div>
+    </section>
+
+    <!-- ================= TARGET 3: kuyruk_stok_seviyesi ================= -->
+    <section class="target good">
+      <div class="target-head">
+        <h2>target_capraz_kuyruk_stok_seviyesi <span style="color:var(--ink-muted); font-weight:500;">— Kuyruk Teorisi (Little's Law) Tahmini Stok Seviyesi</span></h2>
+        <div class="target-meta">28 gözlem · 2024-01 → 2026-06 · 47 aday feature → 31 korelasyon-sonrası → 15 final feature · 6 backtest ayı</div>
+      </div>
+      <div class="formula-box">target = (noter_devir_otomobil_adet / o_ayın_gün_sayısı) × betam_dom_gun</div>
+      <div class="note">
+        <b>Ekonomik anlam:</b> Little's Law (L = λ×W): aylık satış akışı (günlük hıza çevrilmiş) ile
+        ortalama ilanda kalma süresinin çarpımı, o an piyasada aktif "iş sürecinde" (work-in-process)
+        tahmini araç sayısını verir — hacim ve sürenin BİRLİKTE ürettiği, tek başına hiçbirinin
+        veremeyeceği bir stok büyüklüğü. <b>Not:</b> İlk öneri büyüme-hızı olarak tanımlanmıştı ve
+        matematiksel olarak mevcut iki target'ın toplamına indirgeniyordu; bu SEVİYE tanımı o sorunu
+        gidermek için skeptiklerin önerisiyle uygulandı.
+      </div>
+      <img class="table-img" src="data:image/png;base64,__B64_target_capraz_kuyruk_stok_seviyesi__" alt="metrik tablosu" />
+      <div class="verdict-pill strong">Model MAE/RMSE/MASE'de önde, yön doğruluğunda berabere — ama Bias büyüklüğünde baseline biraz daha iyi</div>
+    </section>
+
+    <div class="callout" style="border-left-color: var(--ink-muted);">
+      <b>Genel değerlendirme:</b>
+      <ul>
+        <li><code>target_capraz_ikinciel_yeniarac_satis_orani</code> — en sağlam aday, uzun tarihçe,
+          5/5 metrikte net üstünlük, ekonomik yorumu sade ve savunulabilir.</li>
+        <li><code>target_capraz_kuyruk_stok_seviyesi</code> — ilginç ve orijinal bir sinyal (Little's Law),
+          ama betam_dom_gun'un kısa tarihçesiyle sınırlı (28 gözlem) ve iki farklı popülasyonu
+          (genel noter evreni vs BETAM'a özgü ilan örneği) birleştirdiği için "kalibre" bir stok değil,
+          kaba bir proxy olarak okunmalı.</li>
+        <li><code>target_capraz_uretim_satis_dengesizlik_orani</code> — mutlak hata metriklerinde güçlüydü
+          ama yön tahmininde zayıftı (muhtemelen ihracat confound'u ve aşırı mevsimsellik nedeniyle);
+          <b>projeden çıkarıldı</b>, pipeline'da ve çıktılarda artık yok.</li>
+        <li><code>target_capraz_fiyat_ayarli_devir_hizi</code> reddedildi — veri setine hiç eklenmedi.</li>
+      </ul>
+    </div>
+
+    <footer>
+      Pipeline: <code>scripts/hiz_target_backtest_pipeline.py</code> (yeni <code>DERIVED_TARGET_FORMULAS</code>
+      mekanizmasıyla) · Üretim+doğrulama: Workflow <code>capraz-feature-target-uretimi</code> (4 formül üretimi
+      + 8 bağımsız adversarial doğrulama) · Çıktılar: <code>outputs/hiz_target_backtest/&lt;target&gt;/</code>
+    </footer>
+
+  </div>
+</div>
